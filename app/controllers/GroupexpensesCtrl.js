@@ -9,7 +9,6 @@ App.controller('GroupexpensesCtrl',
 
     $scope.locale = LocalStorageService.get("locale");
 
-
     $scope.$on('newEntries', function(event) {
         console.log("en / new data from server");
         setTimeout(function() { console.log("delayed initing group"); $scope.initGroup(true) }, 500);
@@ -25,6 +24,38 @@ App.controller('GroupexpensesCtrl',
             if(callback) callback();
         });
     };
+
+    $scope.noMoreItems = false;
+    $scope.expenses_display = [];
+
+    $scope.loadMore = function() {
+        $scope.getEntries(function() {
+            $scope.expenses_display.push($scope.expenses[$scope.expenses_display.length]);
+       
+            if ($scope.expenses_display.length == $scope.expenses.length) {
+                $scope.noMoreItems = true;
+            }
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        })
+    };
+
+    $scope.refreshLoadedExpenses = function(discret, callback) {
+
+        if(discret) {
+            $scope.getEntries(function() {
+                var new_display = []
+                for(var i in $scope.expenses_display) {
+                    new_display.push($scope.expenses[i]);
+                }
+                $scope.expenses_display = new_display;
+                console.
+                callback();
+            })
+        }
+        else
+            callback();
+    }
+
     $scope.getEntries = function(callback) {
 
         if(!$rootScope.cached_entries)
@@ -39,16 +70,13 @@ App.controller('GroupexpensesCtrl',
                 console.log('entries have been cached');
                 if(callback) callback();
             });
-            
         }
         
         else {
             console.log('cached entries found');
             $scope.expenses = $rootScope.cached_entries['group'+$scope.GroupId];
             if(callback) callback();
-            
         }
-        
     };
 
     $scope.getBalance = function(callback) {
@@ -66,14 +94,12 @@ App.controller('GroupexpensesCtrl',
                 $scope.settled = ($scope.expenses.length>0 && objectLength($scope.balances)==0);
                 if(callback) callback();
             });
-            
         }
         
         else {
             console.log('cached balances found');
             $scope.balances = $rootScope.cached_balances['group'+$scope.GroupId];
             if(callback) callback();
-            
         }
     }
     $scope.getMembersNames = function(callback) {
@@ -105,13 +131,12 @@ App.controller('GroupexpensesCtrl',
 
             $scope.getMembersNames(function () {
 
-                $scope.getEntries(function() {
-
+                $scope.refreshLoadedExpenses(discret, function() {
                     $scope.getBalance(function() {
                         $scope.$apply();
                         LoaderService.hide();
                     });
-                });
+                })
             });
         });
     }
@@ -128,6 +153,5 @@ App.controller('GroupexpensesCtrl',
     // Tracking
     if (typeof analytics !== 'undefined')
         analytics.trackView($state.current.name);
-
 
 });

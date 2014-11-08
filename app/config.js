@@ -6,8 +6,8 @@
             'APP_VERSION': '1.1.4',
             'FIRST_URL': 'http://www.debal.fr',
             //'API_URL': 'http://localhost:8888/debal_web/Apiv2/'
-            //'API_URL': 'http://dev1466.debal.fr/Apiv2/'
-            'API_URL': 'http://api.debal.fr/'
+            'API_URL': 'http://dev1466.debal.fr/Apiv2/'
+            //'API_URL': 'http://api.debal.fr/'
         },
         'API_ROUTES':{
             sync: {

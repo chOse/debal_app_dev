@@ -21,7 +21,7 @@
 
                 <div translate class="item item-divider">Dépenses</div>
       
-                <a id="expenseslist" ng-repeat="expense in expenses" class="item item-icon-right" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}" style="padding: 10px;padding-right: 40px;padding-left:20px;">
+                <a id="expenseslist" ng-repeat="expense in expenses_display" class="item item-icon-right" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}" style="padding: 10px;padding-right: 40px;padding-left:20px;">
 
                     <div class="title">
                         <h2>
@@ -42,6 +42,13 @@
                 </a>
 
                 <span translate class="item item-icon-right" ng-show="!expenses.length">Aucune dépense ajoutée</span>
+
+                <div style="color: #444;
+font-size: 12px;
+text-align: center;
+}" ng-if="!noMoreItems">Défiler pour afficher les dépenses suivantes</div>
+
+                <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
             </ion-content>
         </ion-tab>
 
