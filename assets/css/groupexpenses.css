@@ -1,0 +1,122 @@
+/* Footer START */
+#groupexpenses .tabs.footer .tab-item {
+    font-weight:bold;
+}
+#groupexpenses .tabs.footer .tab-item.button {
+    border-top:none;
+    border-bottom:none;
+    border-right:none;
+}
+#groupexpenses .item .amount h2 {
+
+}
+#groupexpenses .item h2 {
+    font-size:16px;
+    white-space:normal;
+    font-weight:normal;
+}
+/* Footer END */
+
+/* Content START */
+#groupexpenses ion-content {
+    background: #ececec;
+}
+#groupexpenses .card {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+#groupexpenses .list .item {
+    padding-top:10px;
+    padding-bottom:5px;
+}
+
+#groupexpenses .list .item div {
+    color: #666;
+}
+#groupexpenses #expenseslist.unsynced {
+    background-color:#ECECEC;
+}
+#groupexpenses #expenseslist .title {
+    display:block;
+    float:left;
+    max-width:70%;
+}
+#groupexpenses #expenseslist .title p {
+    font-style:italic;
+}
+#groupexpenses #expenseslist .title p strong {
+    color:#00a8ec;
+}
+#groupexpenses #expenseslist .title p strong.myself {
+    text-decoration:underline;
+}
+#groupexpenses .ion-android-share:before {
+    margin-right:5px;
+}
+#groupexpenses #expenseslist .amount {
+    display:block;
+    text-align:right;
+}
+
+/* Onglet bilan */
+#groupexpenses .debts  {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin:0 auto 5px auto;
+    font-size:11px;
+}
+#groupexpenses .item.myself  {
+    font-size:12px;
+    //background-color:#eee;
+}
+#groupexpenses .debts strong {
+    font-size:1em;
+}
+#groupexpenses .myself .debts strong {
+    font-size:1.2em;
+}
+#groupexpenses .myself {
+    color:red;
+}
+#groupexpenses .debts .col-left strong  {
+    color:#448FAD;
+}
+
+#groupexpenses .myself .debts .col-left strong  {
+    color:#00a8ec;
+}
+#groupexpenses .debts .col-right {
+    text-align:center;
+}
+#groupexpenses .debts .col-right strong.amount {
+    font-size:1.4em;
+    color:orange;
+}
+#groupexpenses .debts .col-right strong.beneficiary {
+    font-size:1.1em;
+}
+#groupexpenses .debts .col-right strong.beneficiary.myself {
+    font-size:1.2em;
+    color:#00a8ec;
+    text-decoration:underline;
+    font-weight:normal;
+}
+#groupexpenses .list .item p.url {
+    text-align:center;
+    margin:10px 0;
+}
+#groupexpenses .list .item p.url button {
+    padding:1px 20px;
+    font-size:16px;
+    border-radius:2px;
+    max-width:400px;
+    margin:0 auto;
+}
+#groupexpenses .list .item p.share {
+    max-width:400px;
+    font-size:16px;
+    margin:10px auto;
+    text-align:center;
+}
+/* Content END */

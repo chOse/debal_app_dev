@@ -1,0 +1,97 @@
+<ion-view title="{{group_data.name}}" id="groupexpenses">
+
+        <ion-nav-buttons side="right">
+            <a data-instantActivate href="#/app/editgroup/{{GroupId}}" style="margin-right:10px" class="button button-clear icon-left ion-gear-a"></a>
+            <a data-instantActivate href="#/app/addexpense/{{GroupId}}" class="button button-clear icon-left ion-plus-circled"></a>
+        </ion-nav-buttons>
+
+
+        <ion-tabs data-instantActivate class="footer tabs-balanced">
+
+        <ion-tab
+                    id="expenses"
+                    icon-on="ion-clipboard"
+                    icon-off="ion-clipboard">
+
+            <ion-content has-tabs="true" class="ionic-scroll">
+                <ion-refresher on-refresh="doRefresh()"
+                         pulling-text="{{'Synchronisation manuelle'|translate}}"
+                         refreshing-text="{{'Synchronisation en cours'|translate}}..."
+                         refreshing-icon="ion-loading-d"></ion-refresher>
+
+                <div translate class="item item-divider">Dépenses</div>
+      
+                <a id="expenseslist" ng-repeat="expense in expenses" class="item item-icon-right" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}" style="padding: 10px;padding-right: 40px;padding-left:20px;">
+
+                    <div class="title">
+                        <h2>
+                            <span ng-if="expense.title">{{expense.title}}</span><span ng-if="!expense.title" translate>Divers</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
+                        </h2>
+                        <p style="font-style: normal;font-size:12px;"><span translate>payé par</span> 
+                            <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
+                            <strong translate class="myself"  ng-if="expense.GroupsUserId==currentUserGuid">Vous</strong>
+                    </div>
+
+                    <div class="amount">
+                        <h2 style="color:#00a8ec">{{expense.amount | currency:group_data.currency}}</h2>
+                        <p ng-if="locale == fr" style="font-size:12px">{{ expense.date | date : 'dd/MM/yyyy'}}</p>
+                        <p ng-if="locale != fr" style="font-size:12px">{{ expense.date | date : 'yyyy-MM-dd'}}</p>
+                    </div>
+   
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+
+                <span translate class="item item-icon-right" ng-show="!expenses.length">Aucune dépense ajoutée</span>
+            </ion-content>
+        </ion-tab>
+
+        <ion-tab
+                    icon-on="ion-wand"
+                    icon-off="ion-wand">
+
+            <ion-content has-tabs="true" class="ionic-scroll">
+                
+                <div translate class="item item-divider">Qui doit quoi ?</div>
+                <ul class="list" style="margin-bottom:0">
+
+                    <span translate class="item item-icon-right" ng-show="!expenses.length || expenses.length==0">Aucune dépense ajoutée</span>
+                    <span translate class="item item-icon-right" ng-show="settled">Les comptes sont équilibrés !</span>
+                    <li ng-repeat="(guid,flows) in balances " ng-if="flows.length>0" class="item" ng-class="{'myself': guid==currentUserGuid}">
+
+                        <div ng-if="flows.length>=1" ng-repeat="(k,flow) in flows" class="debts">
+                            <p ng-if="k==0" class="col-left">
+                                <strong>{{membersNames[guid]}}</strong> <span translate>doit</span>
+                            </p>
+                            
+                            <p class="col-right">
+                                <span translate ng-if="k>0">et</span>
+                                <strong translate class="amount">{{flow.amount | currency:group_data.currency}}</strong><br />
+                                <span translate>à</span>
+                                <strong ng-class="{true:'myself'}[flows[k].to==currentUserGuid]" class="beneficiary">{{membersNames[flows[k].to]}}</strong>
+                            </p>
+                            <p style="clear:both"></p>
+                        </div>
+
+                    </li>
+                </ul>
+
+                <div translate class="item item-divider icon-left ion-android-share">Partager le bilan</div>
+                <ul class="list">
+                    <li ng-show="group_data.public_key" class="item item-text-wrap"><span translate>Les comptes sont accessibles à cette adresse :</span>
+                        <p class="url">
+                            <button data-instantActivate class="button button-block button-energized icon-right icon ion-chevron-right" ng-click="openGroupUrl()">http://debal.fr/<strong>{{group_data.public_key}}</strong></button>
+                        </p>
+
+                        <span translate><strong>Partagez cette adresse</strong> via Email, SMS, Facebook, Whatsapp... avec les autres membres pour leur donner accès aux comptes !</span>
+                        <p class="share">
+                            <button data-instantActivate translate ng-click="ShareGroup()" class="button button-block button-calm ion-android-share">Partager</button>
+                        </p>
+
+                    </li>
+                    <li translate ng-show="!group_data.public_key" class="card item item-text-wrap">Vous n'avez pas encore synchronisé le groupe en ligne. Synchronisez le (connexion à Internet nécessaire) pour gérer le groupe depuis sa page Web et partager le bilan avec les autres membres !</li>
+                </ul>
+                
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+</ion-view>

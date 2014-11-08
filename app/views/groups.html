@@ -1,0 +1,37 @@
+<ion-view hide-back-button="true" title="{{user_name}}" id="groups">
+      
+    <ion-nav-buttons side="left">
+      <button data-instantActivate menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+      <ion-content class="has-header has-footer">
+      <ion-refresher on-refresh="doRefresh()"
+                     pulling-text="{{'Synchronisation manuelle'|translate}}"
+                     refreshing-text="{{'Synchronisation en cours'|translate}}..."
+                     refreshing-icon="ion-loading-d"></ion-refresher>
+
+          <div class="sync-progress-bar" ng-class="{100:'sync-progress-bar-done'}[progressPercent]" style="width: {{progressPercent}}%;"></div>
+
+          <section id="group-buttons">
+              <div class="list">
+                      
+                  <div translate class="item item-divider">Mes groupes</div>
+                  <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}">
+                      {{group.name}}
+                      <i class="icon ion-chevron-right icon-accessory"></i>
+                  </a>
+
+                  <span translate ng-show="!groups.length" class="item item-icon-right">
+                      Aucun groupe créé pour l'instant
+                  </span>
+              </div> 
+          </section>
+
+      </ion-content>
+
+      <ion-footer class="bar bar-footer">
+          <a data-instantActivate href="#/app/creategroup" class="button button-full button-balanced">
+              <i class="icon ion-plus"></i><span translate>Créer un groupe</span>
+          </a>
+      </ion-footer>
+</ion-view>

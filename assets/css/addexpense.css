@@ -1,0 +1,69 @@
+/* Footer START */
+#addexpense .bar.bar-footer {
+    padding: 0;
+}
+#addexpense .bar.bar-footer .button {
+    margin: 0;
+    font-size: 21px;
+    font-weight:bold;
+    border:none;
+}
+#addexpense .bar.bar-footer .button i {
+    margin-right:10px;
+}
+/* Footer END */
+
+
+#addexpense .amount {
+    width: 40px;
+    padding-right: 2px;
+    float: right;
+    font-size: 15px;
+    position: absolute;
+    right: 20px;
+    margin-top: 7px;
+    color: #ccc;
+}
+#addexpense .slider-pager {
+   display:none;
+}
+#addexpense #amount_field::-webkit-input-placeholder {
+    text-align: center;
+}
+#addexpense .ion-checkmark:before {
+    margin-right:5px;
+}
+
+#addexpense #allbutton {
+    font-size: 15px;
+    padding: 0 10px;
+}
+
+#addexpense .list.members {
+    margin-bottom:0;
+}
+
+#addexpense div.item.item-button-right {
+    border: none;
+    padding-left: 19px;
+}
+
+#addexpense .item {
+    color: #666;
+}
+
+#addexpense .item-input select, #creategroup .item-input select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    max-width: 65%;
+    border: none;
+    background: 0 0;
+    color: #333;
+    text-indent: .01px;
+    text-overflow: '';
+    white-space: nowrap;
+    font-size: 14px;
+    cursor: pointer;
+    display: block;
+}

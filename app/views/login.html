@@ -1,0 +1,40 @@
+<ion-view title="Login" id="login">
+    <ion-content scroll="true">
+    <div class="frameT">
+        <div class="frameTC">
+                <div class="container">
+                <section id="login-logo" class="text-center">
+                    <img src="assets/images/logo-medium.png" />
+                </section>
+                <section id="login-form" class="list">
+
+                    <div id="fbk_connect">
+                        <div translate class="line1">Accédez au service en une touche !</div>
+                        <button data-instantActivate type="button" ng-click="facebookLogin()"><span translate>Connexion avec mon compte Facebook</span></button>
+                        <div translate class="line2">(Promis, nous ne posterons jamais rien nulle part !)</div>
+                    </div>
+                    
+                    <form novalidate="novalidate" on-valid-submit="signIn(user)">
+                        <div translate style="text-align:center">Connexion sans Facebook :</div>
+                        <div class="list">
+                            <label class="item item-input validated">
+                                <input placeholder="{{'votre'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
+                                <i class="icon ion-alert-circled error"></i>
+                            </label>
+                            <label class="item item-input validated">
+                                <input placeholder="{{'Mot de passe'|translate}}" id="password" type="password" ng-model="user.password" name="password" required="required">
+                                <i class="icon ion-alert-circled error"></i>
+                            </label>
+                            <button data-instantActivate translate ng-click="forgotPassword()" id="forgot-password" class="button button-small button-clear" type="button">Mot de passe oublié ?</button>
+                            <button data-instantActivate translate class="button button-block button-energized icon-left ion-locked" id="login-button" type="submit"> Connexion</button>
+                            <button data-instantActivate translate type="button" ng-click="goRegister()" class="button button-small button-balanced" id="gotologin-button">Je n'ai pas de compte !</button>
+                        </div>
+
+
+                    </form>
+                </section>
+                </div>
+            </div>
+            </div>
+    </ion-content>
+</ion-view>

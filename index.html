@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>Debal</title>
+
+        <link href="system/ionic/css/ionic.css" rel="stylesheet">
+        <link href="assets/css/addexpense.css" rel="stylesheet">
+        <link href="assets/css/common-styling.css" rel="stylesheet">
+        <link href="assets/css/creategroup.css" rel="stylesheet">
+        <link href="assets/css/form-validation.css" rel="stylesheet">
+        <link href="assets/css/groupexpenses.css" rel="stylesheet">
+        <link href="assets/css/groups.css" rel="stylesheet">
+        <link href="assets/css/loader-rotation-spin.css" rel="stylesheet">
+        <link href="assets/css/login.css" rel="stylesheet">
+        <link href="assets/css/modified.css" rel="stylesheet">
+
+        
+        <script src="system/ionic/js/ionic.bundle.min.js"></script>
+
+        
+        <script src="app/app.js"></script>
+        <script src="app/config.js"></script>
+        <script src="app/db.js"></script>
+
+        <script src="assets/js/accounting.min.js"></script>
+        <script src="assets/js/facebookConnectPlugin.js"></script>
+        <script src="assets/js/gettext.js"></script>
+        <script src="assets/js/myHelpers.js"></script>
+
+        <script src="app/translations/en.js"></script>
+
+        <script src="app/directives/formValidation.js"></script>
+        
+        <script src="app/services/initService.js"></script>
+        <script src="app/services/LoaderService.js"></script>
+        <script src="app/services/LocalStorageService.js"></script>
+        <script src="app/services/LoginService.js"></script>
+        <script src="app/services/SQLiteService.js"></script>
+        <script src="app/services/SyncService.js"></script>
+
+        <script src="app/services/models/EntriesModel.js"></script>
+        <script src="app/services/models/GroupsModel.js"></script>
+        <script src="app/services/models/UsersModel.js"></script>
+        
+        <script src="app/controllers/AddexpenseCtrl.js"></script>
+        <script src="app/controllers/AppCtrl.js"></script>
+        <script src="app/controllers/CreateGroupCtrl.js"></script>
+        <script src="app/controllers/EditexpenseCtrl.js"></script>
+        <script src="app/controllers/EditgroupCtrl.js"></script>
+        <script src="app/controllers/EditgroupUserOptionsCtrl.js"></script>
+        <script src="app/controllers/GroupexpensesCtrl.js"></script>
+        <script src="app/controllers/GroupsCtrl.js"></script>
+        <script src="app/controllers/LoginCtrl.js"></script>
+        <script src="app/controllers/SideMenuCtrl.js"></script>
+
+    </head>
+    <body ng-app="spendingsManager" ng-controller="AppCtrl">
+        <div id="fb-root"></div>
+
+        <ion-nav-view animation="no-animation"></ion-nav-view>
+    </body>
+</html>

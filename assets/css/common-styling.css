@@ -1,0 +1,88 @@
+body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-weight:bold;
+}
+.bar.bar-calm {
+    background-color:#00a8ec;
+}
+.tabs-positive>.tabs {
+    background-color:#00a8ec;
+    border-color:#00a8ec;
+}
+
+/* Header START */
+.bar-header {
+    font-size: 25px;
+}
+.bar .title {
+    font-size:14px;
+}
+.info-pinch-refresh {
+	font-size:11px;
+	font-weight:normal;
+	font-style:italic;
+	color:#929292;
+    position: absolute; top: 9px; right: 10px;
+}
+/* Return button */
+.bar-header a.back-button  {
+    font-size:14px !important;
+    font-weight:bold !important;
+}
+.bar-header a.back-button:before {
+    margin-right:5px !important;
+    font-size:35px !important;
+    color:#fff !important;
+}
+.bar-header a.button.ion-checkmark, .bar-header a.button.ion-ios7-trash-outline {
+    color: #EEEEEE;
+    border: 1px solid #EEEEEE;
+    border-radius: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.bar-header a.button.ion-checkmark:before, .bar-header a.button.ion-ios7-trash-outline:before {
+    font-size: 26px !important;
+    line-height: 26px !important;
+    padding-left: 5px;
+    padding-right: 3px;
+}
+.bar-header a.button.ion-ios7-trash-outline {
+    margin-right:10px;
+}
+.popup-body input.add-user-input {
+    border: 1px solid blue;
+    border-color: rgba(82,168,236,.8);
+    outline: 0;
+    -webkit-box-shadow: 0 0 8px rgba(82,168,236,.6);
+    box-shadow: 0 0 5px rgba(82,168,236,.6);
+    text-align: center;
+}
+.popup {
+    background-color: #eee;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px !important;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
+}
+.sync-progress-bar, .sync-progress-bar-done {
+    height: 1px;
+    transition: width 0.1s;
+    background: orange;
+    position:absolute;
+    z-index:99;
+}
+.sync-progress-bar-done {
+    background:#6c3
+}
+.stroke {
+    text-decoration:line-through;
+}
+
+/* Header END */
