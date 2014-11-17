@@ -157,7 +157,7 @@ border-bottom: 1px solid rgb(204, 204, 204);
 }
 
 #addexpense .checkbox input,#addexpense .checkbox-icon{
-    position: relative;
+    /*position: relative;
 width: 10px;
 height: 46px;
 display: block;
@@ -165,11 +165,20 @@ border: 0;
 background: 0 0;
 cursor: pointer;
 -webkit-appearance: none;
+*/
+width: 15px;
+height: 46px;
+display: block;
+cursor: pointer;
+-webkit-appearance: none;
+padding: 0;
+
 }
 
 
 
 #addexpense .item-checkbox .checkbox{
+    
     position: absolute;
 top: 0%;
 right: 0px;
@@ -177,6 +186,9 @@ left: 0px;
 z-index: 3;
 margin-top: 0px;
 padding:0%;
+
+
+
 }
 
 #addexpense .checkbox input:before,#addexpense .checkbox-icon:before{

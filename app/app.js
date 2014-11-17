@@ -1,4 +1,4 @@
-var App = angular.module('spendingsManager', ['ionic', 'spendingsManager.config', 'gettext', 'spendingsManager.db'])
+var App = angular.module('spendingsManager', ['tmh.dynamicLocale', 'ionic', 'spendingsManager.config', 'gettext', 'spendingsManager.db'])
 .filter('isEmpty', function () {
         var bar;
         return function (obj) {
@@ -91,28 +91,40 @@ $stateProvider
     $urlRouterProvider.otherwise("/register");
     
 })
-.run(function($ionicPlatform, $state, $ionicSideMenuDelegate, LocalStorageService, initService, GENERAL_CONFIG, gettextCatalog) {
-
+.run(function($ionicPlatform, $state, $rootScope, $ionicSideMenuDelegate, tmhDynamicLocale, LocalStorageService, initService, GENERAL_CONFIG, gettextCatalog) {
 
 
     $ionicPlatform.ready(function() {
 
+        this.loadLocale = function(locale) {
+
+            device_locale = locale.value;
+            device_lang = device_locale.split("-")[0];
+
+            LocalStorageService.set("locale", device_lang);
+
+            var supported_lang = ['fr', 'en'];
+                
+            if(supported_lang.indexOf(device_lang)==-1)
+                device_lang = "en";
+
+            $rootScope.$apply(function() {
+
+                gettextCatalog.setCurrentLanguage(device_lang);
+
+                if(typeof device_locale != 'undefined') {
+                    tmhDynamicLocale.set(device_locale.toLowerCase());
+                }
+            });
+        };
+
         if(typeof(navigator.globalization) !== "undefined") {
-
-            navigator.globalization.getPreferredLanguage(function(language) {
-                locale = (language.value).split("-")[0];
-
-                LocalStorageService.set("locale", locale);
-                gettextCatalog.setCurrentLanguage(locale);
-
-            }, null);
-
+            navigator.globalization.getLocaleName(this.loadLocale, null);
         }
 
         else {
-            locale = "en";
-            LocalStorageService.set("locale", locale);
-            gettextCatalog.setCurrentLanguage(locale);
+            $rootScope.$apply(function() {gettextCatalog.setCurrentLanguage("en")});
+            LocalStorageService.set("locale", "en");
         }
 
         // Handle back button
@@ -133,47 +145,12 @@ $stateProvider
                 $state.go('app.groups');
             }
 
-           /* else
-                navigator.app.backHistory();*/
 
         }, false);
-
-        
 
         if (typeof analytics !== 'undefined') {
             analytics.startTrackerWithId('UA-44005158-2')
         }
 
-
-
-
     });
 })
-.filter('currency', function(CURRENCIES_SYMBOLS) {
-    return function(number, currencyCode) {
-        var thousand, decimal, format;
-    
-        if (locale == "fr") {
-            thousand = " ";
-            decimal = ",";
-            format = "%v %s";
-        }
-
-        else {
-            thousand = ",";
-            decimal = ".";
-            format = "%s %v";
-        };
-
-        var symbol = (CURRENCIES_SYMBOLS[currencyCode]) ? CURRENCIES_SYMBOLS[currencyCode] : currencyCode;
-
-        return accounting.formatMoney(number, symbol, 2, thousand, decimal, format);
-
-    };
-  });
-
-/*
-window.onerror = function(message, url, lineNumber) {  
-  alert(message + "url" + url + "line" + lineNumber);
-  return true;
-}; */

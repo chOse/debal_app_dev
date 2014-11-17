@@ -29,7 +29,15 @@
     padding-top:10px;
     padding-bottom:5px;
 }
-
+#groupexpenses #expenseslist {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 10px;padding-right: 40px;padding-left:20px;
+}
 #groupexpenses .list .item div {
     color: #666;
 }
@@ -37,9 +45,9 @@
     background-color:#ECECEC;
 }
 #groupexpenses #expenseslist .title {
-    display:block;
-    float:left;
-    max-width:70%;
+   // display:inline;
+   flex:1;
+
 }
 #groupexpenses #expenseslist .title p {
     font-style:italic;
@@ -54,8 +62,10 @@
     margin-right:5px;
 }
 #groupexpenses #expenseslist .amount {
-    display:block;
+   // display:inline;
+    margin-left:auto;
     text-align:right;
+    flex-shrink:0;
 }
 
 /* Onglet bilan */

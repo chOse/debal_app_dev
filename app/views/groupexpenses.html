@@ -13,7 +13,7 @@
                     icon-on="ion-clipboard"
                     icon-off="ion-clipboard">
 
-            <ion-content has-tabs="true" class="ionic-scroll">
+            <ion-content has-bouncing="false" has-tabs="true" class="ionic-scroll">
                 <ion-refresher on-refresh="doRefresh()"
                          pulling-text="{{'Synchronisation manuelle'|translate}}"
                          refreshing-text="{{'Synchronisation en cours'|translate}}..."
@@ -21,21 +21,22 @@
 
                 <div translate class="item item-divider">Dépenses</div>
       
-                <a id="expenseslist" ng-repeat="expense in expenses_display" class="item item-icon-right" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}" style="padding: 10px;padding-right: 40px;padding-left:20px;">
+                <a id="expenseslist" ng-repeat="expense in expenses_display" class="item item-icon-right" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
 
                     <div class="title">
-                        <h2>
-                            <span ng-if="expense.title">{{expense.title}}</span><span ng-if="!expense.title" translate>Divers</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
-                        </h2>
-                        <p style="font-style: normal;font-size:12px;"><span translate>payé par</span> 
+                       <!-- <h2>-->
+                            <span ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Divers</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
+                     <!--   </h2>-->
+                        <p style="font-style: normal;font-size:12px;">
+                            <span translate>payé par</span> 
                             <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
                             <strong translate class="myself"  ng-if="expense.GroupsUserId==currentUserGuid">Vous</strong>
+                        </p>
                     </div>
 
                     <div class="amount">
-                        <h2 style="color:#00a8ec">{{expense.amount | currency:group_data.currency}}</h2>
-                        <p ng-if="locale == fr" style="font-size:12px">{{ expense.date | date : 'dd/MM/yyyy'}}</p>
-                        <p ng-if="locale != fr" style="font-size:12px">{{ expense.date | date : 'yyyy-MM-dd'}}</p>
+                        <h2 style="color:#00a8ec">{{expense.amount | currency:group_data.currency_symbol}}</h2>
+                        <p style="font-size:12px">{{ expense.date | date: 'shortDate'}}</p>
                     </div>
    
                     <i class="icon ion-chevron-right icon-accessory"></i>
@@ -48,15 +49,15 @@ font-size: 12px;
 text-align: center;
 }" ng-if="!noMoreItems">Défiler pour afficher les dépenses suivantes</div>
 
-                <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+                <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="30%"></ion-infinite-scroll>
             </ion-content>
         </ion-tab>
 
-        <ion-tab
+        <ion-tab   ng-click="showBalance()" 
                     icon-on="ion-wand"
                     icon-off="ion-wand">
 
-            <ion-content has-tabs="true" class="ionic-scroll">
+            <ion-content has-bouncing="false" has-tabs="true" class="ionic-scroll">
                 
                 <div translate class="item item-divider">Qui doit quoi ?</div>
                 <ul class="list" style="margin-bottom:0">
@@ -72,7 +73,7 @@ text-align: center;
                             
                             <p class="col-right">
                                 <span translate ng-if="k>0">et</span>
-                                <strong translate class="amount">{{flow.amount | currency:group_data.currency}}</strong><br />
+                                <strong translate class="amount">{{flow.amount | currency:group_data.currency_symbol}}</strong><br />
                                 <span translate>à</span>
                                 <strong ng-class="{true:'myself'}[flows[k].to==currentUserGuid]" class="beneficiary">{{membersNames[flows[k].to]}}</strong>
                             </p>

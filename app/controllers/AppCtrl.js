@@ -77,6 +77,8 @@ App
         function back_online() {
 
             console.log('back online');
+
+            /*
             var app_version = LocalStorageService.get('app_version');
             // RECREATE DB IF APP UPDATED
             if(app_version==='undefined' || (app_version!=GENERAL_CONFIG.APP_VERSION && app_version!='1.1.2') || !LocalStorageService.get('login')) {
@@ -84,12 +86,12 @@ App
                 $state.go('login');
             }
 
-            else {
+            else {*/
                 initService.init(function() {
                     console.log("sync inited, will now sync");
                     sync();
                 });
-            }
+           // }
         }
 
         function triggerSync(saveBandwidth) {

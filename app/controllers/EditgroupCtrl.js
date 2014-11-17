@@ -19,7 +19,9 @@ App
         $scope.initGroup(true);
     });
 
-    $scope.locale = LocalStorageService.get("locale");
+    var locale = LocalStorageService.get('locale');
+    
+    $scope.locale = (typeof CURRENCIES_LIST["EUR"]["name_" + locale] != 'undefined') ? locale : 'en';
 
     var tab_text1 = gettextCatalog.getString('Participants');
     var tab_text2 = gettextCatalog.getString('Réglages');
@@ -107,7 +109,7 @@ App
                                 'group_id' : (typeof($scope.group.id)!='undefined') ? $scope.group.id : null
                             }, function(created_gu_id) {
                                 $scope.group.members.push({guid: created_gu_id, UserId:created_user_id, username: $scope.data.username, share:1, deleted:0});
-                                $ionicScrollDelegate.scrollBottom();
+                                $ionicScrollDelegate.scrollBottom(true);
                                 $rootScope.$broadcast('unblockSync');
                             });
                         });
@@ -185,66 +187,7 @@ App
             }
         });
     };
-/*
-    $scope.CreateGroupsUsers = function(callback) {
-        // Create groups_users rows and redirect to group
-        if(group_members.length==$scope.group.members.length) {
-            GroupsModel.insert_or_replace_groups_users(group_members, function() {
-                LoaderService.hide();
-                // unBlock Sync after processing
-                $rootScope.$broadcast('unblockSync');
-                
-                
-                $scope.$apply();
-                if(callback) callback();
-            })
-        }
-    };
 
-    $scope.UpdateUser = function(member, callback) {
-        UsersModel.update({'username':member.username,'UserId': member.UserId}, function() {
-            group_members.push({
-                'GroupsUserId': member.guid,
-                'UserId':member.UserId,
-                'GroupId':$scope.GroupId,
-                'share': member.share,
-                'deleted' : member.deleted
-            });
-
-            $scope.CreateGroupsUsers(callback);
-        })
-    };
-
-    $scope.CreateUser = function(member, callback) {
-        UsersModel.create({'username':member.username}, function(created_user_id) {
-            group_members.push({    
-                'UserId': created_user_id,
-                'GroupId': $scope.GroupId,
-                'share': member.share,
-                'group_id' : (typeof($scope.group.id)!='undefined') ? $scope.group.id : null
-            });
-            $scope.CreateGroupsUsers(callback);
-        })
-    };
-
-    $scope.UpdateMembersData = function(callback) {
-
-        $rootScope.$broadcast('blockSync');
-
-        // Create or Replace users and retrieve users ids
-        for(var i=0, len=$scope.group.members.length; i<len;i++) {
-
-            if(typeof($scope.group.members[i].UserId)!='undefined') {
-                
-                $scope.UpdateUser($scope.group.members[i], callback);
-            }
-
-            else { // New user
-                $scope.CreateUser($scope.group.members[i], callback);
-            }
-        }
-    }
-*/
     $scope.getGroup = function(discret) {
 
         if(discret)
@@ -303,7 +246,7 @@ App
                 }
 
                 
-                if(!discret) {
+               // if(!discret) {
                     // Rearrange array : current user on top, deleted user at bottom
                     $scope.group.members.sort(function(a, b) {
                         if(a.current_user)
@@ -320,7 +263,7 @@ App
                             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
                         }
                     });
-                }
+              //  }
                 
             })
         });

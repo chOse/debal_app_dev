@@ -3,11 +3,12 @@
     config_data = {
         'GENERAL_CONFIG': {
             'APP_NAME': 'Debal',
-            'APP_VERSION': '1.1.4',
+            'RECREATE_APP_VERSIONS': ['1.0.0', '1.0.1', '1.0.2', '1.0.3'],
+            'APP_VERSION': '1.1.5',
             'FIRST_URL': 'http://www.debal.fr',
             //'API_URL': 'http://localhost:8888/debal_web/Apiv2/'
-            'API_URL': 'http://dev1466.debal.fr/Apiv2/'
-            //'API_URL': 'http://api.debal.fr/'
+            //'API_URL': 'http://dev1466.debal.fr/Apiv2/'
+            'API_URL': 'http://api.debal.fr/'
         },
         'API_ROUTES':{
             sync: {
@@ -148,6 +149,7 @@
         },
 
         CURRENCIES_LIST : {
+            USD : {id: "USD", name_fr: "dollar des Etats-Unis (USD $)", name_en: "US Dollar (USD $)"},
             JPY : {id: "JPY", name_fr: "yen japonais (JPY ¥JP)", name_en: "Japanese Yen (JPY ¥)"},
             EUR : {id: "EUR", name_fr: "euro (EUR €)", name_en: "Euro (EUR €)"},
             GBP : {id: "GBP", name_fr: "livre sterling (GBP £GB)", name_en: "British Pound Sterling (GBP £)"},

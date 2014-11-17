@@ -218,16 +218,9 @@ App
 
     $scope.getMembers = function(callback) {
         GroupsModel.get_members($scope.GroupId, function(members_names) {
-            /*
-            var shares_sum = 0;
-            for (var i in members_names) {
-                members_names[i].share = 0;
-                members_names[i].sharedAmount = 0;
-                $scope.membersNames[members_names[i].guid] = members_names[i].username;
-            }
-            */
             members_names.shares_sum = 0;
             $scope.groupMembers = members_names;
+            $scope.$apply();
             callback();
         });
     }
@@ -237,9 +230,14 @@ App
 
             $scope.expense = angular.copy(entry[0]);
             $scope.expense.spender = entry[0]['GroupsUserId'];
+            
+            $scope.$apply();
+
             EntriesModel.get_beneficiaries($scope.EntryId, function(beneficiaries) {
 
                 for(var i in $scope.groupMembers) {
+
+                    $scope.groupMembers[i].visible = (($scope.groupMembers[i].default_share>0) || ($scope.groupMembers[i].share>0) || ($scope.groupMembers[i].guid == $scope.expense.spender));
 
                     var curr_member = $scope.groupMembers[i];
 
@@ -247,9 +245,6 @@ App
                         $scope.membersNames[curr_member.guid] = curr_member.username;
 
                         for(var k in beneficiaries) {
-
-                            
-                           
                             if(beneficiaries[k]['GroupsUserId']==curr_member['guid']) {
 
                                 $scope.groupMembers[i].selected = true;
@@ -259,15 +254,15 @@ App
                                 
                                 $scope.changeState($scope.groupMembers[i]);
                             }
-
-                            $scope.groupMembers[i].visible = (($scope.groupMembers[i].default_share>0) || ($scope.groupMembers[i].share>0) || ($scope.groupMembers[i].guid == $scope.expense.spender));
-                            
                         }
 
                     }
+                    $scope.$apply();
                 }
-                $scope.$apply();
+                
             });
+            
+
 
         });
     }
@@ -275,7 +270,7 @@ App
     $scope.initGroup = function() {
         GroupsModel.read({GroupId: $scope.GroupId}, function(data) {
             $scope.group = data[0];
-            $scope.currency_symbol = CURRENCIES_SYMBOLS[$scope.group.currency];
+            $scope.currency_symbol = (typeof(CURRENCIES_SYMBOLS[$scope.group.currency])!='undefined') ? CURRENCIES_SYMBOLS[$scope.group.currency] : $scope.group.currency;
             $scope.getMembers($scope.getEntry);
 
         });
@@ -288,7 +283,7 @@ App
     var device = ionic.Platform.device();
 
     if(typeof(device.model)!='undefined') {
-        if (device.model=="GT-P5210" || device.model=="C5303" || device.model == "GT-I9195" || device.model == "GT-I9500" || device.model == "GT-I9505" || device.model == "GT-I9506")
+        if (device.model=="GT-I9300" || device.model=="GT-P5210" || device.model=="C5303" || device.model == "GT-I9195" || device.model == "GT-I9500" || device.model == "GT-I9505" || device.model == "GT-I9506")
             $scope.tel_keyboard = true;
     }
 

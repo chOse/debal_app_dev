@@ -219,7 +219,7 @@ App
     $scope.initGroup = function() {
         GroupsModel.read({GroupId: $scope.GroupId}, function(data) {
             $scope.group = data[0];
-            $scope.currency_symbol = CURRENCIES_SYMBOLS[$scope.group.currency];
+            $scope.currency_symbol = (typeof(CURRENCIES_SYMBOLS[$scope.group.currency])!='undefined') ? CURRENCIES_SYMBOLS[$scope.group.currency] : $scope.group.currency;
             $scope.getMembers();
         });
     }
@@ -234,7 +234,7 @@ App
     var device = ionic.Platform.device();
 
     if(typeof(device.model)!='undefined') {
-        if (device.model=="GT-P5210" || device.model=="C5303" || device.model == "GT-I9195" || device.model == "GT-I9500" || device.model == "GT-I9505" || device.model == "GT-I9506")
+        if (device.model=="GT-I9300" || device.model=="GT-P5210" || device.model=="C5303" || device.model == "GT-I9195" || device.model == "GT-I9500" || device.model == "GT-I9505" || device.model == "GT-I9506")
             $scope.tel_keyboard = true;
     }
 

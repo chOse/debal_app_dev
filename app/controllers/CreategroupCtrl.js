@@ -9,7 +9,9 @@ App
     $scope.current_user = {'id':LocalStorageService.get("user_id"), 'share':1, 'current_user':true, 'username':LocalStorageService.get("user_name")};
     $scope.group.members = [$scope.current_user];
 
-    $scope.locale = LocalStorageService.get("locale");
+    var locale = LocalStorageService.get('locale');
+    $scope.locale = (typeof CURRENCIES_LIST["EUR"]["name_" + locale] != 'undefined') ? locale : 'en';
+
     function checkName(name) {
         for (var i in $scope.group.members) {
             if($scope.group.members[i].username.toLowerCase()==name.toLowerCase())
@@ -90,7 +92,7 @@ App
                         cordova.plugins.Keyboard.close();
             if(res) {
                 if($scope.data.username && checkName($scope.data.username)) {
-                    $ionicScrollDelegate.scrollBottom();
+                    $ionicScrollDelegate.scrollBottom(true);
                     $scope.group.members.push({username: $scope.data.username, share:1});
                 }
 

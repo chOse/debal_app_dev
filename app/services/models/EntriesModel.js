@@ -174,9 +174,7 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                 for(var i in users_balance) {
 
                     var giver = users_balance[i];
-                    var j = ct - 1;
-
-                    
+                    var j = ct - 1;   
 
                     while(giver['balance']<0) {
 
@@ -206,26 +204,23 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                     }
                 }
                 cb(money_flows);
-                
             };
 
             getGroupBalance = function(data) { 
-                groups_users = data;
+                groups_users = data.sort(function(a, b) {return a.GroupsUserId - b.GroupsUserId;});
 
                 for (var i in groups_users) {
                     var guid = groups_users[i].GroupsUserId;
 
                     getUserBalance(guid, i, function(guid, i, user_balance) {
                         balance.push({'guid':guid, 'balance':user_balance});
-                        if(i==groups_users.length-1)
+                        if(i==groups_users.length-1) {
                             settle(balance);
+                        }
                     });
                 }
             };
-
             getGroupBalance(group_data);
-
-
         }
 
     };

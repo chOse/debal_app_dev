@@ -8,7 +8,7 @@
         <ion-tabs data-instantActivate ng-click="selectTab()" class="tabs-positive tabs-icon-only">
 
             <ion-tab icon-on="ion-android-social" icon-off="ion-android-social">
-                <ion-content has-tabs="true">
+                <ion-content has-bouncing="false" has-tabs="true">
                     <div class="list">
                         <div ng-class="{'disabled': member.share==0}" ng-repeat="member in group.members" class="userlist item item-input-inset card" ng-show="member.deleted == 0">
                             <label class="item-input-wrapper icon-left ion-android-social-user" ng-class="{'current-user': member.current_user, 'registered-user': member.registered && !member.current_user, 'guest-user': !member.registered && !member.current_user}">
@@ -17,7 +17,7 @@
                                     <p>{{member.share}} <span translate>part par defaut</span></p>
                                     <p class="info" ng-show="member.registered || member.current_user">({{member.email}})</p>
                                     <p class="info" ng-show="!member.registered && !member.current_user && !member.invited && member.share!=0"><strong translate>Invite le à gérer le groupe avec son téléphone !</strong></p>
-                                    <p class="info" ng-show="member.invited && !member.registered"><span translate>Invité</span> ({{member.invite_email}})</p>
+                                    <p class="info" ng-show="member.invited && !member.registered && !member.current_user"><span translate>Invité</span> ({{member.invite_email}})</p>
                                     <p translate class="info" ng-show="member.share==0">Change sa part pour le réintégrer au groupe</p>
                                 </div>
                             </label>
@@ -28,7 +28,7 @@
             </ion-tab>
 
             <ion-tab icon-on="ion-compose" icon-off="ion-compose">
-                <ion-content has-tabs="true">
+                <ion-content has-bouncing="false" has-tabs="true">
                     <div class="list" style="padding:10px;padding-top:20px;">
                         <form novalidate="novalidate" on-valid-submit="editGroup()">
                             <label class="item item-input item-label">

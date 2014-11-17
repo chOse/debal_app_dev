@@ -50,6 +50,7 @@
 
 #addexpense .item {
     color: #666;
+    border-bottom:0;
 }
 
 #addexpense .item-input select, #creategroup .item-input select {

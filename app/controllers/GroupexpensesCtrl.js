@@ -1,5 +1,5 @@
 App.controller('GroupexpensesCtrl',
-    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, LoaderService, LocalStorageService) {
+    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
@@ -9,51 +9,93 @@ App.controller('GroupexpensesCtrl',
 
     $scope.locale = LocalStorageService.get("locale");
 
+    $scope.$on('balances.notReady', function() {
+        $scope.balances_ready = false;
+    })
+    $scope.$on('balances.ready', function() {
+        $scope.balances_ready = true;
+        LoaderService.hide();
+    })
     $scope.$on('newEntries', function(event) {
         console.log("en / new data from server");
         setTimeout(function() { console.log("delayed initing group"); $scope.initGroup(true) }, 500);
     });
     
-    $scope.convertcurrency = function(curr) {
-        return CURRENCIES_LIST[curr];
-    };
+    $scope.$on('$stateChangeSuccess', function() {
+        $scope.loadMore();
+    });
+
 
     $scope.getGroupData = function(callback) {
         GroupsModel.read({GroupId: $scope.GroupId}, function(data) {
             $scope.group_data = data[0];
+            $scope.group_data.currency_symbol = (typeof(CURRENCIES_SYMBOLS[$scope.group_data.currency])!='undefined') ? CURRENCIES_SYMBOLS[$scope.group_data.currency] : $scope.group_data.currency;
             if(callback) callback();
         });
     };
 
-    $scope.noMoreItems = false;
-    $scope.expenses_display = [];
+    var limit_display = 0;
 
+    $scope.showBalance = function(e) {
+
+        $ionicTabsDelegate.select(1);
+
+        // Clear loaded expenses for faster tab switch
+        $scope.expenses_display = $scope.expenses_display.slice(0,limit_display);
+
+        $scope.noMoreItems = false;
+
+        if(!$scope.balances_ready) {
+            LoaderService.show();
+        }
+    }
+
+    var max_display = 15;
+    $scope.noMoreItems = false;
+
+    // Triggerd automatically for loading expenses on scroll
     $scope.loadMore = function() {
-        $scope.getEntries(function() {
-            $scope.expenses_display.push($scope.expenses[$scope.expenses_display.length]);
-       
-            if ($scope.expenses_display.length == $scope.expenses.length) {
-                $scope.noMoreItems = true;
-            }
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        })
+        if(!$scope.expenses)
+            $scope.getEntries(function() {
+                $scope.loadExpenses();
+            })
+
+        else
+            $scope.loadExpenses();
     };
 
-    $scope.refreshLoadedExpenses = function(discret, callback) {
+    // Get expenses from cache
+    $scope.loadExpenses = function() {
 
-        if(discret) {
-            $scope.getEntries(function() {
-                var new_display = []
-                for(var i in $scope.expenses_display) {
-                    new_display.push($scope.expenses[i]);
-                }
-                $scope.expenses_display = new_display;
-                console.
-                callback();
-            })
-        }
-        else
+        console.log("will load expenses");
+
+        limit_display = Math.min(max_display, $scope.expenses.length)-1;
+
+        if(!$scope.expenses_display)
+            $scope.expenses_display = $scope.expenses.slice(0,limit_display);
+   
+        if(typeof $scope.expenses[$scope.expenses_display.length] != 'undefined')
+            $scope.expenses_display.push($scope.expenses[$scope.expenses_display.length]);
+
+        if ($scope.expenses_display.length == $scope.expenses.length)
+            $scope.noMoreItems = true;
+        
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }
+
+    // Reload expenses cache if table has been updated
+    $scope.refreshLoadedExpenses = function(callback, discret) {
+
+        $scope.getEntries(function() {
+            var limit_display = Math.min(max_display, $scope.expenses.length)-1;
+            var new_display = []
+            for(var i=0;i<=limit_display;i++) {
+                new_display.push($scope.expenses[i]);
+            }
+            $scope.expenses_display = new_display;
             callback();
+        })
+
     }
 
     $scope.getEntries = function(callback) {
@@ -81,6 +123,8 @@ App.controller('GroupexpensesCtrl',
 
     $scope.getBalance = function(callback) {
 
+        $scope.$broadcast('balances.notReady');
+
         if(!$rootScope.cached_balances)
             $rootScope.cached_balances = [];
 
@@ -92,6 +136,7 @@ App.controller('GroupexpensesCtrl',
                 $rootScope.cached_balances['group'+$scope.GroupId] = balances;
                 console.log('balances have been cached');
                 $scope.settled = ($scope.expenses.length>0 && objectLength($scope.balances)==0);
+                $scope.$broadcast('balances.ready');
                 if(callback) callback();
             });
         }
@@ -99,6 +144,8 @@ App.controller('GroupexpensesCtrl',
         else {
             console.log('cached balances found');
             $scope.balances = $rootScope.cached_balances['group'+$scope.GroupId];
+            $scope.settled = ($scope.expenses.length>0 && objectLength($scope.balances)==0);
+            $scope.$broadcast('balances.ready');
             if(callback) callback();
         }
     }
@@ -131,12 +178,13 @@ App.controller('GroupexpensesCtrl',
 
             $scope.getMembersNames(function () {
 
-                $scope.refreshLoadedExpenses(discret, function() {
-                    $scope.getBalance(function() {
-                        $scope.$apply();
-                        LoaderService.hide();
-                    });
-                })
+                $scope.refreshLoadedExpenses(function() {
+
+                    $scope.$apply();
+                    LoaderService.hide();
+                    
+                    $scope.getBalance();
+                }, discret)
             });
         });
     }

@@ -1,11 +1,10 @@
 App
 .controller('LoginCtrl', function($scope, $rootScope, $ionicPopup, $state, $ionicSideMenuDelegate, gettextCatalog, GENERAL_CONFIG, LoaderService, LoginService, LocalStorageService, SyncService, initService) {
 
-
-
     // RECREATE DB IF APP UPDATED
     var app_version = LocalStorageService.get('app_version');
-    if(app_version==='undefined' || (app_version!=GENERAL_CONFIG.APP_VERSION && app_version!='1.1.2')) {
+
+    if(app_version!=GENERAL_CONFIG.APP_VERSION && GENERAL_CONFIG.RECREATE_APP_VERSIONS.indexOf(app_version)>-1) {
         initService.reInit();
     }
 
@@ -133,8 +132,8 @@ App
                     console.error("---------------------------------------- WILL NOW SYNCANDREFRESH ");
                     SyncService.syncAndRefresh(function() {
                         console.log('LOGIN SyncAndRefresh OK, WILL REDIRECT TO GROUPS');
-                        $scope.$apply();
-                        $state.go('app.groups');
+                        $scope.$apply($state.go('app.groups'));
+                        
                     })
                 }
             });
@@ -152,6 +151,8 @@ App
     $scope.goLogin = function() {
         $state.go('login');
     }
+
+    $scope.user = {};
 
 
     $scope.Register = function() {

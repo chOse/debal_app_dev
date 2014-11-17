@@ -23,6 +23,7 @@
 }
 #creategroup .item-input-wrapper {
     background:#Fff;
+    white-space: normal;
 }
 #creategroup .item-input-wrapper i {
     margin-right: 8px;
@@ -102,6 +103,7 @@ border-radius: 5px;
 }
 #creategroup .userlist label div p {
     margin:0;
+    white-space: normal;
 }
 #creategroup .userlist label div .info {
     font-size:11px;

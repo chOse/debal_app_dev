@@ -419,7 +419,8 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             while(self.ModifiedServerIds.length > 0) {
                 self.ModifiedServerIds.pop();
             }
-            
+
+
 
             self.tablesToSync.forEach(function(table) {
                 self.ModifiedServerIds[table.tableName] = [];
@@ -545,7 +546,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
      * @param {Object} listIdToCheck : ex. [10000, 10010].
      * @param {Object} dataCallBack(listIdsExistingInDb[id] === true).
      */
-    this._getIdExitingInDB = function(tableName, idName, listIdToCheck, listServerIdToCheck , tx, dataCallBack) {
+    this._getIdExitingInDB = function(tableName, idName, listIdToCheck, listServerIdToCheck, tx, dataCallBack) {
 
         if (listIdToCheck.length === 0 && listServerIdToCheck.length === 0) {
             dataCallBack([]);
@@ -609,6 +610,10 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             self._updateEntriesIds_2(tx);
             */
         }
+
+        // Update sqlite_seq
+        if(typeof sqlseq != 'undefined')
+            self.updateSQLiteSeq(self.serverData.sqlseq, tx);
         
 
 
@@ -666,6 +671,23 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         self.clientData = null;
         self.serverData = null;
     };
+
+    this.updateSQLiteSeq = function(sqlseq, tx) {
+
+        var sql = 'SELECT name,seq FROM sqlite_sequence';
+
+        self._selectSql(sql, tx, function(res) {
+
+            for (var i = 0; i < res.length; ++i) {
+                if(typeof sqlseq[res[i]['name']] != 'undefined' && sqlseq[res[i]['name']].length>0) {
+                    if(sqlseq[res[i]['name']]>res[i]['seq']) {
+                        console.error("edit " + res[i]['name'] + ' with seq = ' + sqlseq[res[i]['name']]);
+                        self._executeSql('UPDATE sqlite_sequence SET seq = ' + sqlseq[res[i]['name']] + ' WHERE name = "' + res[i]['name'] + '"', [], tx);
+                    }
+                }
+            }
+        });
+    }
 
 
     /***************** DB  util ****************/
