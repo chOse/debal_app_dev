@@ -239,6 +239,9 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
      * @param {boolean} saveBandwidth (default false): if true, the client will not send a request to the server if there is no local changes
      */
     this.syncNow = function(callBackProgress, clientData, callBackEndSync, saveBandwidth) {
+
+        this.syncInfo.locale = LocalStorageService.get("locale");
+        
         var self = this;
 
         this.username=clientData.username;
@@ -612,9 +615,8 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         }
 
         // Update sqlite_seq
-        if(typeof sqlseq != 'undefined')
+        if(typeof self.serverData.sqlseq != 'undefined')
             self.updateSQLiteSeq(self.serverData.sqlseq, tx);
-        
 
 
         this.syncInfo.lastSyncDate = syncDate;
@@ -673,7 +675,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
     };
 
     this.updateSQLiteSeq = function(sqlseq, tx) {
-
         var sql = 'SELECT name,seq FROM sqlite_sequence';
 
         self._selectSql(sql, tx, function(res) {

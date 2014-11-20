@@ -1,96 +1,93 @@
+<ion-view title="{{curr_title}}" id="addexpense">
 
-<ion-view title="{{'Nouvelle dépense'|translate}}" id="addexpense">
+    <ion-nav-buttons side="right">
+        <a ng-if="curr_action = 'edit'" ng-click="deleteExpense()" class="button button-clear button-clear icon-left ion-ios7-trash-outline"></a>
+        <a class="button button-clear icon-left ion-checkmark" ng-click="validForm()"></a>
+    </ion-nav-buttons>
 
-<ion-nav-buttons side="right">
-<a class="button button-clear icon-left ion-checkmark" ng-click="validForm()"></a>
-</ion-nav-buttons>
 
-<form novalidate="novalidate" on-valid-submit="validForm()">
-    <ion-content has-bouncing="false" has-header has-footer scroll="false">
+    <form novalidate="novalidate" on-valid-submit="validForm()">
+        <ion-content has-bouncing="false" has-header has-footer scroll="false">
+            <ion-slide-box>
+                <ion-slide>
+                    <div class="list">
+                        <div translate class="input_label">Qui a payé ?</div>
+                        <label class="item item-input item-icon-right item-label">
+                    
+                            <i class="icon ion-arrow-down-b icon-accessory"></i>
+                            <div class="spender_name">
+                                <span ng-if="expense.spender">{{membersNames[expense.spender]}}</span>
+                                <span ng-if="!expense.spender" translate>Selectionner le payeur</span>
+                            </div>
+                            <select class="select_spender" ng-model="expense.spender" ng-options="member.guid as member.username for member in groupMembers" required="required">
+                            </select>
+                           
+                        </label>
+                        
+                        <div translate class="input_label">Combien ?</div>
+                        <label class="item item-input item-label">
+                            <input class="centered" ng-show="tel_keyboard" ng-change="calculateShares()" placeholder="0.00" ng-model="expense.amount" type="tel" step="any" />
+                            <input class="centered" ng-show="!tel_keyboard" ng-change="calculateShares()" placeholder="0.00" ng-model="expense.amount" type="number" step="any" />
+                            <div class="amount" style="color:grey">{{currency_symbol}}</div>
+                        </label>
     
-    <ion-slide-box on-slide-changed="slideChanged(index)">
-    <ion-slide >
-    <div>
-        <div class="list" >
-            <div translate style="text-align:center;line-height:28px;padding-top:10px;font-size:14px;"> Qui a payé ?</div>
-         <label class="item item-input item-icon-right item-label first-item"><div class="validate{{member.share}}" style="background-color:white;margin: 3px;height: 44px;border-radius: 4px;width: 100%;">
-            <i class="icon ion-arrow-down-b icon-accessory"></i>
-            <select id="user_who_paid" ng-model="expense.spender" ng-options="member.guid as member.username for member in groupMembers" required="required" style="height: 100%;
-width: 100%;max-width: 100%;text-align: center;left: 5%;position: relative;"><option value="" translate>Selectionner le payeur</option></select></div>
-        </label>
-            <div translate style="text-align:center;line-height:28px;font-size:14px;"> Combien ?</div>
-        <label class="item item-input item-label">
-           <input ng-show="tel_keyboard" id="amount_field" style="text-align: center;height: 44px;margin: 3px;padding-right: 0px;" ng-change="calculateShares()" placeholder="0.00" ng-model="expense.amount" type="tel" step="any">
-           <input ng-show="!tel_keyboard" id="amount_field" style="text-align: center;height: 44px;margin: 3px;padding-right: 0px;" ng-change="calculateShares()" placeholder="0.00" ng-model="expense.amount" type="number" step="any">
-            <div class="amount" style="color:grey">{{currency_symbol}}</div>
- 
-        </label>
-            <div translate style="text-align:center;line-height:28px;font-size:14px;"> Pourquoi ?</div>
-        <label class="item item-input item-label">
+                        <div translate class="input_label">Pourquoi ?</div>
+                        <label class="item item-input item-label">
+                            <input class="centered" maxlength="255" ng-model="expense.title" type="text" placeholder="{{'Motif de la dépense (facultatif)'|translate}}" />
+                        </label>
 
-            <input id="motif_field" style="background-color:white;border-radius:4px;height:46px;padding:10px;margin:3px" maxlength="255" ng-model="expense.title" type="text" placeholder="{{'Motif de la dépense (facultatif)'|translate}}" name="comment">
-        </label>
-            
-        <label class="item item-input item-label item-icon-left">
+      
+                        <label class="item item-input item-label item-icon-left date-label" style=>
+                            <i class="icon ion-calendar icon-accessory"></i>
+                            <div translate class="input_label">Quand ?</div>
+                            <input type="date" id="datef" ng-model="expense.date" style="text-align: right;color:grey;padding-right:0px" />
+                        </label>
+                    </div>
+             
 
-            <i class="icon ion-calendar icon-accessory "></i><div translate style="position:relative;left:35px;font-size:14px;">Quand ?</div>
-            <input type="date" id="datef" ng-model="expense.date" style="text-align: right;color:grey;padding-right:0px">
-        </label>
-    </div>
-</div>
-<div style="margin: 0 auto;line-height: 40px;color:#C2C2C2;border-radius: 400px;width: 80%;text-align: center;"><span translate>Glisser pour accéder aux participants</span><i class="icon ion-ios7-arrow-forward" style="padding:2px;padding-left:10px"></i><i class="icon ion-ios7-arrow-forward" style="padding:0px;padding"></i></div>
-</div>
+                    <div class="swipe_msg">
+                        <span translate>Glisser pour accéder aux participants</span>
+                        <i class="icon ion-ios7-arrow-forward"></i>
+                        <i class="icon ion-ios7-arrow-forward"></i>
+                    </div>
 
-</ion-slide>
-<ion-slide> 
+                </ion-slide>
+                
+                <ion-slide> 
+                    <ion-content has-bouncing="false">
+                        <div class="sub_header">
+                            <strong>{{membersNames[expense.spender]}}</strong> <span translate>a dépensé</span>
+                            <strong>{{expense.amount | currency:currency_symbol}}</strong>
+                        </div>
+                        <div class="item item-input item-label">
+                            <span translate class="input-label">Participants</span>
+                            <a translate ng-click="selectAll($event)" id="allbutton" class="button button-balanced button-small ion-checkmark align-right">Sélectionner tous</a>
+                        </div>
+                        
+                        <ul class="list members">
+                            <li class="item item-input-inset" ng-repeat="member in groupMembers">
+                                <label class="checkbox item-input-wrapper">
+                                    <input ng-model="member.selected" ng-change="changeState(member)" type="checkbox" name="user" />
+                                    <p ng-class="{0:'disabled'}[member.share]">{{member.username}}</p>
+                                </label>
+              
+                                <div>
+                                    <div class="share_box">
+                                        <div class="user-share" ng-class="{0:'disabled'}[member.share]">
+                                            <span class="user-share-count" >{{member.share}}</span> <span translate>part</span><span ng-show="member.share>1.5">s</span>
+                                        </div>
+                                        <div translate class="user-shared-amount">{{member.sharedAmount | currency:currency_symbol}}</div> 
+                                    </div>
 
-<ion-content has-bouncing="false">
+                                    <button type="button" ng-click="removeShare(member)"  ng-class="{0:'disabled'}[member.share]" class="button icon ion-minus-round"></button>
+                                    <button type="button" ng-click="addShare(member)" ng-class="{0:'disabled'}[member.share]" class="button icon ion-plus-round"></button>
 
-  <div style="line-height:25px;background-color:#0E6BB9;color:white;text-align:center;"><span style="font-weight: bold;">{{membersNames[expense.spender]}}</span> <span translate>a dépensé</span> <span style="font-weight: bold;">{{expense.amount | currency:currency_symbol}}</span> </div>
-
-<div class="item item-input item-label">
-    <span translate class="input-label">Participants</span>
-    <a translate ng-click="selectAll($event)" id="allbutton" class="button button-balanced button-small ion-checkmark align-right"> Sélectionner tous</a>
-</div>
-
-<ul class="list members">
-
-
-  <li class="item item-input-inset" style="margin:0; padding:0; border-left:0" ng-repeat="member in groupMembers">
-    <label class="checkbox item-input-wrapper" style="margin: 0;
-    display:inherit;
-padding: 0;
-background: #fff;">
-        <input ng-model="member.selected" ng-change="changeState(member)" type="checkbox" name="user">
-        <p style="
-display: inline-block;
-margin-left: 10px;
-font-size: 16px;
-white-space: normal;
-margin-bottom: 5px;
-margin-top: 5px;
-width: 80%;
-padding-left: 5px;
-line-height:18px" class="text{{member.share}}">{{member.username}}</p>
-    </label>
-    
-    <div style="">
-
-     <div style="display:inline-block;text-align:right">
-      <div class="user-share test{{member.share}}" style="padding-top: 4px;color:#00a8ec"><span class="user-share-count" >{{member.share}}</span> <span translate>part</span><span ng-show="member.share>1.5">s</span></div>
-      <div translate class="user-shared-amount" style="font-size: 12px;color: grey;line-height: 14px;">{{member.sharedAmount | currency:currency_symbol}}</div> 
-  </div>
-  <button type="button" ng-click="removeShare(member)"  class="button icon ion-minus-round ico{{member.share}}"></button>
-  <button type="button" ng-click="addShare(member)" class="button icon ion-plus-round ico{{member.share}}"></button>
-
-</div>
-</li>
-</ul>
-</ion-content>
-</ion-slide>
-</ion-slide-box>
-</ion-content>
-</form> 
-
-
+                                </div>
+                            </li>
+                        </ul>
+                    </ion-content>
+                </ion-slide>
+            </ion-slide-box>
+        </ion-content>
+    </form> 
 </ion-view>

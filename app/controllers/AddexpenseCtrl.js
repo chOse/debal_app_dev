@@ -7,6 +7,9 @@ App
     $scope.membersNames = [];
     $scope.shares_sum = 0;
 
+    $scope.curr_action = 'add';
+    $scope.curr_title = gettextCatalog.getString("Nouvelle dépense");
+
 
     var today_date = new Date();
     var today = today_date.getFullYear() + "-" + ("0" + (today_date.getMonth() + 1)).slice(-2) + "-" + ("0" + today_date.getDate()).slice(-2);

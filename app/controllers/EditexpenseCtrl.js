@@ -9,6 +9,9 @@ App
     $scope.membersNames = [];
     $scope.shares_sum = 0;
 
+    $scope.curr_action = 'edit';
+    $scope.curr_title = gettextCatalog.getString("Modifier la dépense");
+
     $scope.$on('newEntries', function(event) {
         console.log("en / new data from server");
         console.log("NEW ENTRY DETECTED GETTING ENTRY ID");

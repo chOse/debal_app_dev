@@ -82,7 +82,7 @@ $stateProvider
         url: "/editexpense/:GroupId/:EntryId",
         views: {
         'menuContent' :{
-            templateUrl: 'app/views/editexpense.html',
+            templateUrl: 'app/views/addexpense.html',
             controller: 'EditexpenseCtrl'
             }
         }

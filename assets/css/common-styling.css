@@ -71,16 +71,7 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
     box-shadow: 0 3px 9px rgba(0,0,0,.5);
 }
-.sync-progress-bar, .sync-progress-bar-done {
-    height: 1px;
-    transition: width 0.1s;
-    background: orange;
-    position:absolute;
-    z-index:99;
-}
-.sync-progress-bar-done {
-    background:#6c3
-}
+
 .stroke {
     text-decoration:line-through;
 }

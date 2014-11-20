@@ -1,28 +1,112 @@
-/* Footer START */
-#addexpense .bar.bar-footer {
-    padding: 0;
+#addexpense .slider-slide{
+    padding-top:0px;
 }
-#addexpense .bar.bar-footer .button {
-    margin: 0;
-    font-size: 21px;
-    font-weight:bold;
+
+#addexpense .slider{
+    height:100% !important;
+    background-color:#ececec;
+}
+#addexpense .list .item-label {
+    margin:3px auto;
+    background-color:white;
+    height: 44px;
+    border-radius: 4px;
+    border-width: 0px;
+    width: 80%;
+    min-height: 47px;
+    padding: 0px;
+}
+#addexpense .item-label.date-label {
+    width:80%;
+    background:none;
+    margin:3px auto;
     border:none;
+    background: none;margin-top: 20px;
 }
-#addexpense .bar.bar-footer .button i {
-    margin-right:10px;
+#addexpense input.centered {
+    text-align: center;
+    height:100%;
+    border-radius:4px;
+    padding-left:30px;
+    font-size:16px;
+}
+#addexpense .list .select_spender {
+    color:#fff;
+    position:absolute;
+    z-index:1;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+}
+#addexpense .list.members p {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 16px;
+    white-space: normal;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 80%;
+    padding-left: 5px;
+    line-height:18px
+}
+#addexpense .user-share {
+    padding-top: 4px;color:#00a8ec
+}
+#addexpense button.button.icon.disabled {
+    background-color: #E0E0E0 !important;
+}
+#addexpense .user-share.disabled{
+     color:rgb(190, 190, 190) !important;
+}
+#addexpense .user-shared-amount {
+    font-size: 12px;color: grey;line-height: 14px;
+}
+#addexpense .list.members p.disabled {
+    color:rgb(190, 190, 190) !important;
+}
+#addexpense .swipe_msg {
+    margin: 0 auto;line-height: 40px;color:#C2C2C2;border-radius: 400px;width: 80%;text-align: center;
+}
+#addexpense .swipe_msg .ion-ios7-arrow-forward {
+    padding:2px;
+}
+#addexpense .date-label .input_label {
+    margin-left:35px;
+    margin-top:0;
+}
+#addexpense input.centered:focus {
+    border: 1px solid blue !important;
+    border-color: rgba(82,168,236,.8) !important;
+    outline: 0 !important;
+    -webkit-box-shadow: 0 0 8px rgba(82,168,236,.6) !important;
+    box-shadow: 0 0 5px rgba(82,168,236,.6) !important;
+    text-align: center !important;
+}
+
+#addexpense input[type=date] {
+    background:none;
 }
 /* Footer END */
-
+#addexpense .spender_name {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    color: #000;
+    height: 47px;
+    line-height: 47px;
+}
+#addexpense .input_label {
+    text-align:center;line-height:28px;margin-top:10px;font-size:14px;
+}
 
 #addexpense .amount {
     width: 40px;
-    padding-right: 2px;
-    float: right;
     font-size: 15px;
     position: absolute;
-    right: 20px;
-    margin-top: 7px;
+    right: 10px;
     color: #ccc;
+    height: 47px;
+    line-height: 47px;
 }
 #addexpense .slider-pager {
    display:none;
@@ -33,7 +117,9 @@
 #addexpense .ion-checkmark:before {
     margin-right:5px;
 }
-
+#addexpense .sub_header {
+    line-height:25px;background-color:#0E6BB9;color:white;text-align:center;
+}
 #addexpense #allbutton {
     font-size: 15px;
     padding: 0 10px;
@@ -41,6 +127,9 @@
 
 #addexpense .list.members {
     margin-bottom:0;
+}
+#addexpense .list.members li {
+    margin:0; padding:0; border-left:0
 }
 
 #addexpense div.item.item-button-right {
@@ -52,7 +141,9 @@
     color: #666;
     border-bottom:0;
 }
-
+#addexpense .share_box {
+    display:inline-block;text-align:right;margin-right:10px;
+}
 #addexpense .item-input select, #creategroup .item-input select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -67,4 +158,78 @@
     font-size: 14px;
     cursor: pointer;
     display: block;
+}
+
+#addexpense button.button.icon.ion-plus-round, #addexpense button.button.icon.ion-minus-round {
+    border-color: #FFFFFF;
+    background-color: #00a8ec;
+    color: #FFF;
+    position: relative;
+    display: inline-block;
+    padding: 0 12px;
+    width:40px;
+    height:40px;
+    min-width: 20px;
+    min-height: 20px;
+    margin:3px;
+    margin-left:-2px;
+    border:none;
+    border-radius: 93px;
+    vertical-align: top;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    line-height: 40px;
+    cursor: pointer;
+
+}
+#addexpense .checkbox {
+    margin: 0; display:inherit; padding: 0; background: #fff;
+}
+#addexpense .checkbox input:checked:after,#addexpense input:checked+.checkbox-icon:after {
+    display:none;
+}
+
+#addexpense .checkbox input,#addexpense .checkbox-icon {
+    width: 15px;
+    height: 46px;
+    display: block;
+    cursor: pointer;
+    -webkit-appearance: none;
+    padding: 0;
+}
+
+#addexpense .checkbox input:before, #addexpense .checkbox-icon:before {
+    display: table;
+    width: 100%;
+    height: 100%;
+    border-style: solid;
+    border-radius: 0px;
+    content: ' ';
+    border-color: white;
+    transition: background-color 60ms ease-in-out;
+}
+
+#addexpense .checkbox input:checked+.checkbox-icon:before,#addexpense .checkbox input:checked:before {
+    background: #4FC24F;
+    border: 0px;
+    border-right:1px solid green;
+}
+
+#addexpense button.button.icon.ion-plus-round:active, #addexpense button.button.icon.ion-minus-round:active {
+    background-color:#006699;
+}
+
+#addexpense .button .icon:before,#addexpense  .button.icon-left:before,#addexpense .button.icon-right:before,#addexpense  .button.icon:before {
+    display: inline-block;
+    padding: 0px;
+    vertical-align: inherit;
+    font-size: 14px;
+    line-height: 40px;
+    pointer-events: none;
+}
+
+#addexpense .align-right {
+    right: 9px;
+    position: absolute;
 }

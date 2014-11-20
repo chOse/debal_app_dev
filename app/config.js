@@ -4,7 +4,7 @@
         'GENERAL_CONFIG': {
             'APP_NAME': 'Debal',
             'RECREATE_APP_VERSIONS': ['1.0.0', '1.0.1', '1.0.2', '1.0.3'],
-            'APP_VERSION': '1.1.5',
+            'APP_VERSION': '1.1.7',
             'FIRST_URL': 'http://www.debal.fr',
             //'API_URL': 'http://localhost:8888/debal_web/Apiv2/'
             //'API_URL': 'http://dev1466.debal.fr/Apiv2/'

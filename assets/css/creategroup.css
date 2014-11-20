@@ -52,15 +52,18 @@
     margin-bottom:10px;
     margin-top:10px;
 }
+#creategroup .current-user {
+    color: orange;
+}
 #creategroup .add-member {
-margin-left: 5px;
-padding-left: 20px;
-padding-right: 20px;
-height: 35px;
-line-height: 35px;
-width: 120px;
-margin-top: -45px;
-border-radius: 5px;
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 35px;
+    line-height: 35px;
+    width: 120px;
+    margin-top: -45px;
+    border-radius: 5px;
 }
 #creategroup div.disabled, #creategroup div.disabled  label {
     background:#eee;
