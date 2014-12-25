@@ -23,9 +23,8 @@ App.factory('UsersModel', function(SQLiteService, DB_CONFIG) {
             DB.query(callback);
         },
         update : function (data, callback) {
-            console.log("MODEL UDATING " + data.username);
             (new SQLiteService())
-                .update("users", data, "UserId="+data.UserId, callback);
+                .update("users", data, null, "UserId="+data.UserId, callback);
         },
         delete : function(UserId, callback) {
             (new SQLiteService())

@@ -1,5 +1,5 @@
 App
-.controller('SideMenuCtrl', function($ionicSideMenuDelegate, $scope, $ionicModal, $ionicPopup, $state, gettextCatalog, SyncService, LocalStorageService, LoaderService) {
+.controller('SideMenuCtrl', function($ionicSideMenuDelegate, $rootScope, $scope, $ionicModal, $ionicPopup, $state, gettextCatalog, SyncService, LocalStorageService, LoaderService, SUPPORTED_LANG, tmhDynamicLocale) {
 
  $scope.user_email = LocalStorageService.get("user_email");
     // Side menu stuff
@@ -75,6 +75,34 @@ App
             }
             
         });
+    }
+
+    $scope.selectLanguage = function() {
+        $scope.selectLanguagePopup = $ionicPopup.show({
+            templateUrl: 'app/templates/select_language.html',
+            title: gettextCatalog.getString('Choisissez la langue'),
+            scope: $scope,
+            buttons: [
+                { text: gettextCatalog.getString('Annuler') },
+            ]
+        });
+
+    }
+    $scope.changeLanguage = function(device_lang) {
+
+        if(SUPPORTED_LANG.indexOf($scope.device_lang)==-1)
+            device_lang = "en";
+
+        LocalStorageService.set("locale", device_lang);
+
+        gettextCatalog.setCurrentLanguage(device_lang);
+
+        tmhDynamicLocale.set(device_lang);
+
+        $scope.device_lang = device_lang;
+
+        $scope.selectLanguagePopup.close();
+        $ionicSideMenuDelegate.toggleLeft();
     }
 
     

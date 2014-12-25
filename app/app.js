@@ -65,7 +65,7 @@ $stateProvider
         views: {
         'menuContent' :{
             templateUrl: 'app/views/addexpense.html',
-            controller: 'AddexpenseCtrl'
+            controller: 'SaveExpenseCtrl'
             }
         }
     })
@@ -83,7 +83,7 @@ $stateProvider
         views: {
         'menuContent' :{
             templateUrl: 'app/views/addexpense.html',
-            controller: 'EditexpenseCtrl'
+            controller: 'SaveExpenseCtrl'
             }
         }
     });
@@ -91,21 +91,74 @@ $stateProvider
     $urlRouterProvider.otherwise("/register");
     
 })
-.run(function($ionicPlatform, $state, $rootScope, $ionicSideMenuDelegate, tmhDynamicLocale, LocalStorageService, initService, GENERAL_CONFIG, gettextCatalog) {
+.run(function($ionicPlatform, $state, $rootScope, $ionicSideMenuDelegate, $interval, tmhDynamicLocale, LocalStorageService, initService, SyncService, gettextCatalog, SUPPORTED_LANG) {
 
 
     $ionicPlatform.ready(function() {
 
+        // Sync constants
+        var syncInterval = 5000;
+        var syncForcePeriod = 12; // Will force sync each syncForcePeriod * syncInterval ms
+        var syncCounter = 0;
+        var appPaused = false;
+
+        // Reset counter when app synced
+        $rootScope.$on('synced', function(event) {
+            syncCounter = 0;
+        });
+
+        var appSync = $interval(handleSync, syncInterval);
+
+        var appPause = $ionicPlatform.on('pause', appPauseFunction);
+        var appResume = $ionicPlatform.on('resume', appResumeFunction);
+        var appOnline = $ionicPlatform.on('online', appBackOnline);
+
+        function appPauseFunction() {
+            appPaused = true;
+        }
+
+        function appResumeFunction() {
+            appPaused = false;
+            appBackOnline();
+        }
+
+        function appBackOnline() {
+            console.error("App back on line");
+            initService.init(function() {
+                syncCounter = 0;
+                handleSync();
+            });
+        }
+
+        appBackOnline();
+
+        function handleSync() {
+            
+            var online = (typeof(navigator.online)!=='undefined') ? navigator.onLine : (typeof(navigator.network)!=='undefined') ? (navigator.network.connection.type != Connection.NONE) : true;
+            var logged_in = LocalStorageService.get("login");
+
+            if(online && logged_in==="true" && !appPaused) {
+
+                syncCounter++;
+                if(syncCounter%syncForcePeriod==0)
+                    var saveBandwidth = false;
+                else
+                    var saveBandwidth = true;
+
+                SyncService.syncAndRefresh(function(result) {
+
+                }, saveBandwidth);
+            }
+        }
+
         this.loadLocale = function(locale) {
 
-            device_locale = locale.value;
+            device_locale = locale.value.toLowerCase();
             device_lang = device_locale.split("-")[0];
 
             LocalStorageService.set("locale", device_lang);
-
-            var supported_lang = ['fr', 'en'];
                 
-            if(supported_lang.indexOf(device_lang)==-1)
+            if(SUPPORTED_LANG.indexOf(device_lang)==-1)
                 device_lang = "en";
 
             $rootScope.$apply(function() {
@@ -113,7 +166,7 @@ $stateProvider
                 gettextCatalog.setCurrentLanguage(device_lang);
 
                 if(typeof device_locale != 'undefined') {
-                    tmhDynamicLocale.set(device_locale.toLowerCase());
+                    tmhDynamicLocale.set(device_locale);
                 }
             });
         };
@@ -128,7 +181,9 @@ $stateProvider
         }
 
         // Handle back button
-        document.addEventListener("backbutton", function(e) {
+        $ionicPlatform.onHardwareBackButton(handleBackButton);
+
+        function handleBackButton(e) {
             e.preventDefault();
 
             if($ionicSideMenuDelegate.isOpen()) {
@@ -139,18 +194,15 @@ $stateProvider
             else if($state.current.name=="app.groups" || $state.current.name=="login" || $state.current.name=="register") {
                 e.preventDefault();
                 ionic.Platform.exitApp();
-                
             }
+
             else if($state.current.name=="app.groupexpenses") {
                 $state.go('app.groups');
             }
-
-
-        }, false);
+        }
 
         if (typeof analytics !== 'undefined') {
             analytics.startTrackerWithId('UA-44005158-2')
         }
-
     });
 })

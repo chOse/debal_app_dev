@@ -112,12 +112,9 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             this.syncStarted = true;
             this.sync_now(function(r) {
 
-                console.log("SYNC ENDED callback : " + typeof(callback));
-
                 self.syncStarted = false;
 
                 if(r.syncOK) {
-                    //console.error("SYNC RESULTS " + JSON.stringify(r));
                     callback(true);
                     if(r.localDataUpdated) {
                         $rootScope.$broadcast('newGroups');
@@ -174,7 +171,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
      * @param {Object} password : password for basci authentication support
      */
     this.initSync = function(theTablesToSync, dbObject, theSyncInfo, theServerUrl, callBack, username, password) {
-        console.log('SyncService.initSync called');
         var self = this, i = 0;
         this.db = dbObject;
         this.serverUrl = theServerUrl;
@@ -182,13 +178,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         this.syncInfo = theSyncInfo;
         this.username=username;
         this.password=password;
-
-        /*
-        this.modified_groupsusers_serverids = [];
-        this.modified_entries_serverids = [];
-        */
-
-
         
         //Handle optional id :
         for (i = 0; i < self.tablesToSync.length; i++) {
@@ -461,13 +450,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                         if(typeof(serverData.data[table.tableName][i]['EntriesGroupsUserId'])==='undefined')
                             updatedEntriesIds.push(serverData.data[table.tableName][i]['entry_id']);
                     } 
-                    /*
-                    else if(table.tableName=="groups_users") {
-                        self.modified_groupsusers_serverids.push(serverData.data[table.tableName][i]['id']);
-                    }
-                    else if(table.tableName=="entries") {
-                        self.modified_entries_serverids.push(serverData.data[table.tableName][i]['id']);
-                    }*/
 
                 }
 
@@ -607,11 +589,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                     }
                 });
             });
-
-            /*    
-            self._updateGroupsUsersIds_2(tx);
-            self._updateEntriesIds_2(tx);
-            */
         }
 
         // Update sqlite_seq
@@ -657,17 +634,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                 self._executeSql('DELETE FROM new_elem WHERE table_name = "'+tableName+'" AND id IN (SELECT '+idName+' from '+tableName+' where id IN ('+serverIdsString+'))', [], tx);
             }
         }
-/*
-        if(self.modified_entries_serverids.length>0) {
-            serverIdsString = self._arrayToString(self.modified_entries_serverids, ',');
-            self._executeSql('DELETE FROM new_elem WHERE table_name = "entries" AND id IN (SELECT EntryId from entries where id IN ('+serverIdsString+'))', [], tx);
-            
-        }
-        if(self.modified_groupsusers_serverids.length>0) {
-            serverIdsString = self._arrayToString(self.modified_groupsusers_serverids, ',');
-            self._executeSql('DELETE FROM new_elem WHERE table_name = "groups_users" AND id IN (SELECT GroupsUserId from groups_users where id IN ('+serverIdsString+'))', [], tx);
-         
-        }*/
 
         callBack();
         self.clientData = null;
@@ -713,7 +679,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
 
     this._executeSql = function(sql, params, optionalTransaction, optionalCallBack) {
         var self = this;
-        //self.log('_executeSql: ' + sql + ' with param ' + params);
+        self.log('_executeSql: ' + sql + ' with param ' + params);
         if (!optionalCallBack) {
             optionalCallBack = self._defaultCallBack;
         }
@@ -755,22 +721,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         sql += ')';
         return sql;
     };
-
-/*
-    // CA DECLENCHE DES TRIGGERS
-    this._updateEntriesIds_2 = function(tx) {
-        console.log("Updating entries with missing association ids 2");
-        console.log('UPDATE entries SET GroupsUserId = (SELECT GroupsUserId from groups_users WHERE id = entries.groups_user_id) WHERE id IN ("' + this._arrayToString(this.ServerIdsToDelete['entries'], '","') + '")');
-        this._executeSql('UPDATE entries SET GroupsUserId = (SELECT GroupsUserId from groups_users WHERE id = entries.groups_user_id) WHERE id IN ("' + this._arrayToString(this.ServerIdsToDelete['entries'], '","') + '")', [], tx);
-    };
-
-    // CA DECLENCHE DES TRIGGERS
-    this._updateGroupsUsersIds_2 = function(tx) {
-        console.log("Updating groups_users with missing association ids 2");
-        console.log('UPDATE groups_users SET UserId = (SELECT UserId from users WHERE id = groups_users.user_id) WHERE id IN ("' + this._arrayToString(this.modified_groupsusers_serverids, '","') + '")');
-        this._executeSql('UPDATE groups_users SET UserId = (SELECT UserId from users WHERE id = groups_users.user_id) WHERE id IN ("' + this._arrayToString(this.modified_groupsusers_serverids, '","') + '")', [], tx);
-    };
-*/
 
     this._buildUpdateSQL = function(tableName, objToUpdate) {
         /*ex UPDATE "nom de table" SET colonne 1 = [valeur 1], colonne 2 = [valeur 2] WHERE {condition}*/
@@ -839,72 +789,4 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         }
         return result;
     };
-    
-    /*
-    this._keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    
-
-    
-    // public method for encoding
-    this._encodeBase64  = function (input) {
-        var output = "";
-        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-        var i = 0;
- 
-        input = this._utf8_encode(input);
- 
-        while (i < input.length) {
- 
-            chr1 = input.charCodeAt(i++);
-            chr2 = input.charCodeAt(i++);
-            chr3 = input.charCodeAt(i++);
- 
-            enc1 = chr1 >> 2;
-            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-            enc4 = chr3 & 63;
- 
-            if (isNaN(chr2)) {
-                enc3 = enc4 = 64;
-            } else if (isNaN(chr3)) {
-                enc4 = 64;
-            }
- 
-            output = output +
-            this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
-            this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
- 
-        }
- 
-        return output;
-    };*/
-    /*
-    this._utf8_encode  = function (string) {
-        string = string.replace(/\r\n/g,"\n");
-        var utftext = "";
- 
-        for (var n = 0; n < string.length; n++) {
- 
-            var c = string.charCodeAt(n);
- 
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            }
-            else if((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
- 
-        }
- 
-        return utftext;
-    };
-    */
-
-    
 });

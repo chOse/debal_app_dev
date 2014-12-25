@@ -1,0 +1,60 @@
+#sidemenu {
+	background-color: #0e6bb9;box-shadow:rgba(9, 44, 117, 0.29) -5px 0px 5px inset
+}
+#sidemenu ion-header {
+	padding:28px;
+	text-align:center;
+    display: block;
+}
+#sidemenu ion-header img {
+    display:inline-block;
+    height:38px;
+    position:relative;
+    bottom:0;
+}
+#sidemenu .list {
+	color:white;
+}
+#sidemenu ion-content {
+	padding-top: 80px;
+}
+#sidemenu .item-icon-left {
+	background-color:rgba(255, 255, 255, 0);padding: 12px;padding-left: 50px;border-color: rgb(12, 57, 124)
+}
+#sidemenu .user_email {
+	font-size: 12px;margin:0; font-style:italic;color: #ccc;
+}
+
+#sidemenu .item-icon-left .icon {
+    font-size:20px;
+}
+#sidemenu .flag {
+	height: 20px;
+	width: 20px;
+	top: 12px;
+	left: 16px;
+	opacity:0.8;
+}
+#select_language {
+	text-align:center;
+}
+#select_language img {
+	margin-left:20px;
+}
+#select_language img:first-child {
+	margin-left:0;
+}
+
+
+#modal-feedback {
+    border: 2px solid #666;
+    height:260px;
+}
+#modal-feedback textarea {
+    height: 100px;
+    border: 1px solid #eee;
+    margin-bottom:20px;
+}
+#modal-feedback ion-content {
+    text-align:center;
+}

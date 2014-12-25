@@ -5,47 +5,47 @@
         <a data-instantActivate ng-show="tab_index == 0" class="button button-clear icon-left ion-android-add-contact" ng-click="addMember()"></a>
     </ion-nav-buttons>
 
-        <ion-tabs data-instantActivate ng-click="selectTab()" class="tabs-positive tabs-icon-only">
+    <ion-tabs data-instantActivate ng-click="selectTab()" class="tabs-positive tabs-icon-only">
 
-            <ion-tab icon-on="ion-android-social" icon-off="ion-android-social">
-                <ion-content has-bouncing="false" has-tabs="true">
-                    <div class="list">
-                        <div ng-class="{'disabled': member.share==0}" ng-repeat="member in group.members" class="userlist item item-input-inset card" ng-show="member.deleted == 0">
-                            <label class="item-input-wrapper icon-left ion-android-social-user" ng-class="{'current-user': member.current_user, 'registered-user': member.registered && !member.current_user, 'guest-user': !member.registered && !member.current_user}">
-                                <div ng-model="member.username" type="text" ng-readonly name="member" class="username" required="required">
-                                    <p ng-class="{'stroke': member.share==0}">{{member.username}}</p>
-                                    <p>{{member.share}} <span translate>part par defaut</span></p>
-                                    <p class="info" ng-show="member.registered || member.current_user">({{member.email}})</p>
-                                    <p class="info" ng-show="!member.registered && !member.current_user && !member.invited && member.share!=0"><strong translate>Invite le à gérer le groupe avec son téléphone !</strong></p>
-                                    <p class="info" ng-show="member.invited && !member.registered && !member.current_user"><span translate>Invité</span> ({{member.invite_email}})</p>
-                                    <p translate class="info" ng-show="member.share==0">Change sa part pour le réintégrer au groupe</p>
-                                </div>
-                            </label>
-                            <a translate ng-click="openPopover($event, member, $index)" class="button button-small icon-left button-clear ion-android-more button-energized">options</a>
-                        </div>
+        <ion-tab icon-on="ion-android-social" icon-off="ion-android-social">
+            <ion-content has-bouncing="false" has-tabs="true">
+                <div class="list">
+                    <div ng-class="{'disabled': member.share==0}" ng-repeat="member in group.members" class="userlist item item-input-inset card" ng-show="member.deleted == 0">
+                        <label class="item-input-wrapper icon-left ion-android-social-user" ng-class="{'current-user': member.current_user, 'registered-user': member.registered && !member.current_user, 'guest-user': !member.registered && !member.current_user}">
+                            <div ng-model="member.username" type="text" ng-readonly name="member" class="username" required="required" style="width:100%">
+                                <p ng-class="{'stroke': member.share==0}">{{member.username}}</p>
+                                <p>{{member.share}} <span translate>part par defaut</span></p>
+                                <p class="info" ng-show="member.registered || member.current_user">({{member.email}})</p>
+                                <p class="info" ng-show="!member.registered && !member.current_user && !member.invited && member.share!=0"><strong translate>Invite le à gérer le groupe avec son téléphone !</strong></p>
+                                <p class="info" ng-show="member.invited && !member.registered && !member.current_user"><span translate>Invité</span> ({{member.invite_email}})</p>
+                                <p translate class="info" ng-show="member.share==0">Change sa part pour le réintégrer au groupe</p>
+                            </div>
+                        </label>
+                        <a translate ng-click="openPopover($event, member, $index)" class="button button-small icon-left button-clear ion-android-more button-energized">options</a>
                     </div>
-                </ion-content>
-            </ion-tab>
+                </div>
+            </ion-content>
+        </ion-tab>
 
-            <ion-tab icon-on="ion-compose" icon-off="ion-compose">
-                <ion-content has-bouncing="false" has-tabs="true">
-                    <div class="list" style="padding:10px;padding-top:20px;">
-                        <form novalidate="novalidate" on-valid-submit="editGroup()">
-                            <label class="item item-input item-label">
-                                <span translate class="input-label">Nom du groupe</span>
-                                <input ng-model="group.name" type="text" placeholder="{{'Entrez un nom'|translate}}..." name="group" required="required">
-                            </label>
+        <ion-tab icon-on="ion-compose" icon-off="ion-compose">
+            <ion-content has-bouncing="false" has-tabs="true">
+                <div class="list" style="padding:10px;padding-top:20px;">
+                    <form novalidate="novalidate" on-valid-submit="editGroup()">
+                        <label class="item item-input item-label">
+                            <span translate class="input-label">Nom du groupe</span>
+                            <input ng-model="group.name" type="text" placeholder="{{'Entrez un nom'|translate}}..." name="group" required="required">
+                        </label>
 
-                            <label class="item item-input item-icon-right item-label">
-                                <span translate class="input-label">Monnaie</span>
-                                <i class="icon ion-arrow-down-b icon-accessory"></i>
-                                <select ng-model="group.currency" id="currency" ng-options="curr.name_{{locale}} for (k, curr) in currencies" required="required"></select>
-                            </label>
-                        </form>
+                        <label class="item item-input item-icon-right item-label">
+                            <span translate class="input-label">Monnaie</span>
+                            <i class="icon ion-arrow-down-b icon-accessory"></i>
+                            <select class="currency"  ng-model="group.currency" ng-options="curr.name_{{locale}} for (k, curr) in currencies" required="required"></select>
+                        </label>
+                    </form>
 
-                         <button data-instantActivate ng-click="deleteGroup()" class="button button-assertive button-block icon-left ion-ios7-trash-outline" style="width: 300px;margin: 20px auto;" translate>Supprimer le groupe</button>
-                        </div>
-                </ion-content>
-            </ion-tab>
-        </ion-tabs>
+                     <button data-instantActivate ng-click="deleteGroup()" class="button button-assertive button-block icon-left ion-ios7-trash-outline" style="width: 300px;margin: 20px auto;" translate>Supprimer le groupe</button>
+                    </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
 </ion-view>

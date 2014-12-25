@@ -15,6 +15,7 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
             DB.order_by("e.date DESC, e.EntryId DESC");
             DB.query(callback);
         },
+
         get_beneficiaries: function(EntryId, callback) {
             var DB = new SQLiteService();
             DB.select("egu.GroupsUserId, egu.share, egu.shared_amount, egu.id, egu.entry_id, egu.groups_user_id");
@@ -23,52 +24,70 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
 
             DB.query(callback);
         },
-        create: function(data, callback) {
-            (new SQLiteService())
-                    .insert("entries", data, callback);
+
+        save_entry: function(entry_data, beneficiaries_data, callback) {
+
+            var SQL = new SQLiteService();
+            var db = SQL.getDb();
+
+            var insert_id = null;
+
+            db.transaction(
+                function (tx) {
+                    insert("entries", entry_data, tx, function(resultSet) {
+                        if (!resultSet.rowsAffected) {
+                            return false;
+                        }
+
+                        insert_id = resultSet.insertId;
+
+                        // Clean old beneficiaries list
+                        tx.executeSql('DELETE FROM entries_groups_users WHERE EntryId = ' + insert_id);
+
+                        for(var i in beneficiaries_data) {
+                            !function(i) {
+                                beneficiaries_data[i].EntryId = insert_id;
+                                insert("entries_groups_users", beneficiaries_data[i], tx);
+                            }(i);
+                        }
+
+                    }, "OR IGNORE");
+                }, callback, function() { callback(insert_id); }
+            );
         },
-        update_beneficiaries: function(new_beneficiaries, callback) {
-            // remove current benef
-            console.log("remove current beneficiaires");
-            var self = this;
-            (new SQLiteService())
-                    .remove("entries_groups_users", "EntryId=" + new_beneficiaries[0].EntryId, function() {
-                        // Create new beneficiaries
-                        console.log("create nw beneficiaires");
-                        self.create_beneficiaries(new_beneficiaries, callback);
+
+        update_entry: function(entry_data, beneficiaries_data, callback) {
+
+            var SQL = new SQLiteService();
+            var db = SQL.getDb();
+
+            var insert_id = entry_data.EntryId;
+
+            db.transaction(
+                function (tx) {
+                    update("entries", entry_data, tx, "EntryId=" + entry_data.EntryId, function(resultSet) {
+                        if (!resultSet.rowsAffected) {
+                            return false;
+                        }
+                        
+                        tx.executeSql('DELETE FROM entries_groups_users WHERE EntryId = ' + insert_id);
+                        for(var i in beneficiaries_data) {
+                            !function(i) {
+                                beneficiaries_data[i].EntryId = insert_id;
+                                insert("entries_groups_users", beneficiaries_data[i], tx);
+                            }(i);
+                            
+                        }
                     });
-            
+                }, callback, function() { callback(insert_id); }
+            );
         },
-        create_beneficiary: function(beneficiary, callback) {
-            (new SQLiteService())
-                .insert("entries_groups_users", beneficiary, callback );
-        },
-        create_beneficiaries: function(beneficiaries, callback, optionalEntryId) {
-
-            for (var i in beneficiaries) {
-                var beneficiary = beneficiaries[i];
-                
-                if(optionalEntryId)
-                    beneficiary.EntryId = optionalEntryId;
-
-                if(i == beneficiaries.length-1) {
-                    this.create_beneficiary(beneficiary, callback);
-                }
-                else {
-                    this.create_beneficiary(beneficiary, function() { console.log("test")});
-                }
-            }
-        },
-        update: function(data, EntryId, callback) {
-            (new SQLiteService())
-                .update("entries", data, "EntryId=" + EntryId, callback);
-        },
-        
 
         delete: function(EntryId, callback) {
             var DB = new SQLiteService();
-            DB.update("entries", {'deleted':1}, "EntryId=" + EntryId, callback);
+            DB.update("entries", {'deleted':1}, null, "EntryId=" + EntryId, callback);
         },
+        
         get : function(where, callback){
             var DB = new SQLiteService();
             DB.select();
@@ -203,10 +222,12 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                             j--;
                     }
                 }
+
                 cb(money_flows);
             };
 
-            getGroupBalance = function(data) { 
+            getGroupBalance = function(data) {
+
                 groups_users = data.sort(function(a, b) {return a.GroupsUserId - b.GroupsUserId;});
 
                 for (var i in groups_users) {
@@ -215,6 +236,7 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                     getUserBalance(guid, i, function(guid, i, user_balance) {
                         balance.push({'guid':guid, 'balance':user_balance});
                         if(i==groups_users.length-1) {
+
                             settle(balance);
                         }
                     });

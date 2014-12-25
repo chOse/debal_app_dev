@@ -1,5 +1,5 @@
 App
-.controller('CreategroupCtrl', function($scope, $rootScope, $state, $location, $ionicPopup, $ionicSideMenuDelegate, $ionicScrollDelegate, gettextCatalog, LocalStorageService, LoaderService, CURRENCIES_LIST, CURRENCIES_DEFAULT, DB_CONFIG, LocalStorageService, UsersModel, GroupsModel) {
+.controller('CreategroupCtrl', function($scope, $rootScope, $state, $location, $ionicPopup, $ionicSideMenuDelegate, $ionicScrollDelegate, gettextCatalog, LocalStorageService, LoaderService, CURRENCIES_LIST, CURRENCIES_DEFAULT, LocalStorageService, GroupsModel, UsersModel) {
 
     $ionicSideMenuDelegate.canDragContent(false);
 
@@ -128,40 +128,9 @@ App
             callback(true);
     }
 
-
-
     $scope.addGroup = function() {
 
         var group_members = [];
-
-        CreateGroupsUsers = function(created_group_id) {
-            // Create groups_users rows and redirect to group
-            if(group_members.length==$scope.group.members.length) {
-                GroupsModel.create_groups_users(group_members, function() {
-                    
-                    // unBlock Sync after processing
-                    $rootScope.$broadcast('unblockSync');
-
-                    $location.path('app/groupexpenses/' + created_group_id);
-                    $scope.$apply();
-                })
-            }
-        }
-
-
-        CreateUser = function(member, created_group_id) {
-            UsersModel.create({'username':member.username}, function(created_user_id) {
-                group_members.push({
-                    'UserId': created_user_id,
-                    'GroupId': created_group_id,
-                    'share': member.share
-                });
-
-
-                CreateGroupsUsers(created_group_id);
-            })
-
-        }
 
         $scope.validForm(function(validated) {
             if(validated) {
@@ -173,22 +142,38 @@ App
                 var group = {'name':$scope.group.name,'currency':$scope.group.currency.id,'UserId': $scope.current_user.UserId,'user_id':$scope.current_user.id};
 
                 LocalStorageService.set('currency', $scope.group.currency.id);
-                // Create group and retrieve group id
-                GroupsModel.create(group, function(created_group_id) {
-                    
 
-                    // Add current user to group
+                for(var i in $scope.group.members) {
+                    var c = $scope.group.members[i];
                     group_members.push({
-                        'UserId':$scope.current_user.UserId,
-                        'GroupId':created_group_id,
-                        'user_id':$scope.current_user.id,
-                        'share': $scope.group.members[0].share
+                        users : {
+                            username : c.username,
+                            UserId : (typeof(c.UserId)!='undefined') ? c.UserId : null,
+                            
+                        },
+                        groups_users : {
+                            share : c.share,
+                            user_id : (typeof(c.id)!='undefined') ? c.id : null,
+                        }
                     })
-                    // Create users and retrieve users ids
-                    for(var i=1; i<$scope.group.members.length;i++) {
-                        CreateUser($scope.group.members[i], created_group_id);
+                }
+
+                GroupsModel.create_group(group, group_members, 
+                    function(group_id) {
+
+                        if(typeof group_id != 'undefined' && !isNaN(group_id)) {
+                            // unBlock Sync after processing
+                            $rootScope.$broadcast('unblockSync');
+
+                            $location.path('app/groupexpenses/' + group_id);
+                            $scope.$apply()
+                        }
+
+                        else {
+                            console.error("Group could not be created");
+                        }
                     }
-                })
+                );
             }
         })
     };

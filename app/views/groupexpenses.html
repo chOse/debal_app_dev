@@ -21,25 +21,32 @@
 
                 <div translate class="item item-divider">Dépenses</div>
       
-                <a id="expenseslist" ng-repeat="expense in expenses_display" class="item item-icon-right" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
+                <a id="expenseslist" ng-repeat="expense in expenses_display" class="item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
 
-                    <div class="title">
-                       <!-- <h2>-->
+                    <div class="flex">
+                        <div class="title">
                             <span ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Divers</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
-                     <!--   </h2>-->
-                        <p style="font-style: normal;font-size:12px;">
-                            <span translate>payé par</span> 
-                            <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
-                            <strong translate class="myself"  ng-if="expense.GroupsUserId==currentUserGuid">Vous</strong>
-                        </p>
+                            <p style="font-style: normal;font-size:12px;">
+                                <span translate>payé par</span> 
+                                <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
+                                <strong translate class="myself" ng-if="expense.GroupsUserId==currentUserGuid">Vous</strong>
+                            </p>
+                            <!--
+                            <div class="share_indicator">
+                                <span ng-class="{'owed': expense.GroupsUserId==currentUserGuid}" ng-if="expense.GroupsUserId==currentUserGuid">On vous doit : {{expense.amount-expense.shared_amount|currency:group_data.currency_symbol}}</span>
+                                <span ng-class="{'owes': expense.GroupsUserId!=currentUserGuid}" ng-if="expense.GroupsUserId!=currentUserGuid && expense.shared_amount">Vous devez : {{expense.shared_amount|currency:group_data.currency_symbol}}</span>
+                            </div> -->
+                            
+                        </div>
+
+                        <div class="amount">
+                            <h2 style="color:#00a8ec">{{expense.amount | currency:group_data.currency_symbol}}</h2>
+                            <p style="font-size:12px">{{ expense.date | date: 'shortDate'}}</p>
+                        </div>
                     </div>
 
-                    <div class="amount">
-                        <h2 style="color:#00a8ec">{{expense.amount | currency:group_data.currency_symbol}}</h2>
-                        <p style="font-size:12px">{{ expense.date | date: 'shortDate'}}</p>
-                    </div>
+                    
    
-                    <i class="icon ion-chevron-right icon-accessory"></i>
                 </a>
 
                 <span translate class="item item-icon-right" ng-show="!expenses.length">Aucune dépense ajoutée</span>

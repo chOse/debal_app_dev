@@ -35,6 +35,8 @@ App.controller('GroupexpensesCtrl',
     };
 
     var limit_display = 0;
+    var max_display = 15;
+    $scope.noMoreItems = false;
 
     $scope.showBalance = function(e) {
 
@@ -49,9 +51,6 @@ App.controller('GroupexpensesCtrl',
             LoaderService.show();
         }
     }
-
-    var max_display = 15;
-    $scope.noMoreItems = false;
 
     // Triggerd automatically for loading expenses on scroll
     $scope.loadMore = function() {
@@ -111,7 +110,7 @@ App.controller('GroupexpensesCtrl',
                 $rootScope.cached_entries['group'+$scope.GroupId] = data;
                 console.log('entries have been cached');
                 if(callback) callback();
-            });
+            }, $scope.currentUserGuid);
         }
         
         else {
@@ -129,8 +128,8 @@ App.controller('GroupexpensesCtrl',
             $rootScope.cached_balances = [];
 
         if(!$rootScope.cached_balances['group'+$scope.GroupId]) {
-            console.log('cached balances not found');
 
+            console.log('cached balances not found');
             EntriesModel.calculateBalance($scope.GroupsUserIds, function(balances) {
                 $scope.balances = balances;
                 $rootScope.cached_balances['group'+$scope.GroupId] = balances;

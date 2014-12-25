@@ -4,7 +4,7 @@
         DB_CONFIG: {
             DB_NAME : "debal",
 
-            TABLES : ["entries", "entries_groups_users", "groups", "groups_users", "users", "categories", "categoires_entries"],
+            TABLES : ["entries", "entries_groups_users", "groups", "groups_users", "users", "categories", "categories_entries"],
 
             CREATE_SQL : [
                 'CREATE TABLE IF NOT EXISTS `entries` (\n\
@@ -17,7 +17,8 @@
                 `GroupId` INTEGER,\n\
                 `GroupsUserId` INTEGER,\n\
                 `title` TEXT,\n\
-                `deleted` INTEGER DEFAULT \'0\')',
+                `deleted` INTEGER DEFAULT \'0\',\n\
+                UNIQUE (id) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `entries_groups_users` (\n\
                 `EntriesGroupsUserId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
@@ -27,7 +28,9 @@
                 `EntryId` INTEGER,\n\
                 `GroupsUserId` INTEGER,\n\
                 `shared_amount` INTEGER,\n\
-                `share` INTEGER DEFAULT \'1\')',
+                `share` INTEGER DEFAULT \'1\',\n\
+                UNIQUE (id) ON CONFLICT REPLACE,\n\
+                UNIQUE (EntryId,GroupsUserId) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `groups` (\n\
                 `GroupId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
@@ -39,7 +42,8 @@
                 `private` INTEGER DEFAULT \'0\',\n\
                 `public_key` TEXT,\n\
                 `deleted` INTEGER DEFAULT \'0\',\n\
-                `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+                `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n\
+                UNIQUE (id) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `groups_users` (\n\
                 `GroupsUserId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
@@ -51,13 +55,15 @@
                 `invite_email` TEXT,\n\
                 `invite_date` TIMESTAMP,\n\
                 `share` INTEGER DEFAULT \'1\',\n\
-                `deleted` INTEGER DEFAULT \'0\')',
+                `deleted` INTEGER DEFAULT \'0\',\n\
+                UNIQUE (id) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `users` (\n\
                 `UserId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
                 `id` INTEGER,\n\
                 `username` TEXT,\n\
-                `email` TEXT)',
+                `email` TEXT,\n\
+                UNIQUE (id) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `categories` (\n\
                 `CategoryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
@@ -65,7 +71,8 @@
                 `group_id` INTEGER,\n\
                 `GroupId` INTEGER,\n\
                 `name` TEXT,\n\
-                `deleted` INTEGER DEFAULT \'0\')',
+                `deleted` INTEGER DEFAULT \'0\',\n\
+                UNIQUE (id) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `categories_entries` (\n\
                 `CategoriesEntryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
@@ -74,7 +81,8 @@
                 `CategoryId` INTEGER,\n\
                 `entry_id` INTEGER,\n\
                 `EntryId` INTEGER,\n\
-                `deleted` INTEGER DEFAULT \'0\')',
+                `deleted` INTEGER DEFAULT \'0\',\n\
+                UNIQUE (id) ON CONFLICT REPLACE)',
             ],
 
             RECREATE_DB : false,

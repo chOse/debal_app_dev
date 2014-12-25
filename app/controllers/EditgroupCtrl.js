@@ -98,20 +98,14 @@ App
                 if(res) {
                     if($scope.data.username && checkName($scope.data.username)) {
 
-                        
+                        var user_data = {'username':$scope.data.username};
+                        var group_data = {'GroupId':$scope.GroupId,'group_id' : (typeof($scope.group.id)!='undefined') ? $scope.group.id : null}
 
-                        // Update table (block sync as it's 2 steps)
-                        $rootScope.$broadcast('blockSync');
-                        UsersModel.create({'username':$scope.data.username}, function(created_user_id) {
-                            GroupsModel.create_groups_user({
-                                'UserId':created_user_id,
-                                'GroupId':$scope.GroupId,
-                                'group_id' : (typeof($scope.group.id)!='undefined') ? $scope.group.id : null
-                            }, function(created_gu_id) {
-                                $scope.group.members.push({guid: created_gu_id, UserId:created_user_id, username: $scope.data.username, share:1, deleted:0});
+                        GroupsModel.create_groups_user(user_data, group_data, function(created_gu) {
+                            if(typeof created_gu != 'undefined' && created_gu !== null) {
+                                $scope.group.members.push({guid: created_gu.GroupsUserId, UserId:created_gu.UserId, username: $scope.data.username, share:1, deleted:0});
                                 $ionicScrollDelegate.scrollBottom(true);
-                                $rootScope.$broadcast('unblockSync');
-                            });
+                            }
                         });
                     }
 

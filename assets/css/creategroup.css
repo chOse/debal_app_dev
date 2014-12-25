@@ -35,7 +35,10 @@
 #creategroup .ion-arrow-down-b {
     font-size: 25px;
 }
-
+#creategroup .userlist.nomargin {
+    margin-left: 0;
+    margin-right: 0;
+}
 #creategroup .userlist a.ion-android-more {
     font-size:15px;
     color:orange;
@@ -47,10 +50,22 @@
 #creategroup .ion-android-add-contact:before {
     margin-right:5px;
 }
+#creategroup .members_title {
+    height: 25px;
+    background: #00a8ec;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    margin-top: 20px;
+    line-height: 25px;
+    font-size: 16px;
+}
 #creategroup .card {
-    border-radius:5px;
     margin-bottom:10px;
     margin-top:10px;
+}
+#creategroup .currency {
+    margin-right:35px;
 }
 #creategroup .current-user {
     color: orange;
@@ -71,17 +86,20 @@
 #creategroup label.ion-android-social-user.disabled::before {
     color:#ccc;
 }
-#creategroup div.ion-pie-graph {
-    font-size:13px;
-    width:100px;
-}
-#creategroup div.ion-pie-graph input {
+#creategroup .share-status.button-small:before {
+    font-size:20px;
+} 
+
+#creategroup .share-status input {
     padding-right: 0;
 }
 #creategroup .share-status {
-    width: 70px;
-    font-weight: bold;
     text-align: center;
+    font-size: 15px;
+    width: 60px;
+    height: 25px;
+    line-height: 25px;
+    font-weight:bold;
 }
 #creategroup input[readonly] {
     background-color:#fff;

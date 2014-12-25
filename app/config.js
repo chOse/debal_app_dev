@@ -4,11 +4,11 @@
         'GENERAL_CONFIG': {
             'APP_NAME': 'Debal',
             'RECREATE_APP_VERSIONS': ['1.0.0', '1.0.1', '1.0.2', '1.0.3'],
-            'APP_VERSION': '1.1.7',
-            'FIRST_URL': 'http://www.debal.fr',
+            'APP_VERSION': '1.1.8',
             //'API_URL': 'http://localhost:8888/debal_web/Apiv2/'
             //'API_URL': 'http://dev1466.debal.fr/Apiv2/'
             'API_URL': 'http://api.debal.fr/'
+            ///'API_URL': 'http://www.debal.Fr/Apiv2/'
         },
         'API_ROUTES':{
             sync: {
@@ -30,6 +30,7 @@
                 url: "facebook_connect.json", type: "POST"
             }
         },
+        SUPPORTED_LANG : ["en","fr"],
         CURRENCIES_DEFAULT : "EUR",
 
         CURRENCIES_SYMBOLS : {

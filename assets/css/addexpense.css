@@ -28,10 +28,11 @@
     height:100%;
     border-radius:4px;
     padding-left:30px;
-    font-size:16px;
+    font-size:17px;
+    font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }
 #addexpense .list .select_spender {
-    color:#fff;
+    color:transparent;
     position:absolute;
     z-index:1;
     width: 100%;
@@ -54,6 +55,7 @@
 }
 #addexpense button.button.icon.disabled {
     background-color: #E0E0E0 !important;
+    pointer-events: initial;
 }
 #addexpense .user-share.disabled{
      color:rgb(190, 190, 190) !important;
@@ -65,14 +67,31 @@
     color:rgb(190, 190, 190) !important;
 }
 #addexpense .swipe_msg {
-    margin: 0 auto;line-height: 40px;color:#C2C2C2;border-radius: 400px;width: 80%;text-align: center;
+    color: #00a8ec;
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+}
+#addexpense .swipe_msg img {
+    position: relative;
+    top: 7px;
 }
 #addexpense .swipe_msg .ion-ios7-arrow-forward {
-    padding:2px;
+    font-size: 25px;
+    font-weight: 100;
+    position: relative;
+    top: 4px;
+    opacity:0.5;
 }
 #addexpense .date-label .input_label {
     margin-left:35px;
     margin-top:0;
+}
+#addexpense .date-label input {
+    text-align: right;
+    color:grey;
+    padding-right:0px;
 }
 #addexpense input.centered:focus {
     border: 1px solid blue !important;
@@ -101,10 +120,10 @@
 
 #addexpense .amount {
     width: 40px;
-    font-size: 15px;
+    font-size: 20px;
     position: absolute;
     right: 10px;
-    color: #ccc;
+    color: gray;
     height: 47px;
     line-height: 47px;
 }

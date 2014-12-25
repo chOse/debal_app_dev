@@ -30,13 +30,27 @@
     padding-bottom:5px;
 }
 #groupexpenses #expenseslist {
+        padding: 10px;
+    padding-right: 20px;
+    padding-left:20px;
+}
+#groupexpenses #expenseslist .flex {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
-    padding: 10px;padding-right: 40px;padding-left:20px;
+}
+#groupexpenses #expenseslist .share_indicator {
+    font-style: italic;
+    font-size:12px;
+}
+#groupexpenses #expenseslist .share_indicator .owes {
+    color:red;
+}
+#groupexpenses #expenseslist .share_indicator .owed {
+    color:green;
 }
 #groupexpenses .list .item div {
     color: #666;
@@ -45,12 +59,11 @@
     background-color:#ECECEC;
 }
 #groupexpenses #expenseslist .title {
-   // display:inline;
    flex:1;
-
 }
 #groupexpenses #expenseslist .title p {
     font-style:italic;
+    margin-bottom:0;
 }
 #groupexpenses #expenseslist .title p strong {
     color:#00a8ec;
@@ -78,14 +91,11 @@
 }
 #groupexpenses .item.myself  {
     font-size:12px;
-    //background-color:#eee;
 }
 #groupexpenses .debts strong {
-    font-size:1em;
-}
-#groupexpenses .myself .debts strong {
     font-size:1.2em;
 }
+
 #groupexpenses .myself {
     color:red;
 }
