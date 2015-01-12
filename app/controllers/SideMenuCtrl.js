@@ -20,7 +20,14 @@ App
     $scope.closeModal = function() {
         $scope.modal.hide();
     };
-    $scope.sendFeedback = function(msg) {
+
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+
+    $scope.sendFeedback = function() {
+
+        var msg = $scope.modal.feedback_message
         if(msg !== undefined && msg.length>0) {
             LoaderService.show();
             var fbck_data = {
@@ -30,25 +37,26 @@ App
                     app_version : LocalStorageService.get('app_version')
                 }
             }
-            
-            SyncService.api_send("send_feedback", fbck_data, function(data, status) {
 
-            if(status==200 && data.result=="OK") {
-                $ionicPopup.alert({
-                    title: gettextCatalog.getString('Merci !'),
-                    template: gettextCatalog.getString("Votre message nous a bien été transmis. Merci !")
-                });
-                
-                $scope.modal.hide();
-            }
-            else {
-                $ionicPopup.alert({
-                    title: gettextCatalog.getString('Oups !'),
-                    template: gettextCatalog.getString("Le message n'a pas été transmis. Merci de vérifier votre connexion à Internet et réessayer.")
-                });
-            }
-            LoaderService.hide();
-        });
+            SyncService.api_send("send_feedback", fbck_data, function(data, status) {
+                LoaderService.hide();
+
+                if(status==200 && data.result=="OK") {
+                    $ionicPopup.alert({
+                        title: gettextCatalog.getString('Merci !'),
+                        template: gettextCatalog.getString("Votre message nous a bien été transmis. Merci !")
+                    });
+                    
+                    $scope.modal.hide();
+                    delete $scope.modal.feedback_message;
+                }
+                else {
+                    $ionicPopup.alert({
+                        title: gettextCatalog.getString('Oups !'),
+                        template: gettextCatalog.getString("Le message n'a pas été transmis. Merci de vérifier votre connexion à Internet et réessayer.")
+                    });
+                }
+            });
         }
         else {
             $ionicPopup.alert({
@@ -86,8 +94,14 @@ App
                 { text: gettextCatalog.getString('Annuler') },
             ]
         });
-
     }
+    
+    $scope.shareApp = function() {
+        if(typeof window.plugins.socialsharing != 'undefined') {
+            window.plugins.socialsharing.share(gettextCatalog.getString('Application pour faire ses comptes entre amis') + ' : http://debal.fr',null,null,'http://www.debal.fr');
+        }
+    }
+
     $scope.changeLanguage = function(device_lang) {
 
         if(SUPPORTED_LANG.indexOf($scope.device_lang)==-1)

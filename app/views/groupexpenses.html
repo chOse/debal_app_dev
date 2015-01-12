@@ -21,7 +21,7 @@
 
                 <div translate class="item item-divider">Dépenses</div>
       
-                <a id="expenseslist" ng-repeat="expense in expenses_display" class="item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
+                <a ng-repeat="expense in expenses_display" class="expenseslist item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
 
                     <div class="flex">
                         <div class="title">

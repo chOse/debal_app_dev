@@ -76,3 +76,8 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Header END */
+
+
+ion-tabs ion-content {
+    top: 44px !important;
+}

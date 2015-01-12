@@ -91,6 +91,11 @@ $stateProvider
     $urlRouterProvider.otherwise("/register");
     
 })
+.config(function($ionicConfigProvider) {
+  $ionicConfigProvider.backButton.text(false);
+  $ionicConfigProvider.views.forwardCache(true);
+  $ionicConfigProvider.backButton.previousTitleText(false);
+})
 .run(function($ionicPlatform, $state, $rootScope, $ionicSideMenuDelegate, $interval, tmhDynamicLocale, LocalStorageService, initService, SyncService, gettextCatalog, SUPPORTED_LANG) {
 
 

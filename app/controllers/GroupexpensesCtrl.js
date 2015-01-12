@@ -20,6 +20,17 @@ App.controller('GroupexpensesCtrl',
         console.log("en / new data from server");
         setTimeout(function() { console.log("delayed initing group"); $scope.initGroup(true) }, 500);
     });
+
+    $scope.$on('$ionicView.beforeEnter', function(event) {
+        console.error($scope.expenses);
+        $scope.initGroup();
+    })
+
+    $scope.$on('$ionicView.loaded', function(event) {
+        console.error("loading view");
+    })
+
+    
     
     $scope.$on('$stateChangeSuccess', function() {
         $scope.loadMore();
@@ -99,15 +110,17 @@ App.controller('GroupexpensesCtrl',
 
     $scope.getEntries = function(callback) {
 
+        
         if(!$rootScope.cached_entries)
             $rootScope.cached_entries = [];
+        
 
         if(!$rootScope.cached_entries['group' + $scope.GroupId]) {
             console.log('cached entries not found');
             EntriesModel.read({GroupId: $scope.GroupId}, function(data) {
                 $scope.expenses = data;
 
-                $rootScope.cached_entries['group'+$scope.GroupId] = data;
+                $rootScope.cached_entries['group'+$scope.GroupId] = true;
                 console.log('entries have been cached');
                 if(callback) callback();
             }, $scope.currentUserGuid);
@@ -115,7 +128,7 @@ App.controller('GroupexpensesCtrl',
         
         else {
             console.log('cached entries found');
-            $scope.expenses = $rootScope.cached_entries['group'+$scope.GroupId];
+            //$scope.expenses = $rootScope.cached_entries['group'+$scope.GroupId];
             if(callback) callback();
         }
     };
@@ -132,7 +145,7 @@ App.controller('GroupexpensesCtrl',
             console.log('cached balances not found');
             EntriesModel.calculateBalance($scope.GroupsUserIds, function(balances) {
                 $scope.balances = balances;
-                $rootScope.cached_balances['group'+$scope.GroupId] = balances;
+                $rootScope.cached_balances['group'+$scope.GroupId] = true;
                 console.log('balances have been cached');
                 $scope.settled = ($scope.expenses.length>0 && objectLength($scope.balances)==0);
                 $scope.$broadcast('balances.ready');
@@ -142,8 +155,8 @@ App.controller('GroupexpensesCtrl',
         
         else {
             console.log('cached balances found');
-            $scope.balances = $rootScope.cached_balances['group'+$scope.GroupId];
-            $scope.settled = ($scope.expenses.length>0 && objectLength($scope.balances)==0);
+            //$scope.balances = $rootScope.cached_balances['group'+$scope.GroupId];
+            //$scope.settled = ($scope.expenses.length>0 && objectLength($scope.balances)==0);
             $scope.$broadcast('balances.ready');
             if(callback) callback();
         }
@@ -188,10 +201,13 @@ App.controller('GroupexpensesCtrl',
         });
     }
     
-    $scope.initGroup();
-
     $scope.ShareGroup = function() {
-        window.plugins.socialsharing.share({text: gettextCatalog.getString('Comptes du groupe {{name}}', {name:$scope.group_data['name']}), url: 'http://www.debal.fr/' + $scope.group_data['public_key']});
+        var text = gettextCatalog.getString('Comptes du groupe {{name}}', {name:$scope.group_data['name']});
+        var url = 'http://www.debal.fr/' + $scope.group_data['public_key'];
+        if(typeof window.plugins.socialsharing != 'undefined') {
+            window.plugins.socialsharing.share(text, null, null, url);
+        }
+        
     }
     $scope.openGroupUrl = function() {
         window.open('http://debal.fr/group/' + $scope.group_data['public_key'] + '/?locale=' + LocalStorageService.get("locale") + '&utm_source=app&utm_medium=balance&utm_campaign=outbound', '_system');

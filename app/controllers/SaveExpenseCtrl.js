@@ -1,5 +1,5 @@
 App
-.controller('SaveExpenseCtrl', function($scope, $state, $rootScope, $ionicPopup, $stateParams, $location, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, CURRENCIES_SYMBOLS, gettextCatalog, LoaderService, EntriesModel, GroupsModel) {
+.controller('SaveExpenseCtrl', function($scope, $state, $rootScope, $ionicPopup, $filter, $stateParams, $location, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, CURRENCIES_SYMBOLS, gettextCatalog, LoaderService, EntriesModel, GroupsModel) {
 
     $ionicSideMenuDelegate.canDragContent(false);
 
@@ -7,10 +7,7 @@ App
     $scope.EntryId = $stateParams.EntryId;
     $scope.membersNames = [];
     $scope.shares_sum = 0;
-
-    var today_date = new Date();
-    var today = today_date.getFullYear() + "-" + ("0" + (today_date.getMonth() + 1)).slice(-2) + "-" + ("0" + today_date.getDate()).slice(-2);
-    $scope.expense = {'date':today};
+    $scope.expense = {'date': new Date()};
 
     if($state.current.name=='app.editexpense') {
         $scope.curr_action = 'edit';
@@ -32,6 +29,11 @@ App
             $scope.getEntry();
         }
     });
+
+    $scope.$on('$ionicView.beforeEnter', function(event) {
+        $scope.initGroup();
+        $ionicSlideBoxDelegate.select(0);
+    })
 
 
     // Common functions for form controls
@@ -192,7 +194,7 @@ App
             groups_user_id: (spender_server_guid!==undefined) ? spender_server_guid : null,
             amount: expense.amount,
             title: expense.title,
-            date: expense.date,
+            date: $filter('date')(expense.date, "yyyy-MM-dd")
         };
 
         // Save or edit ?
@@ -214,7 +216,14 @@ App
                     // unBlock Sync after processing
                     $rootScope.$broadcast('unblockSync');
 
-                    $scope.$apply($location.path('app/groupexpenses/'+$scope.GroupId));
+                    $scope.$apply(function() {
+                        
+                        $location.path('app/groupexpenses/'+$scope.GroupId);
+
+                    });
+
+                    $rootScope.$broadcast('newEntries');
+
                 }
                 
                 else
@@ -294,6 +303,7 @@ App
             EntriesModel.read({EntryId: $scope.EntryId}, function(entry) {
 
                 $scope.expense = angular.copy(entry[0]);
+                $scope.expense.date = new Date(entry[0].date);
                 $scope.expense.spender = entry[0]['GroupsUserId'];
                 
                 $scope.$apply();
@@ -333,7 +343,7 @@ App
         });
     }
 
-    $scope.initGroup();
+    
 
     $scope.tel_keyboard = false;
 

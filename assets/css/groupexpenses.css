@@ -29,12 +29,12 @@
     padding-top:10px;
     padding-bottom:5px;
 }
-#groupexpenses #expenseslist {
+#groupexpenses .expenseslist {
         padding: 10px;
     padding-right: 20px;
     padding-left:20px;
 }
-#groupexpenses #expenseslist .flex {
+#groupexpenses .expenseslist .flex {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -42,39 +42,39 @@
     display: -ms-flexbox;
     display: flex;
 }
-#groupexpenses #expenseslist .share_indicator {
+#groupexpenses .expenseslist .share_indicator {
     font-style: italic;
     font-size:12px;
 }
-#groupexpenses #expenseslist .share_indicator .owes {
+#groupexpenses .expenseslist .share_indicator .owes {
     color:red;
 }
-#groupexpenses #expenseslist .share_indicator .owed {
+#groupexpenses .expenseslist .share_indicator .owed {
     color:green;
 }
 #groupexpenses .list .item div {
     color: #666;
 }
-#groupexpenses #expenseslist.unsynced {
+#groupexpenses .expenseslist.unsynced {
     background-color:#ECECEC;
 }
-#groupexpenses #expenseslist .title {
+#groupexpenses .expenseslist .title {
    flex:1;
 }
-#groupexpenses #expenseslist .title p {
+#groupexpenses .expenseslist .title p {
     font-style:italic;
     margin-bottom:0;
 }
-#groupexpenses #expenseslist .title p strong {
+#groupexpenses .expenseslist .title p strong {
     color:#00a8ec;
 }
-#groupexpenses #expenseslist .title p strong.myself {
+#groupexpenses .expenseslist .title p strong.myself {
     text-decoration:underline;
 }
 #groupexpenses .ion-android-share:before {
     margin-right:5px;
 }
-#groupexpenses #expenseslist .amount {
+#groupexpenses .expenseslist .amount {
    // display:inline;
     margin-left:auto;
     text-align:right;
@@ -139,4 +139,7 @@
     margin:10px auto;
     text-align:center;
 }
+
+
+
 /* Content END */

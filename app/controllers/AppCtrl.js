@@ -1,7 +1,8 @@
 App
 .controller('AppCtrl',
-    function($rootScope, $state, $scope, $ionicNavBarDelegate, $ionicTabsDelegate, SyncService, LocalStorageService, SUPPORTED_LANG) {
+    function($rootScope, $state, $scope, $ionicHistory, $ionicNavBarDelegate, $ionicTabsDelegate, SyncService, LocalStorageService, SUPPORTED_LANG) {
 
+        
     $scope.$on('newEntries', function(event) {
         console.log("// Remove cached entries !!");
         if(typeof($rootScope.cached_balances)!='undefined') {
@@ -11,7 +12,7 @@ App
             for (prop in $rootScope.cached_entries) 
                 delete $rootScope.cached_entries[prop];
         }
-    });
+    }); 
 
     // Handle back top-left button
     $scope.goBack = function() {
@@ -28,7 +29,7 @@ App
                 $state.go('app.groups');
 
         else
-            $ionicNavBarDelegate.back();
+            $ionicHistory.goBack();
     }
 
     // Pull to refresh
