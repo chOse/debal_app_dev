@@ -26,6 +26,12 @@ $stateProvider
         controller: 'LoginCtrl'
     })
 
+    .state('landing', {
+        url: "/landing",
+        templateUrl: 'app/views/landing.html',
+        controller: 'LoginCtrl'
+    })
+
     .state('app', {
       url: "/app",
       abstract: true,
@@ -88,7 +94,7 @@ $stateProvider
         }
     });
     
-    $urlRouterProvider.otherwise("/register");
+    $urlRouterProvider.otherwise("/landing");
     
 })
 .config(function($ionicConfigProvider) {
