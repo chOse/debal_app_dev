@@ -30,16 +30,15 @@ div.frameTC {
     margin: 0;
 }
 #login ion-content {
-    background-color:#ececec;
+    background-color:rgb(25, 114, 232);
 }
-#login #login-logo {
+/*#login #login-logo {
     max-width:400px;
     margin:0 auto;
     padding-top:5px;
     padding-bottom: 10px;
     background-color:#fff;
-
-}
+}*/
 #login h3 {
     color: #666;
     margin-bottom: 20px;
@@ -63,7 +62,6 @@ div.frameTC {
     max-width:400px;
     background-color:#fff;
     margin:0 auto 0 auto;
-    padding-bottom:15px;
 
     
 }
@@ -112,8 +110,9 @@ div.frameTC {
 }
 
 #login #login-form form {
-    border-top: 1px solid orange;
     padding-top: 15px;
+    background: rgb(25, 114, 232);
+    text-align: center;
 }
 
 #login .title {
@@ -148,18 +147,18 @@ div.frameTC {
     margin-left: 30px;
 }
 #login label {
-    width:90%;
-    margin:0 auto 6px auto;
-    border:none;
-    padding-left:15px;
-    padding-right:15px;
+width: 80%;
+margin: 0 auto;
+border: none;
+padding: 0px;
+margin-bottom: 16px;
 }
 
 #login #login-form label input {
     background-color:#f7f7f7;
     padding-left:10px;
     padding-right:10px;
-    height: 40px;
+    height: 46px;
     border-radius: 5px;
     text-align: center;
 }
@@ -171,4 +170,21 @@ div.frameTC {
     -webkit-box-shadow: 0 0 8px rgba(82,168,236,.6);
     box-shadow: 0 0 5px rgba(82,168,236,.6);
     
+}
+
+.landing_back{
+    border: none;
+background: none;
+color: white;
+padding: 10px;
+}
+
+.item{
+    background: none;
+}
+
+.button4{
+    padding: 12px;
+    line-height: 18px;
+    background: none;
 }

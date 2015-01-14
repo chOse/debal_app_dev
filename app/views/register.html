@@ -1,21 +1,18 @@
 <ion-view cache-view="false" title="Register" id="login">
     <ion-content scroll="true">
-        <div class="frameT">
-            <div class="frameTC">
-                <div class="container">
-                    <section id="login-logo" class="text-center">
-                        <img src="assets/images/logo-medium.png" />
-                    </section>
+
+        <section >
+        <button data-instantActivate translate type="button" class="landing_back"ng-click="goLanding()">< Retour</button>
+    </section>
+
+    <section class="text-center top_content">
+        <img id="login-logo" src="assets/images/logo_debal.png" />
+    </section>
+
 
                     <section id="login-form">
-                        <div id="fbk_connect">
-                            <div translate class="line1">Accédez au service en une touche !</div>
-                            <button data-instantActivate type="button" ng-click="facebookLogin()"><span translate>Connexion avec mon compte Facebook</span></button>
-                            <div translate class="line2">(Promis, nous ne posterons jamais rien nulle part !)</div>
-                        </div>
 
                         <form novalidate="novalidate" on-valid-submit="Register()">
-                            <div translate style="text-align:center">Inscription sans Facebook :</div>
                             <div class="list">
                                 <label class="item item-input validated">                      
                                     <input placeholder="{{'votre'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
@@ -33,14 +30,12 @@
                                     <i class="icon ion-alert-circled error"></i>
                                 </label>
 
-                                <button data-instantActivate translate class="button button-block button-energized icon-right ion-chevron-right" id="signin-button" type="submit"> Commencer</button>
-                                <button data-instantActivate translate type="button" ng-click="goLogin()" class="button button-small button-balanced" id="gotologin-button">J'ai déjà un compte</button>
+                                <button data-instantActivate translate class="button2 button_landing" id="signin-button" type="submit"> Commencer</button>
+                                <button data-instantActivate translate type="button" ng-click="goLogin()" class="button_landing button4">J'ai déjà un compte</button>
                             </div>
                             </div>
                         </form>
                     </section>
-                    </div>
-                </div>
-            </div>
+
     </ion-content>
 </ion-view>

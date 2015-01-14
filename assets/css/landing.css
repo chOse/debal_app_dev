@@ -40,6 +40,7 @@ padding: 0px 30px;
 	line-height: 28px;
 	color:white;
 	font-weight:bold;
+	border:none;
 }
 
 .button1{
@@ -60,7 +61,7 @@ padding: 0px 30px;
 }
 
 .button2{
-	background-color: #30cced;
+	background-color: #F5B643;
 	-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
 	-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
 	-o-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
@@ -73,12 +74,13 @@ padding: 0px 30px;
 	-webkit-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
 	-o-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
 	box-shadow: inset  1px 2px 0px 0px rgba(0,0,0,0.2);
-	background-color: #1bb8da;
+	background-color: #F09C3D;
 }
 
 .button3{
 	padding: 2px;
-	line-height: 12px;
+	line-height: 18px;
+	background: none;
 }
 
 .mid_text{

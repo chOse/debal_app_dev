@@ -8,21 +8,18 @@
 
 	<section class="text-center middle_content">
 		<div id="central_text">Où que vous soyez
-			ajoutez vos dépenses avec ou 
-			sans connexion internet !</div>
+			ajoutez vos dépenses <b>avec ou 
+			sans connexion internet !</b></div>
 		</section>
 
 		<section class="text-center bottom_content">
-			<a href="#" title="Connexion via Facebook">
-				<div class="button_landing button1">Connexion via Facebook</div>
-			</a>
-			<a href="#" title="S'inscrire">
-				<div class="button_landing button2">S'inscrire</div>
-			</a>
+				<button data-instantActivate type="button" class="button_landing button1" ng-click="facebookLogin()">
+					<span translate>Connexion avec mon compte Facebook</span>
+				</button>
+			 <button data-instantActivate translate type="button" ng-click="goRegister()" class="button_landing button2" id="gotologin-button">S'inscrire</button>
+
 			<div class="mid_text"> Vous avez déjà un compte,</div>
-			<a href="#" title="Se connecter">
-				<div class="button_landing button3">Se connecter</div>
-			</a>
+			 <button data-instantActivate translate type="button" ng-click="goLogin()" class="button_landing button3" id="gotologin-button">Se connecter</button>
 		</section>
 
 	</div>
