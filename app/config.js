@@ -7,7 +7,11 @@
             'APP_VERSION': '1.1.8',
             //'API_URL': 'http://localhost:8888/debal_web/Apiv2/'
             'API_URL': 'http://dev1466.debal.fr/Apiv2/'
+<<<<<<< Updated upstream
             //'API_URL': 'http://api.debal.fr/'
+=======
+            ///'API_URL': 'http://api.debal.fr/'
+>>>>>>> Stashed changes
             ///'API_URL': 'http://www.debal.Fr/Apiv2/'
         },
         'API_ROUTES':{
