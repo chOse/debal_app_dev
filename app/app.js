@@ -213,7 +213,8 @@ $stateProvider
         }
 
         if (typeof analytics !== 'undefined') {
-            analytics.startTrackerWithId('UA-44005158-2')
+            analytics.startTrackerWithId('UA-44005158-2');
+            analytics.setUserId(LocalStorageService.get('user_id'));
         }
     });
 })
