@@ -212,6 +212,9 @@
 #creategroup .creategroup_button1{
     background: none;
     margin-bottom:14px;
+    display: inline-block;
+    cursor:pointer;
+    text-align: center;
 }
 
 #creategroup .creategroup_button1:active{
