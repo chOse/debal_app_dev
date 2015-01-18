@@ -1,34 +1,41 @@
 <ion-view hide-back-button="true" title="Mes groupes" id="groups">
-      
-    <ion-nav-buttons side="left">
-      <button data-instantActivate menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons>
 
-      <ion-content class="has-header has-footer">
-      <ion-refresher on-refresh="doRefresh()"
-                     pulling-text="{{'Synchronisation manuelle'|translate}}"
-                     refreshing-text="{{'Synchronisation en cours'|translate}}..."
-                     refreshing-icon="ion-loading-d"></ion-refresher>
+<ion-nav-buttons side="left">
+<button data-instantActivate menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+</ion-nav-buttons>
 
-          <section id="group-buttons">
-              <div class="list">
+<ion-content class="has-header has-footer">
+<ion-refresher on-refresh="doRefresh()"
+pulling-text="{{'Synchronisation manuelle'|translate}}"
+refreshing-text="{{'Synchronisation en cours'|translate}}..."
+refreshing-icon="ion-loading-d"></ion-refresher>
 
-                  <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}">
-                      {{group.name}}
-                      <i class="icon ion-chevron-right icon-accessory"></i>
-                  </a>
+<section id="group-buttons">
+  <div class="list" >
 
-                  <span translate ng-show="!groups.length" class="item item-icon-right">
-                      Aucun groupe créé pour l'instant
-                  </span>
-              </div> 
-          </section>
+    <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}" style="border:none;line-height:44px;padding:1px 24px;">
+      <img src="assets/images/addexpense_icon_group2.png" style="width: 22px;top: 13px;position: relative;margin-right: 10px;">
+      {{group.name}}</br>
+      <div style="padding-left:44px;font-size:12px;line-height:24px;margin-top:-10px;margin-bottom:10px;color:grey;">Il y a 6 participants dans ce groupe</div>
 
-      </ion-content>
+      <i class="icon ion-chevron-right icon-accessory"></i>
+      <div style="height:1px; width:100%;background-color:rgb(230,230,230);margin:0 auto;"></div>
+    </a>
 
-      <ion-footer class="bar bar-footer">
-          <a data-instantActivate href="#/app/creategroup" class="button button-full button-balanced">
-              <i class="icon ion-plus"></i><span translate>Créer un groupe</span>
-          </a>
-      </ion-footer>
+    <span translate ng-show="!groups.length" class="item item-icon-right">
+      Aucun groupe créé pour l'instant
+    </span>
+  </div> 
+</section>
+
+</ion-content>
+
+<ion-footer class="bar bar-footer" style="padding: 10px;
+background: none;
+height: auto;
+border-radius: 4px;">
+<a data-instantActivate href="#/app/creategroup" class="button button-full button-balanced">
+  <i class="icon ion-plus"></i><span translate>Créer un groupe</span>
+</a>
+</ion-footer>
 </ion-view>
