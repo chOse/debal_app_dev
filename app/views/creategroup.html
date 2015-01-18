@@ -1,6 +1,6 @@
 <ion-view cache-view="false" title="{{'Nouveau groupe'|translate}}" id="creategroup">
     <ion-nav-buttons side="right">
-        <a data-instantActivate style="margin-right:10px" class="button button-clear icon-left ion-android-add-contact" ng-click="addMember()"></a>
+
         <a data-instantActivate class="button button-clear icon-left ion-checkmark" ng-click="addGroup()"></a>
     </ion-nav-buttons>
 
@@ -26,6 +26,7 @@
                     <div ng-click="editShare(member)" class="button button-small button-energized share-status icon-left ion-pie-graph">{{member.share}}</div>
                     <button ng-disabled="member.current_user" ng-click="group.members.splice($index, 1)" class="button icon button-small ion-trash-a"></button>
                 </div>
+                        <button data-instantActivate style="margin-right:10px" class="creategroup_button creategroup_button1" ng-click="addMember()">Ajouter un participant</button>
             </div>
         </form> 
     </ion-content>
