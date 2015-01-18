@@ -1,7 +1,7 @@
 <ion-view cache-view="false" title="Landing" id="landing">
 <ion-content scroll="false">
 
-<div class="backgroundlanding">
+<div id="backgroundlanding">
 	<section class="text-center top_content">
 		<img id="login-logo" src="assets/images/logo_debal.png" />
 	</section>
@@ -13,13 +13,13 @@
 		</section>
 
 		<section class="text-center bottom_content">
-				<button data-instantActivate type="button" class="button_landing button1" ng-click="facebookLogin()">
+				<button data-instantActivate type="button" class="landing_button landing_button1" ng-click="facebookLogin()">
 					<span translate>Connexion avec mon compte Facebook</span>
 				</button>
-			 <button data-instantActivate translate type="button" ng-click="goRegister()" class="button_landing button2" id="gotologin-button">S'inscrire</button>
+			 <button data-instantActivate translate type="button" ng-click="goRegister()"  class="landing_button landing_button2">S'inscrire</button>
 
-			<div class="mid_text"> Vous avez déjà un compte,</div>
-			 <button data-instantActivate translate type="button" ng-click="goLogin()" class="button_landing button3" id="gotologin-button">Se connecter</button>
+			<div id="mid_text"> Vous avez déjà un compte,</div>
+			 <button data-instantActivate translate type="button" ng-click="goLogin()" class="landing_button landing_button3" >Se connecter</button>
 		</section>
 
 	</div>
