@@ -164,11 +164,7 @@ background-color: #0e6bb9;
 }
 
 #login #login-form label input:focus {
-    border: 1px solid blue;
-    border-color: rgba(82,168,236,.8);
-    outline: 0;
-    -webkit-box-shadow: 0 0 8px rgba(82,168,236,.6);
-    box-shadow: 0 0 5px rgba(82,168,236,.6);
+    border: 2px solid rgb(110, 202, 236);
     
 }
 
