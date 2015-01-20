@@ -18,7 +18,7 @@
                          pulling-text="{{'Synchronisation manuelle'|translate}}"
                          refreshing-text="{{'Synchronisation en cours'|translate}}..."
                          refreshing-icon="ion-loading-d"></ion-refresher>
-
+<div class="groupexpenses_subheader">Code du groupe : {{group_data.public_key}}</div>
                 <div translate class="item item-divider">Dépenses</div>
       
                 <a ng-repeat="expense in expenses_display" class="expenseslist item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">

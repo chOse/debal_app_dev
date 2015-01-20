@@ -140,6 +140,15 @@
     text-align:center;
 }
 
+#groupexpenses .groupexpenses_subheader{
+text-align: center;
+line-height: 29px;
+font-weight: bold;
+color: rgb(160, 228, 255);
+background-color: #0e6bb9;
+
+    
+}
 
 
 /* Content END */
