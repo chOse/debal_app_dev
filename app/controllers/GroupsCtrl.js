@@ -1,4 +1,4 @@
-App.controller('GroupsCtrl', function($scope, $state, $ionicSideMenuDelegate, GroupsModel, LocalStorageService, LoaderService) {
+App.controller('GroupsCtrl', function($scope, $state, $location, $ionicSideMenuDelegate, GroupsModel, LocalStorageService, LoaderService) {
 
     
 
@@ -11,6 +11,10 @@ App.controller('GroupsCtrl', function($scope, $state, $ionicSideMenuDelegate, Gr
     $scope.$on('newGroups', function(event) {
         $scope.getGroups(true);
     });
+
+    $scope.goCreategroup = function() {
+        $location.path('app/creategroup');
+    }
 
 
     $scope.getGroups = function(discret) {

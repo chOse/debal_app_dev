@@ -1,5 +1,5 @@
 App.controller('GroupexpensesCtrl',
-    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
+    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
@@ -35,6 +35,11 @@ App.controller('GroupexpensesCtrl',
     $scope.$on('$stateChangeSuccess', function() {
         $scope.loadMore();
     });
+
+
+    $scope.addExpense = function() {
+        $location.path('app/addexpense/' + $scope.GroupId);
+    }
 
 
     $scope.getGroupData = function(callback) {

@@ -22,7 +22,7 @@ refreshing-icon="ion-loading-d"></ion-refresher>
       <div style="height:1px; width:100%;background-color:rgb(230,230,230);margin:0 auto;"></div>
     </a>
 
-    <span translate ng-show="!groups.length" class="item item-icon-right">
+    <span translate ng-show="!groups.length" ng-click="goCreategroup()" class="item item-icon-right">
       Aucun groupe créé pour l'instant
     </span>
   </div> 
