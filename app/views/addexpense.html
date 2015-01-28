@@ -10,35 +10,35 @@
     <ion-slide-box>
     <ion-slide>
     <div class="list">
-        <div translate class="input_label">Qui a payé ?</div>
+        <div translate class="input_label">Who paid?</div>
         <label class="item item-input item-icon-right item-label">
 
             <i class="icon ion-arrow-down-b icon-accessory"></i>
             <div class="spender_name">
                 <span ng-if="expense.spender">{{membersNames[expense.spender]}}</span>
-                <span ng-if="!expense.spender" translate>Selectionner le payeur</span>
+                <span ng-if="!expense.spender" translate>Select spender</span>
             </div>
             <select class="select_spender" ng-model="expense.spender" ng-options="member.guid as member.username for member in groupMembers" required="required">
             </select>
 
         </label>
 
-        <div translate class="input_label">Combien ?</div>
+        <div translate class="input_label">How much?</div>
         <label for="amount_field" class="item item-input item-label">
             <input id="amount_field" class="centered" ng-show="!tel_keyboard" ng-change="calculateShares()" placeholder="{{0.00 | currency:' '}}" ng-model="expense.amount" type="number" step="any" />
             <input id="amount_field" class="centered" ng-show="tel_keyboard" ng-change="calculateShares()" placeholder="{{0.00 | currency:' '}}" ng-model="expense.amount" type="tel" step="any" />
             <div class="amount">{{currency_symbol}}</div>
         </label>
 
-        <div translate class="input_label">Pourquoi ?</div>
+        <div translate class="input_label">For what?</div>
         <label class="item item-input item-label">
-            <input class="centered" maxlength="255" ng-model="expense.title" type="text" placeholder="{{'Motif de la dépense (facultatif)'|translate}}" />
+            <input class="centered" maxlength="255" ng-model="expense.title" type="text" placeholder="{{'Expenses was for... (optional)'|translate}}" />
         </label>
 
 
         <label class="item item-input item-label item-icon-left date-label">
             <i class="icon ion-calendar icon-accessory"></i>
-            <div translate class="input_label">Quand ?</div>
+            <div translate class="input_label">When?</div>
             <input type="date" id="datef" ng-model="expense.date" />
         </label>
     </div>
@@ -47,7 +47,7 @@
         <a class="swipe_msg button_selectusers" ng-click="nextSlide()">
             <div>
                 <img src="assets/images/addexpense_icon_group.png" style="width: 22px;margin: 4px;">
-                <span translate style="padding: 0px 4px;">Sélectionner les participants</span>
+                <span translate style="padding: 0px 4px;">Select beneficiaries</span>
                 <i class="icon ion-ios7-arrow-forward"></i>
                 <i class="icon ion-ios7-arrow-forward" style="margin-left:-4px;"></i>
             </div>
@@ -58,14 +58,14 @@
 <ion-slide> 
 <ion-content has-bouncing="false">
 <div class="sub_header" ng-click="previousSlide()">
-    <strong>{{membersNames[expense.spender]}}</strong> <span translate>a dépensé</span>
+    <strong>{{membersNames[expense.spender]}}</strong> <span translate>has spent</span>
     <strong>{{expense.amount | currency:currency_symbol}}</strong>
 </div>
 <div class="item item-input item-label">
-    <span translate class="input-label">Participants</span>
+    <span translate class="input-label">Members</span>
     <a ng-click="selectAll()" id="allbutton" class="button button-balanced button-small ion-checkmark align-right">
-        <span ng-if="select_state" translate>Désélectionner tous</span>
-        <span ng-if="!select_state" translate>Sélectionner tous</span>
+        <span ng-if="select_state" translate>Unselect all</span>
+        <span ng-if="!select_state" translate>Select all</span>
     </a>
 </div>
 
@@ -79,7 +79,7 @@
         <div>
             <div class="share_box">
                 <div class="user-share" ng-class="{0:'disabled'}[member.share]">
-                    <span class="user-share-count" >{{member.share}}</span> <span translate>part</span><span ng-show="member.share>1.5">s</span>
+                    <span class="user-share-count" >{{member.share}}</span> <span translate translate-n="member.share" translate-plural="shares">share</span>
                 </div>
                 <div class="user-shared-amount">{{member.sharedAmount | currency:currency_symbol}}</div> 
             </div>
@@ -95,7 +95,7 @@
         <div>
          <i class="icon ion-ios7-arrow-back"></i>
          <i class="icon ion-ios7-arrow-back" style="margin-left:-4px;"></i>
-         <span translate style="padding: 0px 4px;">Retour</span>
+         <span translate style="padding: 0px 4px;">Back</span>
 
      </div>
  </a>

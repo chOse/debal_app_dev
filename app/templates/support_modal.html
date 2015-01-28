@@ -1,21 +1,10 @@
-<!--<div cache-view="false" class="modal" id="modal-feedback">
-      <header class="bar bar-header bar-secondary">
-        <h1 translate class="title">Contacter le support</h1>
-        <button translate class="button button-positive button-clear" ng-click="closeModal()">Fermer</button>
-      </header>
-    <ion-content class="padding has-header">
-      <p translate>Un problème ou des suggestions ? Nous répondons à tous les messages très rapidement.</p>
-        <textarea ng-model="feedback_message" placeholder="{{'Ecrivez votre message ici.'|translate}}"></textarea>
-        <button translate class="button button-positive" ng-click="sendFeedback(feedback_message)">Envoyer</button>
-    </ion-content>
-</div>-->
 <ion-modal-view cache-view="false" id="modal-feedback">
     <ion-header-bar class="bar-secondary">
-    	<h1 translate class="title">Contacter le support</h1>
+    	<h1 translate class="title">Contact support team</h1>
     </ion-header-bar>
     <ion-content class="padding">
-    	<p translate>Un problème ou des suggestions ? Nous répondons à tous les messages très rapidement.</p>
-        <textarea ng-model="modal.feedback_message" placeholder="{{'Ecrivez votre message ici.'|translate}}"></textarea>
-        <button translate class="button button-positive" ng-click="sendFeedback()">Envoyer</button>
+    	<p translate>Having issues? Have suggestions? We'll answer quickly!</p>
+        <textarea ng-model="modal.feedback_message" placeholder="{{'Write your message here'|translate}}"></textarea>
+        <button translate class="button button-positive" ng-click="sendFeedback()">Send</button>
     </ion-content>
 </ion-modal-view>

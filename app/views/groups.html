@@ -1,4 +1,4 @@
-<ion-view hide-back-button="true" title="Mes groupes" id="groups">
+<ion-view hide-back-button="true" view-title="{{'My groups'|translate}}" id="groups">
 
 <ion-nav-buttons side="left">
 <button data-instantActivate menu-toggle="left" class="button button-icon icon ion-navicon"></button>
@@ -6,24 +6,24 @@
 
 <ion-content class="has-header has-footer">
 <ion-refresher on-refresh="doRefresh()"
-pulling-text="{{'Synchronisation manuelle'|translate}}"
-refreshing-text="{{'Synchronisation en cours'|translate}}..."
+pulling-text="{{'Manual sync'|translate}}"
+refreshing-text="{{'Now syncing...'|translate}}..."
 refreshing-icon="ion-loading-d"></ion-refresher>
 
 <section id="group-buttons">
-  <div class="list" >
+  <div class="list">
 
     <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}" style="border:none;line-height:44px;padding:1px 24px;">
       <img src="assets/images/addexpense_icon_group2.png" style="width: 22px;top: 13px;position: relative;margin-right: 10px;">
       {{group.name}}</br>
-      <div style="padding-left:44px;font-size:12px;line-height:24px;margin-top:-10px;margin-bottom:10px;color:grey;">Il y a 6 participants dans ce groupe</div>
+      <div style="padding-left:44px;font-size:12px;line-height:24px;margin-top:-10px;margin-bottom:10px;color:grey;">There are 6 members in this group</div>
 
       <i class="icon ion-chevron-right icon-accessory"></i>
       <div style="height:1px; width:100%;background-color:rgb(230,230,230);margin:0 auto;"></div>
     </a>
 
     <span translate ng-show="!groups.length" ng-click="goCreategroup()" class="item item-icon-right">
-      Aucun groupe créé pour l'instant
+      No group created
     </span>
   </div> 
 </section>
@@ -32,7 +32,7 @@ refreshing-icon="ion-loading-d"></ion-refresher>
 
 <ion-footer class="bar bar-footer" style="padding: 10px;background: none;height: auto;border-radius: 4px;">
 <a data-instantActivate href="#/app/creategroup" class="button button-full button-balanced">
-  <i class="icon ion-plus"></i><span translate>Créer un groupe</span>
+  <i class="icon ion-plus"></i><span translate>Create a group</span>
 </a>
 
 </ion-footer>

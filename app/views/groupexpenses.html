@@ -1,4 +1,6 @@
-<ion-view title="{{group_data.name}}" id="groupexpenses">
+<ion-view id="groupexpenses">
+
+        <ion-nav-title>{{group_data.name}}</ion-nav-title>
 
         <ion-nav-buttons side="right">
             <a data-instantActivate href="#/app/editgroup/{{GroupId}}" style="margin-right:10px" class="button button-clear icon-left ion-gear-a"></a>
@@ -15,21 +17,21 @@
 
             <ion-content has-bouncing="false" has-tabs="true" class="ionic-scroll">
                 <ion-refresher on-refresh="doRefresh()"
-                         pulling-text="{{'Synchronisation manuelle'|translate}}"
-                         refreshing-text="{{'Synchronisation en cours'|translate}}..."
+                         pulling-text="{{'Manual sync'|translate}}"
+                         refreshing-text="{{'Now syncing...'|translate}}..."
                          refreshing-icon="ion-loading-d"></ion-refresher>
-<div class="groupexpenses_subheader">Code du groupe : {{group_data.public_key}}</div>
-                <div translate class="item item-divider">Dépenses</div>
+                <div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>
+                <div translate class="item item-divider">Expenses</div>
       
                 <a ng-repeat="expense in expenses_display" class="expenseslist item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
 
                     <div class="flex">
                         <div class="title">
-                            <span ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Divers</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
+                            <span ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Various</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
                             <p style="font-style: normal;font-size:12px;">
-                                <span translate>payé par</span> 
+                                <span translate>paid by</span> 
                                 <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
-                                <strong translate class="myself" ng-if="expense.GroupsUserId==currentUserGuid">Vous</strong>
+                                <strong translate class="myself" ng-if="expense.GroupsUserId==currentUserGuid">You</strong>
                             </p>
                             <!--
                             <div class="share_indicator">
@@ -44,17 +46,11 @@
                             <p style="font-size:12px">{{ expense.date | date: 'shortDate'}}</p>
                         </div>
                     </div>
-
-                    
-   
                 </a>
 
-                <span translate class="item item-icon-right" ng-click="addExpense()" ng-show="!expenses.length">Aucune dépense ajoutée</span>
+                <span translate class="item item-icon-right" ng-click="addExpense()" ng-show="!expenses.length">No expense added</span>
 
-                <div style="color: #444;
-font-size: 12px;
-text-align: center;
-}" ng-if="!noMoreItems">Défiler pour afficher les dépenses suivantes</div>
+                <div style="color: #444;font-size: 12px;text-align: center;" ng-if="!noMoreItems">Scroll to show next expenses</div>
 
                 <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="30%"></ion-infinite-scroll>
             </ion-content>
@@ -66,22 +62,22 @@ text-align: center;
 
             <ion-content has-bouncing="false" has-tabs="true" class="ionic-scroll">
                 
-                <div translate class="item item-divider">Qui doit quoi ?</div>
+                <div translate class="item item-divider">Who owes what?</div>
                 <ul class="list" style="margin-bottom:0">
 
-                    <span translate class="item item-icon-right" ng-show="!expenses.length || expenses.length==0">Aucune dépense ajoutée</span>
-                    <span translate class="item item-icon-right" ng-show="settled">Les comptes sont équilibrés !</span>
+                    <span translate class="item item-icon-right" ng-show="!expenses.length || expenses.length==0">No expense added</span>
+                    <span translate class="item item-icon-right" ng-show="settled">Debts are already settled!</span>
                     <li ng-repeat="(guid,flows) in balances " ng-if="flows.length>0" class="item" ng-class="{'myself': guid==currentUserGuid}">
 
                         <div ng-if="flows.length>=1" ng-repeat="(k,flow) in flows" class="debts">
                             <p ng-if="k==0" class="col-left">
-                                <strong>{{membersNames[guid]}}</strong> <span translate>doit</span>
+                                <strong>{{membersNames[guid]}}</strong> <span translate>owes</span>
                             </p>
                             
                             <p class="col-right">
-                                <span translate ng-if="k>0">et</span>
-                                <strong translate class="amount">{{flow.amount | currency:group_data.currency_symbol}}</strong><br />
-                                <span translate>à</span>
+                                <span translate ng-if="k>0">and</span>
+                                <strong class="amount">{{flow.amount | currency:group_data.currency_symbol}}</strong><br />
+                                <span translate>to</span>
                                 <strong ng-class="{true:'myself'}[flows[k].to==currentUserGuid]" class="beneficiary">{{membersNames[flows[k].to]}}</strong>
                             </p>
                             <p style="clear:both"></p>
@@ -90,20 +86,20 @@ text-align: center;
                     </li>
                 </ul>
 
-                <div translate class="item item-divider icon-left ion-android-share">Partager le bilan</div>
+                <div translate class="item item-divider icon-left ion-android-share">Share balance</div>
                 <ul class="list">
-                    <li ng-show="group_data.public_key" class="item item-text-wrap"><span translate>Les comptes sont accessibles à cette adresse :</span>
+                    <li ng-show="group_data.public_key" class="item item-text-wrap"><span translate>Check the accounts from this address:</span>
                         <p class="url">
                             <button data-instantActivate class="button button-block button-energized icon-right icon ion-chevron-right" ng-click="openGroupUrl()">http://debal.fr/<strong>{{group_data.public_key}}</strong></button>
                         </p>
 
-                        <span translate><strong>Partagez cette adresse</strong> via Email, SMS, Facebook, Whatsapp... avec les autres membres pour leur donner accès aux comptes !</span>
+                        <span translate><strong>Share this address</strong> via Email, SMS, Facebook, Whatsapp... with other group members to give them access to the balance!</span>
                         <p class="share">
-                            <button data-instantActivate translate ng-click="ShareGroup()" class="button button-block button-calm ion-android-share">Partager</button>
+                            <button data-instantActivate translate ng-click="ShareGroup()" class="button button-block button-calm ion-android-share">Share</button>
                         </p>
 
                     </li>
-                    <li translate ng-show="!group_data.public_key" class="card item item-text-wrap">Vous n'avez pas encore synchronisé le groupe en ligne. Synchronisez le (connexion à Internet nécessaire) pour gérer le groupe depuis sa page Web et partager le bilan avec les autres membres !</li>
+                    <li translate ng-show="!group_data.public_key" class="card item item-text-wrap">You haven't synced the group yet. Sync it (Internet required), so you can manage it from its Web page and share it with other members!</li>
                 </ul>
                 
             </ion-content>

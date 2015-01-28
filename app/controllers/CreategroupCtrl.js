@@ -42,12 +42,12 @@ App
         $scope.editshare_member = angular.copy(member);
         var myPopup = $ionicPopup.show({
             templateUrl: 'app/templates/edit_user_share.html',
-            title: gettextCatalog.getString('Part par defaut de {{name}}', {name:member.username}),
+            title: gettextCatalog.getString('{{name}}\'s default share', {name:member.username}),
             scope: $scope,
             buttons: [
-                { text: gettextCatalog.getString('Annuler') },
+                { text: gettextCatalog.getString('Cancel') },
                 {
-                    text: gettextCatalog.getString('Valider'),
+                    text: gettextCatalog.getString('Confirm'),
                     type: 'button-positive',
                     onTap: function(e) {
                         return true;
@@ -67,13 +67,13 @@ App
 
         var myPopup = $ionicPopup.show({
             template: '<input autofocus type="text" class="add-user-input" ng-model="data.username">',
-            title: gettextCatalog.getString('Comment s\'appelle le membre ?'),
+            title: gettextCatalog.getString('Enter member\'s name'),
 
             scope: $scope,
             buttons: [
-                { text: 'Annuler' },
+                { text: gettextCatalog.getString('Cancel') },
                 {
-                    text: '<b>Ajouter</b>',
+                    text: '<b>' + gettextCatalog.getString('Add') + '</b>',
                     type: 'button-positive',
                     onTap: function(e) {
                         if (!$scope.data.username)
@@ -98,8 +98,8 @@ App
 
                 else if(!checkName($scope.data.username)) {
                     var alertPopup = $ionicPopup.alert({
-                        title: gettextCatalog.getString('Erreur'),
-                        template: gettextCatalog.getString("Veuillez renseigner un nom qui n'est pas déjà utilisé !")
+                        title: gettextCatalog.getString('Error'),
+                        template: gettextCatalog.getString("Please enter a name that is not already used!")
                     });
                     alertPopup.then(function(res) {
                         $scope.addMember();
@@ -112,15 +112,15 @@ App
     $scope.validForm = function(callback) {
         if(typeof($scope.group.name)=='undefined') {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur'),
-                template: gettextCatalog.getString("Veuillez renseigner un nom pour le groupe !")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("Please enter a name for the group!")
             });
             callback(false);
         }
         else if($scope.group.members.length<2) {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur'),
-                template: gettextCatalog.getString("Veuillez ajouter au minimum une deuxième personne au groupe !")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("Please add at least a second member to the group!")
             });
             callback(false);
         }

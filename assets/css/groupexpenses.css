@@ -42,6 +42,9 @@
     display: -ms-flexbox;
     display: flex;
 }
+#groupexpenses .scroll {
+    padding-bottom: 100px;
+}
 #groupexpenses .expenseslist .share_indicator {
     font-style: italic;
     font-size:12px;

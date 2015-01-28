@@ -1,5 +1,5 @@
 App.controller('GroupexpensesCtrl',
-    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
+    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
@@ -22,16 +22,15 @@ App.controller('GroupexpensesCtrl',
     });
 
     $scope.$on('$ionicView.beforeEnter', function(event) {
-        console.error($scope.expenses);
-        $scope.initGroup();
+        //console.error($scope.expenses);
+        
     })
 
     $scope.$on('$ionicView.loaded', function(event) {
         console.error("loading view");
+        $scope.initGroup();
     })
 
-    
-    
     $scope.$on('$stateChangeSuccess', function() {
         $scope.loadMore();
     });
@@ -45,7 +44,9 @@ App.controller('GroupexpensesCtrl',
     $scope.getGroupData = function(callback) {
         GroupsModel.read({GroupId: $scope.GroupId}, function(data) {
             $scope.group_data = data[0];
+            
             $scope.group_data.currency_symbol = (typeof(CURRENCIES_SYMBOLS[$scope.group_data.currency])!='undefined') ? CURRENCIES_SYMBOLS[$scope.group_data.currency] : $scope.group_data.currency;
+            $scope.$apply();
             if(callback) callback();
         });
     };
@@ -114,11 +115,8 @@ App.controller('GroupexpensesCtrl',
     }
 
     $scope.getEntries = function(callback) {
-
-        
         if(!$rootScope.cached_entries)
             $rootScope.cached_entries = [];
-        
 
         if(!$rootScope.cached_entries['group' + $scope.GroupId]) {
             console.log('cached entries not found');
@@ -207,12 +205,11 @@ App.controller('GroupexpensesCtrl',
     }
     
     $scope.ShareGroup = function() {
-        var text = gettextCatalog.getString('Comptes du groupe {{name}}', {name:$scope.group_data['name']});
+        var text = gettextCatalog.getString('Accounts for group {{name}}', {name:$scope.group_data['name']});
         var url = 'http://www.debal.fr/' + $scope.group_data['public_key'];
         if(typeof window.plugins.socialsharing != 'undefined') {
             window.plugins.socialsharing.share(text, null, null, url);
         }
-        
     }
     $scope.openGroupUrl = function() {
         window.open('http://debal.fr/group/' + $scope.group_data['public_key'] + '/?locale=' + LocalStorageService.get("locale") + '&utm_source=app&utm_medium=balance&utm_campaign=outbound', '_system');

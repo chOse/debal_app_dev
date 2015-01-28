@@ -43,8 +43,8 @@ App
 
                 if(status==200 && data.result=="OK") {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Merci !'),
-                        template: gettextCatalog.getString("Votre message nous a bien été transmis. Merci !")
+                        title: gettextCatalog.getString('Thank you !'),
+                        template: gettextCatalog.getString("Your message has been sent. Thank you!")
                     });
                     
                     $scope.modal.hide();
@@ -52,26 +52,26 @@ App
                 }
                 else {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Oups !'),
-                        template: gettextCatalog.getString("Le message n'a pas été transmis. Merci de vérifier votre connexion à Internet et réessayer.")
+                        title: gettextCatalog.getString('Oops !'),
+                        template: gettextCatalog.getString("Message could not be sent. Please check your internet status and try again.")
                     });
                 }
             });
         }
         else {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Message vide !'),
-                template: gettextCatalog.getString("Merci d'entrer un message.")
+                title: gettextCatalog.getString('Message is empty!'),
+                template: gettextCatalog.getString("Please type a message.")
             });
         }
     }
     $scope.disconnect = function() {
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Déconnexion'),
-            template: gettextCatalog.getString('Vous allez être deconnecté de votre compte.'),
+            title: gettextCatalog.getString('Disconnect'),
+            template: gettextCatalog.getString('You\'ll be disconnected.'),
             buttons: [
-                { text: gettextCatalog.getString('Annuler'), onTap: function(e) { return false; } },
-                { text: '<b>' + gettextCatalog.getString("Confirmer") + '</b>', type: 'button-positive', onTap: function(e) { return true; } },
+                { text: gettextCatalog.getString('Cancel'), onTap: function(e) { return false; } },
+                { text: '<b>' + gettextCatalog.getString("Confirm") + '</b>', type: 'button-positive', onTap: function(e) { return true; } },
             ]
         });
 
@@ -88,17 +88,17 @@ App
     $scope.selectLanguage = function() {
         $scope.selectLanguagePopup = $ionicPopup.show({
             templateUrl: 'app/templates/select_language.html',
-            title: gettextCatalog.getString('Choisissez la langue'),
+            title: gettextCatalog.getString('Select a language'),
             scope: $scope,
             buttons: [
-                { text: gettextCatalog.getString('Annuler') },
+                { text: gettextCatalog.getString('Cancel') },
             ]
         });
     }
     
     $scope.shareApp = function() {
         if(typeof window.plugins.socialsharing != 'undefined') {
-            window.plugins.socialsharing.share(gettextCatalog.getString('Application pour faire ses comptes entre amis') + ' : http://debal.fr',null,null,'http://www.debal.fr');
+            window.plugins.socialsharing.share(gettextCatalog.getString('App for sharing expenses with friends') + ' : http://debal.fr',null,null,'http://www.debal.fr');
         }
     }
 

@@ -59,8 +59,8 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                     if(status==401 && method!="auth") {
 
                         var alertPopup = $ionicPopup.alert({
-                            title: gettext('Erreur'),
-                            template: gettext("Vos informations de connexions ne sont plus valides. Vous allez être déconnecté.")
+                            title: gettext('Error'),
+                            template: gettext("You connections credentials are not longer valid. You will be disconnected.")
                         });
                         
                         alertPopup.then(function(res) {
@@ -117,6 +117,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                 if(r.syncOK) {
                     callback(true);
                     if(r.localDataUpdated) {
+                        console.error(r);
                         $rootScope.$broadcast('newGroups');
                         $rootScope.$broadcast('newEntries');
                     }

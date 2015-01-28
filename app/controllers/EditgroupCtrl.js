@@ -23,8 +23,8 @@ App
     
     $scope.locale = (typeof CURRENCIES_LIST["EUR"]["name_" + locale] != 'undefined') ? locale : 'en';
 
-    var tab_text1 = gettextCatalog.getString('Participants');
-    var tab_text2 = gettextCatalog.getString('Réglages');
+    var tab_text1 = gettextCatalog.getString('Members');
+    var tab_text2 = gettextCatalog.getString('Settings');
     $scope.tab_title = tab_text1
     $scope.tab_index = 0;
 
@@ -66,14 +66,14 @@ App
         $scope.data = {}
 
         var myPopup = $ionicPopup.show({
-            template: '<input autofocus placeholder="' + gettextCatalog.getString('Entrer un nom') + '" type="text" class="add-user-input" ng-model="data.username">',
-            title: gettextCatalog.getString('Ajouter un membre'),
+            template: '<input autofocus placeholder="' + gettextCatalog.getString('Enter a name') + '" type="text" class="add-user-input" ng-model="data.username">',
+            title: gettextCatalog.getString('Add new member'),
 
             scope: $scope,
             buttons: [
-                { text: gettextCatalog.getString('Annuler') },
+                { text: gettextCatalog.getString('Cancel') },
                 {
-                    text: '<b>' + gettextCatalog.getString('Ajouter') + '</b>',
+                    text: '<b>' + gettextCatalog.getString('Add') + '</b>',
                     type: 'button-positive',
                     onTap: function(e) {
                         if (!$scope.data.username)
@@ -111,8 +111,8 @@ App
 
                     else if(!checkName($scope.data.username)) {
                         var alertPopup = $ionicPopup.alert({
-                            title: gettextCatalog.getString('Erreur'),
-                            template: gettextCatalog.getString("Veuillez renseigner un nom qui n'est pas déjà utilisé !")
+                            title: gettextCatalog.getString('Error'),
+                            template: gettextCatalog.getString("Please enter a name that is not already used!")
                         });
                         alertPopup.then(function(res) {
                             $scope.addMember();
@@ -125,15 +125,15 @@ App
     $scope.validForm = function(callback) {
         if(typeof($scope.group.name)=='undefined') {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur'),
-                template: gettextCatalog.getString("Veuillez renseigner un nom pour le groupe !")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("Please enter a name for the group!")
             });
             callback(false);
         }
         else if($scope.group.members.length<2) {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur'),
-                template: gettextCatalog.getString("Veuillez ajouter au minimum une deuxième personne au groupe !")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("Please add at least a second member to the group!")
             });
             callback(false);
         }
@@ -159,11 +159,11 @@ App
 
     $scope.deleteGroup = function() {
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Confirmez la suppression'),
-            template: gettextCatalog.getString('Ce groupe et toutes ses dépenses seront définitivement supprimées. Cela affectera tous les membres connectés à ce groupe.'),
+            title: gettextCatalog.getString('Confirm deleting group'),
+            template: gettextCatalog.getString('This group and all related expenses will be permanently removed. This will affect all members connected to the group!'),
             buttons: [
-                { text: gettextCatalog.getString('Annuler'), onTap: function(e) { return false; } },
-                { text: '<b>' + gettextCatalog.getString('Confirmer') + '</b>', type: 'button-positive', onTap: function(e) { return true; } },
+                { text: gettextCatalog.getString('Cancel'), onTap: function(e) { return false; } },
+                { text: '<b>' + gettextCatalog.getString('Confirm') + '</b>', type: 'button-positive', onTap: function(e) { return true; } },
             ]
         });
         
@@ -171,8 +171,8 @@ App
             if(res) {
                 GroupsModel.delete($scope.GroupId, function() {
                     var alertPopup = $ionicPopup.alert({
-                        title: gettextCatalog.getString('Groupe supprimé'),
-                        template: gettextCatalog.getString('Le groupe a bien été supprimé.')
+                        title: gettextCatalog.getString('Group deleted'),
+                        template: gettextCatalog.getString('The group was correctly deleted.')
                     });
                     alertPopup.then(function(res) {
                         $state.go('app.groups');

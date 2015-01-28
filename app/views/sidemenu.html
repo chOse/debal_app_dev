@@ -22,29 +22,29 @@
             <div class="list">
                 <a data-instantActivate class="item item-icon-left" ng-click="disconnect()">
                     <i class="icon ion-unlocked"></i>
-                    <span translate>Déconnexion</span>
+                    <span translate>Disconnect</span>
                     <p class="user_email">{{user_email}}</p>
                 </a>
 
                 <a data-instantActivate class="item item-icon-left" ng-click="selectLanguage()">
-                    <img class="icon flag" src="assets/images/flag_{{device_lang}}.png" /> <!-- flag src: https://www.iconfinder.com/iconsets/finalflags -->
-                    <span translate>Langue</span>
+                    <img class="icon flag" ng-src="assets/images/flag_{{device_lang}}.png" /> <!-- flag src: https://www.iconfinder.com/iconsets/finalflags -->
+                    <span translate>Language</span>
                 </a>
 
                 <a data-instantActivate class="item item-icon-left" ng-click="openModal()">
                     <i class="icon ion-chatbubble-working"></i>
-                    <span translate>Ecrire au support</span>
+                    <span translate>Write to support</span>
                 </a>
 
                 <a data-instantActivate ng-click="rateApp()" class="item item-icon-left">
                     <i class="icon ion-star"></i>
-                    <span translate>Noter l'appli</span>
+                    <span translate>Rate the app</span>
                 </a>
                 
 
                 <a data-instantActivate ng-click="shareApp()" class="item item-icon-left">
                     <i class="icon ion-android-share"></i>
-                    <span translate>Partager l'appli !</span>
+                    <span translate>Share the app !</span>
                 </a>
           </div>
 
