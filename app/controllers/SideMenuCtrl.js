@@ -1,5 +1,5 @@
 App
-.controller('SideMenuCtrl', function($ionicSideMenuDelegate, $rootScope, $scope, $ionicModal, $ionicPopup, $state, gettextCatalog, SyncService, LocalStorageService, LoaderService, SUPPORTED_LANG, tmhDynamicLocale) {
+.controller('SideMenuCtrl', function($ionicSideMenuDelegate, $rootScope, $scope,$window, $ionicModal, $ionicPopup, $state, gettextCatalog, SyncService, LocalStorageService, LoaderService, SUPPORTED_LANG, tmhDynamicLocale) {
 
  $scope.user_email = LocalStorageService.get("user_email");
     // Side menu stuff
@@ -117,6 +117,7 @@ App
 
         $scope.selectLanguagePopup.close();
         $ionicSideMenuDelegate.toggleLeft();
+        $window.location.reload();
     }
 
     

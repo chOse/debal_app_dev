@@ -1,5 +1,5 @@
 <div id="edit_user_share">
 	<button type="button" ng-click="removeShare(editshare_member)" class="button icon button-small ion-minus"></button>
-	<div class="button button-small button-energized share-status">{{editshare_member.share}} <span translate-n="editshare_member.share" translate-plural="shares">share</span></div>
+	<div class="button button-small button-energized share-status">{{editshare_member.share}} <span translate>part</span><span ng-show="editshare_member.share>1.5">s</span></div>
 	<button type="button" ng-click="addShare(editshare_member)" class="button icon button-small ion-plus"></button>
 </div>

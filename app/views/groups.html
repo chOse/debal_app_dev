@@ -1,41 +1,39 @@
 <ion-view hide-back-button="true" view-title="{{'My groups'|translate}}" id="groups">
 
-<ion-nav-buttons side="left">
-<button data-instantActivate menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-</ion-nav-buttons>
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
 
-<ion-content class="has-header has-footer">
-<ion-refresher on-refresh="doRefresh()"
-pulling-text="{{'Manual sync'|translate}}"
-refreshing-text="{{'Now syncing...'|translate}}..."
-refreshing-icon="ion-loading-d"></ion-refresher>
+    <ion-content class="has-header has-footer">
+        <ion-refresher on-refresh="doRefresh()"
+        pulling-text="{{'Manual sync'|translate}}"
+        refreshing-text="{{'Now syncing...'|translate}}..."
+        refreshing-icon="ion-loading-d"></ion-refresher>
 
-<section id="group-buttons">
-  <div class="list">
+        <section id="group-buttons">
+            <div class="list">
 
-    <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}" style="border:none;line-height:44px;padding:1px 24px;">
-      <img src="assets/images/group.png" style="width: 22px;top: 13px;position: relative;margin-right: 10px;">
-      {{group.name}}</br>
-      <div style="padding-left:36px;font-size:12px;line-height:24px;margin-top:-10px;margin-bottom:10px;color:grey;">There are 6 members in this group</div>
+            <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}" style="border:none;line-height:44px;padding:1px 24px;">
+                <img src="assets/images/group.png" style="width: 22px;top: 13px;position: relative;margin-right: 10px;" />
+                {{group.name}}</br>
+                <div style="padding-left:36px;font-size:12px;line-height:24px;margin-top:-10px;margin-bottom:10px;color:grey;">There are 6 members in this group</div>
 
-      <i class="icon ion-chevron-right icon-accessory"></i>
-      <div style="height:1px; width:100%;background-color:rgb(230,230,230);margin:0 auto;"></div>
-    </a>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+                <div style="height:1px; width:100%;background-color:rgb(230,230,230);margin:0 auto;"></div>
+            </a>
 
-    <span translate ng-show="!groups.length" ng-click="goCreategroup()" class="item item-icon-right">
-      No group created
-    </span>
-  </div> 
-</section>
+            <span translate ng-show="!groups.length" ng-click="goCreategroup()" class="item item-icon-right">No group created</span>
+            </div> 
+        </section>
 
-</ion-content>
-<ion-footer class="bar bar-footer" style="padding: 5px;background: none;height: auto;border-radius: 4px;">
-  <a data-instantActivate href="#/app/creategroup" class="button button-full button-balanced">
-   <i class="icon ion-plus"></i><span translate>Create a group</span>
-  </a>
-  <div class="button button-full button-balanced" style="border:none;border-radius:4px;box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.13);">
-   <span translate>Rejoindre un groupe</span>
-  </div>
+    </ion-content>
 
-</ion-footer>
+    <ion-footer class="bar bar-footer" style="padding: 5px;background: none;height: auto;border-radius: 4px;">
+        <button ng-click="goCreategroup()" class="button button-full button-balanced">
+            <i class="icon ion-plus"></i><span translate>Create a group</span>
+        </button>
+        <button ng-click="goJoinGroup()" class="button button-full button-balanced" style="border:none;border-radius:4px;box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.13);">
+            <i class="icon ion-forward"></i><span translate>Join a group</span>
+        </button>
+    </ion-footer>
 </ion-view>

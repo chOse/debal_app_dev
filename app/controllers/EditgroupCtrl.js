@@ -23,8 +23,8 @@ App
     
     $scope.locale = (typeof CURRENCIES_LIST["EUR"]["name_" + locale] != 'undefined') ? locale : 'en';
 
-    var tab_text1 = gettextCatalog.getString('Members');
-    var tab_text2 = gettextCatalog.getString('Settings');
+    var tab_text1 = gettextCatalog.getString('Participants');
+    var tab_text2 = gettextCatalog.getString('Réglages');
     $scope.tab_title = tab_text1
     $scope.tab_index = 0;
 
@@ -159,7 +159,7 @@ App
 
     $scope.deleteGroup = function() {
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Confirm deleting group'),
+            title: gettextCatalog.getString('Confirmation deleting group'),
             template: gettextCatalog.getString('This group and all related expenses will be permanently removed. This will affect all members connected to the group!'),
             buttons: [
                 { text: gettextCatalog.getString('Cancel'), onTap: function(e) { return false; } },

@@ -1,39 +1,38 @@
 <ion-view cache-view="false" title="Register" id="login">
     <ion-content scroll="true">
 
-        <section >
-        <button data-instantActivate translate type="button" class="landing_back" ng-click="goLanding()">Back</button>
-    </section>
+        <section>
+            <button translate type="button" class="landing_back" ng-click="goLanding()">Back</button>
+        </section>
 
-    <section class="text-center top_content">
-        <img id="login-logo" src="assets/images/logo_debal.png" />
-    </section>
-                    <section id="login-form">
+        <section class="text-center top_content">
+            <img id="login-logo" src="assets/images/logo_debal.png" />
+        </section>
 
-                        <form novalidate="novalidate" on-valid-submit="Register()">
-                            <div class="list">
-                                <label class="item item-input validated">                      
-                                    <input placeholder="{{'your'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
-                                    <i class="icon ion-alert-circled error"></i>
-                                </label>
+        <section id="login-form">
 
-                                <label class="item item-input validated">                
-                                    <input placeholder="{{'Your name'|translate}}" type="text" ng-model="user.username" required="required" name="username" />
-                                    <i class="icon ion-alert-circled error"></i>
-                                </label>
+            <form novalidate="novalidate" on-valid-submit="Register()">
+                <div class="list">
+                    <label class="item item-input validated">                      
+                        <input placeholder="{{'your'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
+                        <i class="icon ion-alert-circled error"></i>
+                    </label>
+
+                    <label class="item item-input validated">                
+                        <input placeholder="{{'Your name'|translate}}" type="text" ng-model="user.username" required="required" name="username" />
+                        <i class="icon ion-alert-circled error"></i>
+                    </label>
 
 
-                                <label class="item item-input validated">
-                                    <input placeholder="{{'Password (6 characters min.)'|translate}}" type="password" ng-model="user.password" minlength="6" name="password" required="required">
-                                    <i class="icon ion-alert-circled error"></i>
-                                </label>
+                    <label class="item item-input validated">
+                        <input placeholder="{{'Password (6 characters min.)'|translate}}" type="password" ng-model="user.password" minlength="6" name="password" required="required">
+                        <i class="icon ion-alert-circled error"></i>
+                    </label>
 
-                                <button data-instantActivate translate class="login_button2 login_button" id="signin-button" type="submit">Start</button>
-                                <button data-instantActivate translate type="button" ng-click="goLogin()" class="login_button login_button4">I already have an account</button>
-                            </div>
-                            </div>
-                        </form>
-                    </section>
-
+                    <button translate class="login_button2 login_button" id="signin-button" type="submit"> Start</button>
+                    <button translate type="button" ng-click="goLogin()" class="login_button login_button4">I already have an account</button>
+                </div>
+            </form>
+        </section>
     </ion-content>
 </ion-view>

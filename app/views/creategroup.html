@@ -1,7 +1,7 @@
 <ion-view cache-view="false" title="{{'New group'|translate}}" id="creategroup">
     <ion-nav-buttons side="right">
 
-        <a data-instantActivate class="button button-clear icon-left ion-checkmark" ng-click="addGroup()"></a>
+        <button class="button button-clear icon-left ion-checkmark" ng-click="addGroup()"></button>
     </ion-nav-buttons>
 
     <ion-content has-bouncing="false" has-header>
@@ -9,7 +9,7 @@
             <div class="list" style="padding-left: 10px; padding-right: 10px;margin-top: 20px;">
                 <label class="item item-input item-label">
                     <span translate class="input-label">Group name</span>
-                    <input autofocus ng-model="group.name" type="text" placeholder="{{'Enter a name'|translate}}" name="group" required="required">
+                    <input ng-model="group.name" type="text" placeholder="{{'Enter a name'|translate}}" name="group" required="required">
                 </label>
                 <label class="item item-input item-icon-right item-label">
                     <span translate class="input-label">Currency</span>
@@ -27,7 +27,7 @@
                     <button ng-disabled="member.current_user" ng-click="group.members.splice($index, 1)" class="button icon button-small ion-trash-a"></button>
                 </div>
                 
-                <a data-instantActivate style="margin-right:10px" class="creategroup_button creategroup_button1" ng-click="addMember()">Add a member</a>
+                <button translate style="margin-right:10px" class="creategroup_button creategroup_button1" ng-click="addMember()">Add a member</button>
             </div>
         </form> 
     </ion-content>

@@ -1,34 +1,30 @@
 <ion-view cache-view="false" title="Login" id="login">
     <ion-content scroll="true">
-        <section >
-        <button data-instantActivate translate type="button" class="landing_back" ng-click="goLanding()">Back</button>
-    </section>
+        <section>
+            <button translate type="button" class="landing_back" ng-click="goLanding()">Back</button>
+        </section>
 
-    <section class="text-center top_content">
-        <img id="login-logo" src="assets/images/logo_debal.png" />
-    </section>
-                    <section id="login-form" class="list">
-                        
-                        <form novalidate="novalidate" on-valid-submit="signIn(user)">
-                            <div class="list">
-                                <label class="item item-input validated">
-                                    <input placeholder="{{'your'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
-                                    <i class="icon ion-alert-circled error"></i>
-                                </label>
-                                <label class="item item-input validated">
-                                    <input placeholder="{{'Password'|translate}}" id="password" type="password" ng-model="user.password" name="password" required="required">
-                                    <i class="icon ion-alert-circled error"></i>
-                                </label>
-                                <button data-instantActivate translate ng-click="forgotPassword()" id="forgot-password" class="button button-small button-clear" type="button">Forgot your password?</button>
-                                <button data-instantActivate translate class="login_button login_button2" type="submit">Connect</button>
-                                <button data-instantActivate translate type="button" ng-click="goRegister()" class="login_button login_button4">I don't have an account</button>
-                            </div>
-                        </form>
-                    </section>
+        <section class="text-center top_content">
+            <img id="login-logo" src="assets/images/logo_debal.png" />
+        </section>
 
+        <section id="login-form" class="list">
+            
+            <form novalidate="novalidate" on-valid-submit="signIn(user)">
+                <div class="list">
+                    <label class="item item-input validated">
+                        <input placeholder="{{'votre'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
+                        <i class="icon ion-alert-circled error"></i>
+                    </label>
+                    <label class="item item-input validated">
+                        <input placeholder="{{'Mot de passe'|translate}}" id="password" type="password" ng-model="user.password" name="password" required="required">
+                        <i class="icon ion-alert-circled error"></i>
+                    </label>
+                    <button translate ng-click="forgotPassword()" id="forgot-password" class="button button-small button-clear" type="button">Forgot your password?</button>
+                    <button translate class="login_button login_button2" type="submit">Connect</button>
+                    <button translate type="button" ng-click="goRegister()" class="login_button login_button4">I don't have an account</button>
                 </div>
-            </div>
-        </div>
-
+            </form>
+        </section>
     </ion-content>
 </ion-view>

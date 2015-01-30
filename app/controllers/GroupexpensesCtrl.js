@@ -35,6 +35,9 @@ App.controller('GroupexpensesCtrl',
         $scope.loadMore();
     });
 
+    $scope.goSettings = function() {
+        $location.path('app/editgroup/' + $scope.GroupId);
+    }
 
     $scope.addExpense = function() {
         $location.path('app/addexpense/' + $scope.GroupId);

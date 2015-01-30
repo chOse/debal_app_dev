@@ -98,9 +98,9 @@ $stateProvider
     
 })
 .config(function($ionicConfigProvider) {
-  $ionicConfigProvider.backButton.text(false);
+  $ionicConfigProvider.backButton.text(true);
   $ionicConfigProvider.views.forwardCache(true);
-  $ionicConfigProvider.backButton.previousTitleText(false);
+  $ionicConfigProvider.backButton.previousTitleText(true);
 })
 .run(function($ionicPlatform, $state, $rootScope, $ionicSideMenuDelegate, $interval, tmhDynamicLocale, LocalStorageService, initService, SyncService, gettextCatalog, SUPPORTED_LANG) {
 
@@ -182,13 +182,17 @@ $stateProvider
             });
         };
 
-        if(typeof(navigator.globalization) !== "undefined") {
+        if(typeof(LocalStorageService.get("locale"))!='undefined') {
+
+            this.loadLocale({value:LocalStorageService.get("locale")});
+        }
+
+        else if(typeof(navigator.globalization) !== "undefined") {
             navigator.globalization.getLocaleName(this.loadLocale, null);
         }
 
         else {
-            $rootScope.$apply(function() {gettextCatalog.setCurrentLanguage("en")});
-            LocalStorageService.set("locale", "en");
+            this.loadLocale({value:"en"});
         }
 
         // Handle back button

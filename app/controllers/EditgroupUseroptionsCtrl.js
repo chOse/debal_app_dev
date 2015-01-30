@@ -59,12 +59,12 @@ App
                                     $scope.popover.member.invited = true;
                                     LoaderService.hide();
                                     if(data.data == "joined")
-                                        template_msg =  gettextCatalog.getString('{{name}} was added to the group.', {name:$scope.popover.member.username});
+                                        template_msg =  gettextCatalog.getString('{{name}} a été ajouté au groupe', {name:$scope.popover.member.username});
                                     else
-                                        template_msg =  gettextCatalog.getString('Invitation has been sent to {{name}} by email. If they don\'t receive it, ask them to check their junk mailbox !', {name:$scope.popover.member.username});
+                                        template_msg =  gettextCatalog.getString('L\'invitation a bien été envoyée par mail. Si {{name}} ne la reçoit pas, demandez-lui de vérifier son courrier indésirable !', {name:$scope.popover.member.username});
                                     
                                     $ionicPopup.alert({
-                                        title: gettextCatalog.getString('Invitation has been sent!'),
+                                        title: gettextCatalog.getString('Invitation envoyée !'),
                                         template: template_msg
                                     });
                                     GroupsModel.update_groups_user({GroupsUserId:$scope.popover.member.guid, invite_email:$scope.data.invite_email});
@@ -74,8 +74,8 @@ App
                                 else {
                                     LoaderService.hide();
                                     $ionicPopup.alert({
-                                        title: gettextCatalog.getString('Error'),
-                                        template: gettextCatalog.getString('Invite could not be sent')
+                                        title: gettextCatalog.getString('Erreur'),
+                                        template: gettextCatalog.getString('L\'invitation n\'a pas pu être envoyée')
                                     });
                                 }
 
@@ -119,12 +119,12 @@ App
 
             var myPopup = $ionicPopup.show({
                 template: '<input autofocus type="text" ng-model="data.username" class="add-user-input" required="true">',
-                title: gettextCatalog.getString('Enter a new name for {{name}}', {name:$scope.popover.member.username}),
+                title: gettextCatalog.getString('Quel nouveau nom pour {{name}} ?', {name:$scope.popover.member.username}),
                 scope: $scope,
                 buttons: [
-                    { text: gettextCatalog.getString('Cancel') },
+                    { text: gettextCatalog.getString('Annuler') },
                     {
-                        text: gettextCatalog.getString('Confirm'),
+                        text: gettextCatalog.getString('Valider'),
                         type: 'button-positive',
                         onTap: function(e) {
                             if (!$scope.data.username)
@@ -146,8 +146,8 @@ App
                     
                     else {
                         var alertPopup = $ionicPopup.alert({
-                            title: gettextCatalog.getString('Error'),
-                            template: gettextCatalog.getString("Please fill a name that is not already used!")
+                            title: gettextCatalog.getString('Erreur'),
+                            template: gettextCatalog.getString("Veuillez renseigner un nom qui n'est pas déjà utilisé !")
                         });
                         alertPopup.then(function(res) {
                             $scope.renameUser();
@@ -181,12 +181,12 @@ App
         $scope.editshare_member = angular.copy($scope.popover.member);
         var myPopup = $ionicPopup.show({
             templateUrl: 'app/templates/edit_user_share.html',
-            title: gettextCatalog.getString('{{name}}\'s default share', {name:$scope.popover.member.username}),
+            title: gettextCatalog.getString('Part par defaut de {{name}}', {name:$scope.popover.member.username}),
             scope: $scope,
             buttons: [
-                { text: gettextCatalog.getString('Cancel') },
+                { text: gettextCatalog.getString('Annuler') },
                 {
-                    text: gettextCatalog.getString('Confirm'),
+                    text: gettextCatalog.getString('Valider'),
                     type: 'button-positive',
                     onTap: function(e) {
                         return true;
@@ -211,20 +211,20 @@ App
         if($scope.popover.member.share!=0) {
 
             if($scope.popover.member.current_user)
-                var template_text = '<div style="text-align:center">' + gettextCatalog.getString('Your default share will be set to 0 and you <strong>won\'t be displayed in further entries</strong>.') + '</div>';
+                var template_text = '<div style="text-align:center">' + gettextCatalog.getString('Votre part par défaut sera mise à 0 et vous <strong>n\'apparaîtrez pas dans les prochaines dépenses</strong>.') + '</div>';
 
 
             else if($scope.popover.member.count_total>0) 
-                var template_text = '<div style="text-align:center">' + gettextCatalog.getString('{{name}} is listed in some entries and thus couldn\'t be removed.<br />Their default share was set to 0 and they <strong>won\'t be displayed in further entries</strong>.', {name: $scope.popover.member.username }) + '</div>';
+                var template_text = '<div style="text-align:center">' + gettextCatalog.getString('{{name}} apparaît dans des dépenses et ne peut être supprimé.<br />Sa part par défaut sera mise à 0 et il/elle <strong>n\'apparaîtra pas dans les prochaines dépenses</strong>.', {name: $scope.popover.member.username }) + '</div>';
 
             else
-                var template_text = gettextCatalog.getString('Remove {{name}} from group?', {name: $scope.popover.member.username});
+                var template_text = gettextCatalog.getString('Supprimer {{name}} du groupe ?', {name: $scope.popover.member.username});
 
             var confirmPopup = $ionicPopup.confirm({
                 title: gettextCatalog.getString('Information'),
                 template: template_text,
                 buttons: [
-                    { text: gettextCatalog.getString('Cancel') },
+                    { text: gettextCatalog.getString('Annuler') },
                     {
                         text: gettextCatalog.getString('OK'),
                         type: 'button-positive',

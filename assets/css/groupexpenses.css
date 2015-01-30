@@ -42,9 +42,7 @@
     display: -ms-flexbox;
     display: flex;
 }
-#groupexpenses .scroll {
-    padding-bottom: 100px;
-}
+
 #groupexpenses .expenseslist .share_indicator {
     font-style: italic;
     font-size:12px;
@@ -143,15 +141,60 @@
     text-align:center;
 }
 
-#groupexpenses .groupexpenses_subheader{
-text-align: center;
-line-height: 29px;
-font-weight: bold;
-color: rgb(160, 228, 255);
-background-color: #0e6bb9;
-
-    
+#groupexpenses .groupexpenses_subheader {
+    text-align: center;
+    line-height: 29px;
+    font-weight: bold;
+    color: rgb(160, 228, 255);
+    background-color: #0e6bb9; 
 }
 
+#groupexpenses ion-content.has-tabs-top {
+    top: 93px;
+    height: inherit;
+}
+
+#groupexpenses .tab-nav.tabs {
+    //height: 30px;
+    //line-height: 30px;
+}
+#groupexpenses ion-content.has-footer.has-tabs {
+    bottom:inherit;
+}
+#groupexpenses .tabs-bottom ion-content.has-footer.has-tabs {
+    bottom:49px;
+}
+#groupexpenses .bar-footer {
+    background: transparent;
+    height:1px;
+}
+#groupexpenses .bar-footer .buttons {
+    text-align: right;
+    display: inline-block;
+    width: 100%;
+}
+#groupexpenses #addexpensebutton {
+    bottom: 90px;
+    max-height:initial;
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    text-align: center;
+    padding-left: 25px;
+}
+
+#groupexpenses #addexpensebutton:before {
+    font-size: 60px;
+    color: rgba(218, 67, 54, 0.85);
+    box-shadow: 0 6px 10px rgba(0,0,0,.23),0 10px 30px rgba(0,0,0,.19);
+    background: transparent;
+    height: 52px;
+    line-height: 52px;
+    border-radius: 100%;
+    width: 52px;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
 
 /* Content END */

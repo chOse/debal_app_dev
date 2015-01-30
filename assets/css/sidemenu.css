@@ -19,7 +19,13 @@
 	padding-top: 80px;
 }
 #sidemenu .item-icon-left {
-	background-color:rgba(255, 255, 255, 0);padding: 12px;padding-left: 50px;border-color: rgb(12, 57, 124)
+	background-color:rgba(255, 255, 255, 0);
+	padding: 12px;
+	padding-left: 50px;
+	border-color: rgb(12, 57, 124);
+	color:inherit;
+	width:100%;
+	text-align:left;
 }
 #sidemenu .user_email {
 	font-size: 12px;margin:0; font-style:italic;color: #ccc;

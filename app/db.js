@@ -83,6 +83,17 @@
                 `EntryId` INTEGER,\n\
                 `deleted` INTEGER DEFAULT \'0\',\n\
                 UNIQUE (id) ON CONFLICT REPLACE)',
+
+                'CREATE TABLE IF NOT EXISTS `groups_requests` (\n\
+                `GroupRequestId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
+                `id` INTEGER,\n\
+                `user_id` INTEGER,\n\
+                `UserId` INTEGER,\n\
+                `group_id` INTEGER,\n\
+                `GroupId` INTEGER,\n\
+                `status` INTEGER DEFAULT \'0\',\n\
+                `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n\
+                UNIQUE (id) ON CONFLICT REPLACE)',
             ],
 
             RECREATE_DB : false,

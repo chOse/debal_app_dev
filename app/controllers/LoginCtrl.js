@@ -35,10 +35,10 @@ App
 
     $scope.forgotPassword = function() {
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Forgot password'),
-            template: gettextCatalog.getString('You\'ll be directed to the "request a new password" web page'),
+            title: gettextCatalog.getString('Mot de passe oublié'),
+            template: gettextCatalog.getString('Vous allez être redirigé vers la page web de récupération de mot de passe'),
             buttons: [
-                { text: gettextCatalog.getString('Cancel'), onTap: function(e) { return false; } },
+                { text: gettextCatalog.getString('Annuler'), onTap: function(e) { return false; } },
                 { text: 'OK', type: 'button-positive', onTap: function(e) { return true; } },
             ]
         });
@@ -90,8 +90,8 @@ App
     function facebook_error(response) {
         LoaderService.hide();
         $ionicPopup.alert({
-            title: gettextCatalog.getString('Error'),
-            template: gettextCatalog.getString("Unable to connect with your Facebook account right now.")
+            title: gettextCatalog.getString('Erreur'),
+            template: gettextCatalog.getString("Impossible de se connecter avec votre compte Facebook pour le moment.")
         });
     }
 
@@ -115,15 +115,15 @@ App
                 
                 if(status===401) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Error'),
-                        template: gettextCatalog.getString("Incorrect email or password.")
+                        title: gettextCatalog.getString('Erreur'),
+                        template: gettextCatalog.getString("Email ou mot de passe incorrect.")
                     });
                     
                 }
                 else if(status!==200 || response.result!="OK") {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Error'),
-                        template: gettextCatalog.getString("Unable to connect to server. Please try again.")
+                        title: gettextCatalog.getString('Erreur'),
+                        template: gettextCatalog.getString("Impossible de se connecter au serveur. Veuillez reessayer.")
                     });
                 }
                 else if(response.result=='OK') {
@@ -146,8 +146,8 @@ App
         else {
             
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Error'),
-                template: gettextCatalog.getString("Please fill all fields!")
+                title: gettextCatalog.getString('Erreur'),
+                template: gettextCatalog.getString("Veuillez remplir tous les champs !")
             });
         }
     };
@@ -178,27 +178,27 @@ App
 
             if(status!==200) {
                 $ionicPopup.alert({
-                    title: gettextCatalog.getString('Error'),
-                    template: gettextCatalog.getString("Unable to connect to server. Please try again.")
+                    title: gettextCatalog.getString('Erreur'),
+                    template: gettextCatalog.getString("Impossible de se connecter au serveur.")
                 });
             }
             else if(response.result=="ERROR") {
                 if(response.data.email) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Error'),
-                        template: gettextCatalog.getString("This email address is already used. Did you already register?")
+                        title: gettextCatalog.getString('Erreur'),
+                        template: gettextCatalog.getString("Cette adresse email est déjà prise par un membre. Etes vous déjà inscrit ?")
                     });
                 }
                 else if(response.data.password) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Error'),
-                        template: gettextCatalog.getString("Password must be at least 6 characters long")
+                        title: gettextCatalog.getString('Erreur'),
+                        template: gettextCatalog.getString("Le mot de passe doit faire au moins 6 caractères")
                     });
                 }
                 else if(response.data.username) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Error'),
-                        template: gettextCatalog.getString("Invalid username")
+                        title: gettextCatalog.getString('Erreur'),
+                        template: gettextCatalog.getString("Nom d'utilisateur invalide")
                     });
                 }
             }
@@ -216,8 +216,8 @@ App
 
             else {
                 $ionicPopup.alert({
-                    title: gettextCatalog.getString('Error'),
-                    template: gettextCatalog.getString("Unable to proceed to subscribtion")
+                    title: gettextCatalog.getString('Erreur'),
+                    template: gettextCatalog.getString("Impossible de procéder à l'inscription")
                 });
             }
             

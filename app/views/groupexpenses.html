@@ -1,28 +1,26 @@
-<ion-view id="groupexpenses">
+<ion-view id="groupexpenses" view-title="{{group_data.name}}">
 
         <ion-nav-title>{{group_data.name}}</ion-nav-title>
 
         <ion-nav-buttons side="right">
-            <a data-instantActivate href="#/app/editgroup/{{GroupId}}" style="margin-right:10px" class="button button-clear icon-left ion-gear-a"></a>
-            <a data-instantActivate href="#/app/addexpense/{{GroupId}}" class="button button-clear icon-left ion-plus-circled"></a>
+            <button ng-click="goSettings()" style="margin-right:10px" class="button button-clear icon-left ion-gear-a"></button>
         </ion-nav-buttons>
 
 
-        <ion-tabs data-instantActivate class="footer tabs-balanced">
+        <ion-tabs class="tabs-striped tabs-balanced">
 
-        <ion-tab
-                    id="expenses"
-                    icon-on="ion-clipboard"
-                    icon-off="ion-clipboard">
+        <ion-tab id="expenses" title="{{'Expenses'|translate}}">
 
-            <ion-content has-bouncing="false" has-tabs="true" class="ionic-scroll">
+
+            <ion-content has-bouncing="false" has-tabs="true" has-footer="false" class="has-tabs ionic-scroll">
+
                 <ion-refresher on-refresh="doRefresh()"
                          pulling-text="{{'Manual sync'|translate}}"
                          refreshing-text="{{'Now syncing...'|translate}}..."
                          refreshing-icon="ion-loading-d"></ion-refresher>
-                <div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>
-                <div translate class="item item-divider">Expenses</div>
-      
+                <!--<div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>-->
+                <!--<div translate class="item item-divider">Expenses</div>-->
+                
                 <a ng-repeat="expense in expenses_display" class="expenseslist item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
 
                     <div class="flex">
@@ -53,16 +51,21 @@
                 <div style="color: #444;font-size: 12px;text-align: center;" ng-if="!noMoreItems">Scroll to show next expenses</div>
 
                 <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="30%"></ion-infinite-scroll>
+
             </ion-content>
+            <ion-footer-bar>
+              <div class="buttons">
+                <button id="addexpensebutton" ng-click="addExpense()" class="button button-clear icon-left ion-plus-circled"></button>
+              </div>
+            </ion-footer-bar>
+
         </ion-tab>
 
-        <ion-tab   ng-click="showBalance()" 
-                    icon-on="ion-wand"
-                    icon-off="ion-wand">
+        <ion-tab ng-click="showBalance()" title="{{'Debts'|translate}}">
 
             <ion-content has-bouncing="false" has-tabs="true" class="ionic-scroll">
                 
-                <div translate class="item item-divider">Who owes what?</div>
+                <!--<div translate class="item item-divider">Who owes what?</div>-->
                 <ul class="list" style="margin-bottom:0">
 
                     <span translate class="item item-icon-right" ng-show="!expenses.length || expenses.length==0">No expense added</span>
@@ -90,12 +93,12 @@
                 <ul class="list">
                     <li ng-show="group_data.public_key" class="item item-text-wrap"><span translate>Check the accounts from this address:</span>
                         <p class="url">
-                            <button data-instantActivate class="button button-block button-energized icon-right icon ion-chevron-right" ng-click="openGroupUrl()">http://debal.fr/<strong>{{group_data.public_key}}</strong></button>
+                            <button class="button button-block button-energized icon-right icon ion-chevron-right" ng-click="openGroupUrl()">http://debal.fr/<strong>{{group_data.public_key}}</strong></button>
                         </p>
 
                         <span translate><strong>Share this address</strong> via Email, SMS, Facebook, Whatsapp... with other group members to give them access to the balance!</span>
                         <p class="share">
-                            <button data-instantActivate translate ng-click="ShareGroup()" class="button button-block button-calm ion-android-share">Share</button>
+                            <button translate ng-click="ShareGroup()" class="button button-block button-calm ion-android-share">Share</button>
                         </p>
 
                     </li>
@@ -103,6 +106,7 @@
                 </ul>
                 
             </ion-content>
+            <ion-footer-bar></ion-footer-bar>
         </ion-tab>
     </ion-tabs>
 </ion-view>

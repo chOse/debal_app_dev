@@ -11,11 +11,11 @@ App
 
     if($state.current.name=='app.editexpense') {
         $scope.curr_action = 'edit';
-        $scope.curr_title = gettextCatalog.getString("Edit expense");
+        $scope.curr_title = gettextCatalog.getString("Modifier la dépense");
     }
     else {
         $scope.curr_action = 'add';
-        $scope.curr_title = gettextCatalog.getString("New expense");
+        $scope.curr_title = gettextCatalog.getString("Nouvelle dépense");
     }
     
     $scope.$on('newGroups', function(event) {
@@ -60,14 +60,14 @@ App
     $scope.validForm = function() {
         if (typeof($scope.expense.spender)=='undefined') {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Error'),
-                template: gettextCatalog.getString("Please select spender.")
+                title: gettextCatalog.getString('Erreur'),
+                template: gettextCatalog.getString("Préciser le nom du payeur.")
             });
         }
         else if(!is_amount($scope.expense.amount)) {
             var alertPopup = $ionicPopup.alert({
-                title: gettextCatalog.getString('Error'),
-                template: gettextCatalog.getString("Amount could only have digits and period (no commas !)")
+                title: gettextCatalog.getString('Erreur de montant'),
+                template: gettextCatalog.getString("Le montant ne peut contenir que des chiffres et un point (pas de virgule !)")
             });
             alertPopup.then(function(res) {
                 document.getElementById("amount_field").focus();
@@ -75,8 +75,8 @@ App
         }
         else if ($scope.shares_sum==0) {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Error'),
-                template: gettextCatalog.getString("Please select at least one beneficiary.")
+                title: gettextCatalog.getString('Erreur'),
+                template: gettextCatalog.getString("Veuillez entrer au moins un bénéficiaire.")
             });
         }
         else
@@ -273,11 +273,11 @@ App
     $scope.deleteExpense = function() {
        
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Confirm deleting group'),
-            template: gettextCatalog.getString('Are you sure you want to delete this expense?'),
+            title: gettextCatalog.getString('Confirmez la suppression'),
+            template: gettextCatalog.getString('Etes-vous sûr de vouloir supprimer cette dépense ?'),
             buttons: [
-                { text: gettextCatalog.getString('Cancel'), onTap: function(e) { return false; } },
-                { text: '<b>' + gettextCatalog.getString('Confirm') + '</b>', type: 'button-positive', onTap: function(e) { return true; } },
+                { text: 'Annuler', onTap: function(e) { return false; } },
+                { text: '<b>Confirmer</b>', type: 'button-positive', onTap: function(e) { return true; } },
             ]
         });
         
