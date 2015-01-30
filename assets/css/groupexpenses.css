@@ -185,7 +185,7 @@
 
 #groupexpenses #addexpensebutton:before {
     font-size: 60px;
-    color: rgba(218, 67, 54, 0.85);
+    color: rgba(218, 67, 54,1);
     box-shadow: 0 6px 10px rgba(0,0,0,.23),0 10px 30px rgba(0,0,0,.19);
     background: transparent;
     height: 52px;
