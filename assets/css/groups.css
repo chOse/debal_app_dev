@@ -25,14 +25,23 @@
     padding: 0;
 }
 #groups .bar.bar-footer .button {
-    display:block;
+    display: block;
     margin: 0;
-    padding-top:4px;
-    font-size: 21px;
-    width:100%;
+    border-radius: 4px;
+    line-height: 46px;
+    font-size: 16px;
+    width: 48%;
+    border: none;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.13);
 }
 #groups .bar.bar-footer .button i {
     padding: 0 10px 0 0;
+    position: relative;
+    top: -6px;
+    vertical-align: bottom;
 }
 
+.title.title-center.header-item{
+    font-size: 18px;
+}
 /* Footer END */

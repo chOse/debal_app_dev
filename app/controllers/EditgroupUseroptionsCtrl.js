@@ -14,8 +14,8 @@ App
 
             if(!$scope.popover.member.id) {
                 $ionicPopup.alert({
-                    title: gettextCatalog.getString('Invitation impossible !'),
-                    template: gettextCatalog.getString("Le groupe n'a pas encore été synchronisé (connexion à Internet nécessaire)")
+                    title: gettextCatalog.getString('Unable to invite!'),
+                    template: gettextCatalog.getString("You need to sync the group first. (Internet required)")
                 });
             }
 
@@ -23,12 +23,12 @@ App
                 var myPopup = $ionicPopup.show({
                     //template: '<style>.popup {width:300px !important;}</style><input style="width: 185px;display: inline;" autofocus type="email" ng-model="data.invite_email" class="add-user-input" required="true"><button ng-click="$scope.pickContact()" class="button button-small button-energized icon-left ion-android-contacts">Contacts</button>',
                     template: '<input autofocus type="text" ng-model="data.invite_email" class="add-user-input" required="true">',
-                    title: gettextCatalog.getString('Quelle est l\'adresse e-mail de {{name}} ?', {name:$scope.popover.member.username}),
+                    title: gettextCatalog.getString('What is {{name}}\'s email address?', {name:$scope.popover.member.username}),
                     scope: $scope,
                     buttons: [
-                        { text: gettextCatalog.getString('Annuler') },
+                        { text: gettextCatalog.getString('Cancel') },
                         {
-                            text: gettextCatalog.getString('Inviter'),
+                            text: gettextCatalog.getString('Invite'),
                             type: 'button-positive',
                             onTap: function(e) {
                                 console.log($scope.data.invite_email);

@@ -1,0 +1,25 @@
+<ion-view cache-view="false" title="Landing" id="landing">
+	<ion-content scroll="false">
+
+		<div id="backgroundlanding">
+			<section class="text-center top_content">
+				<img id="login-logo" src="assets/images/logo_debal.png" />
+			</section>
+
+			<section class="text-center middle_content">
+				<div translate id="central_text">Wherever you are, add expenses <strong>even without Internet access!</strong></div>
+			</section>
+
+			<section class="text-center bottom_content">
+				<button type="button" class="landing_button landing_button1" ng-click="facebookLogin()">
+					<span translate>Connect with my Facebook account</span>
+				</button>
+				
+				<button translate type="button" ng-click="goRegister()" class="landing_button landing_button2">Register</button>
+
+				<div translate id="mid_text">You already have an account,</div>
+				<button translate type="button" ng-click="goLogin()" class="landing_button landing_button3">Connect</button>
+			</section>
+		</div>
+	</ion-content>
+</ion-view>

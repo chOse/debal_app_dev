@@ -14,6 +14,9 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
 }
 
 /* Header START */
+.bar-calm .button.back-button {
+    padding-right: 20px;
+}
 .bar-header {
     font-size: 25px;
 }
@@ -28,28 +31,28 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     position: absolute; top: 9px; right: 10px;
 }
 /* Return button */
-.bar-header a.back-button  {
+.bar-header .back-button  {
     font-size:14px !important;
     font-weight:bold !important;
 }
-.bar-header a.back-button:before {
+.bar-header .back-button:before {
     margin-right:5px !important;
     font-size:35px !important;
     color:#fff !important;
 }
-.bar-header a.button.ion-checkmark, .bar-header a.button.ion-ios7-trash-outline { 
+.bar-header .button.ion-checkmark, .bar-header .button.ion-ios7-trash-outline { 
     border: 1px solid #fff;
     border-radius: 6px;
     padding-left: 5px;
     padding-right: 5px;
 }
-.bar-header a.button.ion-checkmark:before, .bar-header a.button.ion-ios7-trash-outline:before {
+.bar-header .button.ion-checkmark:before, .bar-header .button.ion-ios7-trash-outline:before {
     font-size: 26px !important;
     line-height: 26px !important;
     padding-left: 5px;
     padding-right: 3px;
 }
-.bar-header a.button.ion-ios7-trash-outline {
+.bar-header .button.ion-ios7-trash-outline {
     margin-right:10px;
 }
 .popup-body input.add-user-input {

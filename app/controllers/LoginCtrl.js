@@ -25,6 +25,10 @@ App
     
     $ionicSideMenuDelegate.canDragContent(false);
 
+    $scope.goLanding = function() {
+        $state.go('landing');
+    }
+
     $scope.goRegister = function() {
         $state.go('register');
     }

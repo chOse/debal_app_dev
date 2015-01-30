@@ -1,23 +1,23 @@
-<ion-view title="{{'Nouveau groupe'|translate}}" id="creategroup">
+<ion-view cache-view="false" title="{{'New group'|translate}}" id="creategroup">
     <ion-nav-buttons side="right">
-        <a data-instantActivate style="margin-right:10px" class="button button-clear icon-left ion-android-add-contact" ng-click="addMember()"></a>
-        <a data-instantActivate class="button button-clear icon-left ion-checkmark" ng-click="addGroup()"></a>
+
+        <button class="button button-clear icon-left ion-checkmark" ng-click="addGroup()"></button>
     </ion-nav-buttons>
 
     <ion-content has-bouncing="false" has-header>
         <form novalidate="novalidate" on-valid-submit="addGroup()">
             <div class="list" style="padding-left: 10px; padding-right: 10px;margin-top: 20px;">
                 <label class="item item-input item-label">
-                    <span translate class="input-label">Nom du groupe</span>
-                    <input autofocus ng-model="group.name" type="text" placeholder="{{'Entrez un nom'|translate}}" name="group" required="required">
+                    <span translate class="input-label">Group name</span>
+                    <input ng-model="group.name" type="text" placeholder="{{'Enter a name'|translate}}" name="group" required="required">
                 </label>
                 <label class="item item-input item-icon-right item-label">
-                    <span translate class="input-label">Monnaie</span>
+                    <span translate class="input-label">Currency</span>
                     <i class="icon ion-arrow-down-b icon-accessory"></i>
                     <select class="currency" ng-model="group.currency" ng-options="curr.name_{{locale}} for (k, curr) in currencies" required="required"></select>
                 </label>
 
-                <div class="members_title" translate>Participants</div>
+                <div class="members_title" translate>Members</div>
 
                 <div ng-repeat="member in group.members" class="userlist nomargin card item item-input-inset">
                     <label class="item-input-wrapper validated icon-left ion-person" ng-class="{true:'current-user'}[member.current_user]" style="font-size:20px; padding-left:2px">
@@ -26,6 +26,8 @@
                     <div ng-click="editShare(member)" class="button button-small button-energized share-status icon-left ion-pie-graph">{{member.share}}</div>
                     <button ng-disabled="member.current_user" ng-click="group.members.splice($index, 1)" class="button icon button-small ion-trash-a"></button>
                 </div>
+                
+                <button translate style="margin-right:10px" class="creategroup_button creategroup_button1" ng-click="addMember()">Add a member</button>
             </div>
         </form> 
     </ion-content>

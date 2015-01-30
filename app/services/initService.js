@@ -41,6 +41,12 @@ App.service('initService', function(API_ROUTES, LocalStorageService, GENERAL_CON
             associations : ['entries', 'groups_users']
         },
         {
+            tableName : 'groups_requests', 
+            idName : 'GroupRequestId',
+            serverId : 'groups_request_id',
+            associations : ['users', 'groups']
+        },
+        {
             tableName : 'categories', 
             idName : 'CategoryId',
             serverId : 'category_id',

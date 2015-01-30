@@ -1,5 +1,5 @@
 App
-.controller('SideMenuCtrl', function($ionicSideMenuDelegate, $rootScope, $scope, $ionicModal, $ionicPopup, $state, gettextCatalog, SyncService, LocalStorageService, LoaderService, SUPPORTED_LANG, tmhDynamicLocale) {
+.controller('SideMenuCtrl', function($ionicSideMenuDelegate, $rootScope, $scope,$window, $ionicModal, $ionicPopup, $state, gettextCatalog, SyncService, LocalStorageService, LoaderService, SUPPORTED_LANG, tmhDynamicLocale) {
 
  $scope.user_email = LocalStorageService.get("user_email");
     // Side menu stuff
@@ -20,7 +20,14 @@ App
     $scope.closeModal = function() {
         $scope.modal.hide();
     };
-    $scope.sendFeedback = function(msg) {
+
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+
+    $scope.sendFeedback = function() {
+
+        var msg = $scope.modal.feedback_message
         if(msg !== undefined && msg.length>0) {
             LoaderService.show();
             var fbck_data = {
@@ -30,40 +37,41 @@ App
                     app_version : LocalStorageService.get('app_version')
                 }
             }
-            
-            SyncService.api_send("send_feedback", fbck_data, function(data, status) {
 
-            if(status==200 && data.result=="OK") {
-                $ionicPopup.alert({
-                    title: gettextCatalog.getString('Merci !'),
-                    template: gettextCatalog.getString("Votre message nous a bien été transmis. Merci !")
-                });
-                
-                $scope.modal.hide();
-            }
-            else {
-                $ionicPopup.alert({
-                    title: gettextCatalog.getString('Oups !'),
-                    template: gettextCatalog.getString("Le message n'a pas été transmis. Merci de vérifier votre connexion à Internet et réessayer.")
-                });
-            }
-            LoaderService.hide();
-        });
+            SyncService.api_send("send_feedback", fbck_data, function(data, status) {
+                LoaderService.hide();
+
+                if(status==200 && data.result=="OK") {
+                    $ionicPopup.alert({
+                        title: gettextCatalog.getString('Thank you !'),
+                        template: gettextCatalog.getString("Your message has been sent. Thank you!")
+                    });
+                    
+                    $scope.modal.hide();
+                    delete $scope.modal.feedback_message;
+                }
+                else {
+                    $ionicPopup.alert({
+                        title: gettextCatalog.getString('Oops !'),
+                        template: gettextCatalog.getString("Message could not be sent. Please check your internet status and try again.")
+                    });
+                }
+            });
         }
         else {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Message vide !'),
-                template: gettextCatalog.getString("Merci d'entrer un message.")
+                title: gettextCatalog.getString('Message is empty!'),
+                template: gettextCatalog.getString("Please type a message.")
             });
         }
     }
     $scope.disconnect = function() {
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Déconnexion'),
-            template: gettextCatalog.getString('Vous allez être deconnecté de votre compte.'),
+            title: gettextCatalog.getString('Disconnect'),
+            template: gettextCatalog.getString('You\'ll be disconnected.'),
             buttons: [
-                { text: gettextCatalog.getString('Annuler'), onTap: function(e) { return false; } },
-                { text: '<b>' + gettextCatalog.getString("Confirmer") + '</b>', type: 'button-positive', onTap: function(e) { return true; } },
+                { text: gettextCatalog.getString('Cancel'), onTap: function(e) { return false; } },
+                { text: '<b>' + gettextCatalog.getString("Confirm") + '</b>', type: 'button-positive', onTap: function(e) { return true; } },
             ]
         });
 
@@ -80,14 +88,20 @@ App
     $scope.selectLanguage = function() {
         $scope.selectLanguagePopup = $ionicPopup.show({
             templateUrl: 'app/templates/select_language.html',
-            title: gettextCatalog.getString('Choisissez la langue'),
+            title: gettextCatalog.getString('Select a language'),
             scope: $scope,
             buttons: [
-                { text: gettextCatalog.getString('Annuler') },
+                { text: gettextCatalog.getString('Cancel') },
             ]
         });
-
     }
+    
+    $scope.shareApp = function() {
+        if(typeof window.plugins.socialsharing != 'undefined') {
+            window.plugins.socialsharing.share(gettextCatalog.getString('App for sharing expenses with friends') + ' : http://debal.fr',null,null,'http://www.debal.fr');
+        }
+    }
+
     $scope.changeLanguage = function(device_lang) {
 
         if(SUPPORTED_LANG.indexOf($scope.device_lang)==-1)
@@ -103,6 +117,7 @@ App
 
         $scope.selectLanguagePopup.close();
         $ionicSideMenuDelegate.toggleLeft();
+        $window.location.reload();
     }
 
     
