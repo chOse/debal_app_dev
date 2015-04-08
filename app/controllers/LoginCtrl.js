@@ -1,10 +1,12 @@
+/* global cordova,App, facebookConnectPlugin */
+
 App
 .controller('LoginCtrl', function($scope, $rootScope, $ionicPopup, $state, $ionicSideMenuDelegate, gettextCatalog, GENERAL_CONFIG, LoaderService, LoginService, LocalStorageService, SyncService, initService) {
 
     // RECREATE DB IF APP UPDATED
     var app_version = LocalStorageService.get('app_version');
 
-    if(app_version!=GENERAL_CONFIG.APP_VERSION && GENERAL_CONFIG.RECREATE_APP_VERSIONS.indexOf(app_version)>-1) {
+    if(app_version!==GENERAL_CONFIG.APP_VERSION && GENERAL_CONFIG.RECREATE_APP_VERSIONS.indexOf(app_version)>-1) {
         initService.reInit();
     }
 
@@ -16,9 +18,15 @@ App
         LoaderService.show();
         initService.init(function() {
             $state.go('app.groups');
+            if(typeof LocalStorageService.get('user_email') !== 'undefined' && LocalStorageService.get('user_name') !== 'undefined') {
+                cordova.plugins.intercom.updateAttributes({
+                    email: LocalStorageService.get('user_email'),
+                    name: LocalStorageService.get('user_name')
+                });
+            }
             SyncService.syncAndRefresh(function() {
                 LoaderService.hide();
-            })
+            });
         });
     }
 
@@ -27,19 +35,19 @@ App
 
     $scope.goLanding = function() {
         $state.go('landing');
-    }
+    };
 
     $scope.goRegister = function() {
         $state.go('register');
-    }
+    };
 
     $scope.forgotPassword = function() {
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Mot de passe oublié'),
-            template: gettextCatalog.getString('Vous allez être redirigé vers la page web de récupération de mot de passe'),
+            title: gettextCatalog.getString('Forgot your password?'),
+            template: gettextCatalog.getString('You will be redirected to the password recovery page.'),
             buttons: [
-                { text: gettextCatalog.getString('Annuler'), onTap: function(e) { return false; } },
-                { text: 'OK', type: 'button-positive', onTap: function(e) { return true; } },
+                { text: gettextCatalog.getString('Cancel'), onTap: function(e) { return false; } },
+                { text: 'OK', type: 'button-positive', onTap: function(e) { return true; } }
             ]
         });
 
@@ -48,18 +56,18 @@ App
                 window.open('http://debal.fr/users/forgot_password?email=' + $scope.user.email + '&locale=' + LocalStorageService.get("locale") + 'utm_source=app&utm_medium=forgot_password&utm_campaign=outbound', '_system');
             }
         });
-    }
+    };
     
 
     $scope.facebookLogin = function() {
         LoaderService.show();
         facebookConnectPlugin.login(["email", "public_profile"],facebook_success,facebook_error);
-    }
+    };
 
     function facebook_success(response) {
         LoaderService.hide();
 
-        if(typeof(response.authResponse)!='undefined' && typeof(response.authResponse.accessToken)!='undefined') {
+        if(typeof(response.authResponse)!=='undefined' && typeof(response.authResponse.accessToken)!=='undefined') {
             var accessToken =  response.authResponse.accessToken;
             console.error("---------------------------------------- FB LOGIN SUCCESS");
             LoaderService.show_long();
@@ -70,7 +78,7 @@ App
                 LoginService.facebook_connect(sendData, function(response, status) {
                     console.error("---------------------------------------- LOGINSERVICE SUCCESS " + status + " " + JSON.stringify(response));
                     LoaderService.hide();
-                    if(status==200 && response.result=="OK") {
+                    if(status===200 && response.result==="OK") {
                         console.error("---------------------------------------- WILL NOW LOGIN");
                         $scope.signIn({email:email, password:accessToken});
                     }
@@ -90,8 +98,8 @@ App
     function facebook_error(response) {
         LoaderService.hide();
         $ionicPopup.alert({
-            title: gettextCatalog.getString('Erreur'),
-            template: gettextCatalog.getString("Impossible de se connecter avec votre compte Facebook pour le moment.")
+            title: gettextCatalog.getString('Error'),
+            template: gettextCatalog.getString("Unable to connect with you Facebook account at the moment.")
         });
     }
 
@@ -115,30 +123,36 @@ App
                 
                 if(status===401) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Erreur'),
-                        template: gettextCatalog.getString("Email ou mot de passe incorrect.")
+                        title: gettextCatalog.getString('Error'),
+                        template: gettextCatalog.getString('Incorrect email or password')
                     });
                     
                 }
-                else if(status!==200 || response.result!="OK") {
+                else if(status!==200 || response.result!=="OK") {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Erreur'),
-                        template: gettextCatalog.getString("Impossible de se connecter au serveur. Veuillez reessayer.")
+                        title: gettextCatalog.getString('Error'),
+                        template: gettextCatalog.getString("Unable to connect to server. Please try again.")
                     });
                 }
-                else if(response.result=='OK') {
+                else if(response.result==='OK') {
                     // SyncData
                     $rootScope.user_email = LocalStorageService.get('user_email');
                     $rootScope.user_name = LocalStorageService.get('user_name');
                     $rootScope.user_id = LocalStorageService.get('user_id');
 
                     LoaderService.show();
+                    if(typeof cordova !== 'undefined' && typeof cordova.plugins !== 'undefined' && typeof cordova.plugins.intercom !== "undefined") {
+                        cordova.plugins.intercom.updateAttributes({
+                            email: LocalStorageService.get('user_email'),
+                            name: LocalStorageService.get('user_name')
+                        });
+                    }
                     console.error("---------------------------------------- WILL NOW SYNCANDREFRESH ");
                     SyncService.syncAndRefresh(function() {
                         console.log('LOGIN SyncAndRefresh OK, WILL REDIRECT TO GROUPS');
                         $scope.$apply($state.go('app.groups'));
                         
-                    })
+                    });
                 }
             });
         }
@@ -146,15 +160,15 @@ App
         else {
             
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur'),
-                template: gettextCatalog.getString("Veuillez remplir tous les champs !")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("Please fill in all the fields!")
             });
         }
     };
 
     $scope.goLogin = function() {
         $state.go('login');
-    }
+    };
 
     $scope.user = {};
 
@@ -182,7 +196,7 @@ App
                     template: gettextCatalog.getString("Impossible de se connecter au serveur.")
                 });
             }
-            else if(response.result=="ERROR") {
+            else if(response.result==="ERROR") {
                 if(response.data.email) {
                     $ionicPopup.alert({
                         title: gettextCatalog.getString('Erreur'),
@@ -203,15 +217,21 @@ App
                 }
             }
                 
-            else if (response.result=="OK") {
+            else if (response.result==="OK") {
                 $rootScope.user_email = LocalStorageService.get('user_email');
                 $rootScope.user_name = LocalStorageService.get('user_name');
                 $rootScope.user_id = LocalStorageService.get('user_id');
+                if(typeof cordova !== 'undefined' && typeof cordova.plugins !== 'undefined' && typeof cordova.plugins.intercom !== "undefined") {
+                    cordova.plugins.intercom.updateAttributes({
+                        email: LocalStorageService.get('user_email'),
+                        name: LocalStorageService.get('user_name')
+                    });
+                }
                 SyncService.syncAndRefresh(function() {
                     $scope.$apply();
                     $state.go('app.groups');
                     LoaderService.hide();
-                })
+                });
             }
 
             else {

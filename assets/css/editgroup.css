@@ -24,15 +24,16 @@
     margin-left: 0;
     margin-right: 0;
 }
-#editgroup .userlist a.ion-android-more {
+#editgroup .userlist a.ion-android-more-vertical {
     font-size:15px;
     color:orange;
 }
-#editgroup .userlist a.ion-android-more:before {
-    margin-top: 4px;
+#editgroup .userlist a.ion-android-more-vertical:before {
+    margin-top: 5px;
     margin-right: 3px;
+    font-size: 14pt;
 }
-#editgroup .ion-android-add-contact:before {
+#editgroup .ion-android-person-add:before {
     margin-right:5px;
 }
 #editgroup .members_title {
@@ -68,7 +69,7 @@
 #editgroup div.disabled, #editgroup div.disabled  label {
     background:#eee;
 }
-#editgroup label.ion-android-social-user.disabled::before {
+#editgroup label.ion-person.disabled::before {
     color:#ccc;
 }
 #editgroup .share-status.button-small:before {
@@ -111,22 +112,31 @@
     margin:0;
     white-space: normal;
 }
+#editgroup .userlist label div p.username {
+    font-size:12pt;
+}
 #editgroup .userlist label div .info {
     font-size:11px;
     overflow: initial;
     text-overflow: initial;
     white-space: initial;
 }
-#editgroup div.userlist label.ion-android-social-user:before {
+#editgroup div.userlist label.ion-person:before {
     font-size: 30px;
+    border: 1px solid #ccc;
+border-radius: 5px;
+width: 40px;
+height: 40px;
+text-align: center;
+line-height: 40px;
 }
-#editgroup div.userlist label.ion-android-social-user.current-user:before {
+#editgroup div.userlist label.ion-person.current-user:before {
     color:orange;
 }
-#editgroup div.userlist label.ion-android-social-user.registered-user:before {
+#editgroup div.userlist label.ion-person.registered-user:before {
     color:green;
 }
-#editgroup div.userlist label.ion-android-social-user.guest-user:before {
+#editgroup div.userlist label.ion-person.guest-user:before {
     color:gray;
     content: "\f143";
     margin-left: 3px;

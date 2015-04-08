@@ -11,11 +11,12 @@
 </div>-->
 <ion-modal-view cache-view="false" id="modal-feedback">
     <ion-header-bar class="bar-secondary">
-    	<h1 translate class="title">Contacter le support</h1>
+    	<h1 translate class="title">Contact support team</h1>
+        <button translate class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
     </ion-header-bar>
     <ion-content class="padding">
-    	<p translate>Un problème ou des suggestions ? Nous répondons à tous les messages très rapidement.</p>
-        <textarea ng-model="modal.feedback_message" placeholder="{{'Ecrivez votre message ici.'|translate}}"></textarea>
-        <button translate class="button button-positive" ng-click="sendFeedback()">Envoyer</button>
+    	<p translate>Having an issue or some feedback to provide ? We'll answer shortly !</p>
+        <textarea ng-model="modal.feedback_message" placeholder="{{'Write your message here.'|translate}}"></textarea>
+        <button translate class="button button-positive" ng-click="sendFeedback()">Send</button>
     </ion-content>
 </ion-modal-view>

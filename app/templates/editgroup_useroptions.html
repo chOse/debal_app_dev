@@ -2,16 +2,16 @@
     <ion-content scroll="false">
       <div class="list">
         <a class="item icon ion-person-add" ng-click="popInvite()" ng-class="{'disabled': popover.member.current_user || popover.member.registered || popover.member.share==0}">
-          <span translate>Inviter</span> {{popover.member.username}}
+          <span translate>Invite</span> {{popover.member.username}}
         </a>
         <a translate class="item icon ion-pie-graph" ng-click="editShare()">
-          Changer la part
+          Change share
         </a>
         <a translate class="item icon ion-edit" ng-click="renameUser()" ng-class="{'disabled': popover.member.current_user || popover.member.registered  || popover.member.share==0}">
-          Renommer
+          Change name
         </a>
         <a translate class="item icon ion-trash-b" ng-click="removeUser()" ng-class="{'disabled': popover.member.share==0}">
-          Supprimer du groupe
+          Remove from group
         </a>
       </div>
     </ion-content>

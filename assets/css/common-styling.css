@@ -1,7 +1,28 @@
+@font-face {
+    font-family: "Roboto";
+    src: url('../fonts/Roboto-Light.ttf');
+}
+@font-face {
+    font-family: "Roboto";
+    font-style: medium;
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+@font-face {
+    font-family: "Roboto";
+    font-weight: bold;
+    src: url('../fonts/Roboto-Medium.ttf');
+}
+
 body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }
-
+textarea {
+    resize: none;
+}
+textarea, button, select, option, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+    font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-size:13pt;
+    }
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     font-weight:bold;
 }

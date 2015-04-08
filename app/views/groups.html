@@ -14,9 +14,25 @@
             <div class="list">
 
             <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}" style="border:none;line-height:44px;padding:1px 24px;">
-                <img src="assets/images/group.png" style="width: 22px;top: 13px;position: relative;margin-right: 10px;" />
+                <!--<img src="assets/images/group.png" style="width: 22px;top: 13px;position: relative;margin-right: 10px;" />-->
+                <div style="width: 40px;
+height: 40px;
+border-radius: 5px;
+background-color: #66D8BA;
+float: left;
+color: #fff;
+padding-bottom: 5px;
+text-align: center;
+line-height: 40px;
+font-size: 19pt;
+margin-top: 12px;
+margin-right: 20px;">T</div>
                 {{group.name}}</br>
-                <div style="padding-left:36px;font-size:12px;line-height:24px;margin-top:-10px;margin-bottom:10px;color:grey;">There are 6 members in this group</div>
+                <div style="font-size: 10pt;
+line-height: 24px;
+margin-top: -10px;
+margin-bottom: 10px;
+color: grey;">Avec Kévin, José et Gérard</div>
 
                 <i class="icon ion-chevron-right icon-accessory"></i>
                 <div style="height:1px; width:100%;background-color:rgb(230,230,230);margin:0 auto;"></div>

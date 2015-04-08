@@ -21,10 +21,11 @@
                 <!--<div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>-->
                 <!--<div translate class="item item-divider">Expenses</div>-->
                 
-                <a ng-repeat="expense in expenses_display" class="expenseslist item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
+                <a collection-repeat="expense in expenses" class="expenseslist item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
 
-                    <div class="flex">
-                        <div class="title">
+                    <div class="flex icon-left ion-android-list" style="">
+                        <div class="title ">
+                            
                             <span ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Various</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
                             <p style="font-style: normal;font-size:12px;">
                                 <span translate>paid by</span> 
@@ -48,15 +49,15 @@
 
                 <span translate class="item item-icon-right" ng-click="addExpense()" ng-show="!expenses.length">No expense added</span>
 
-                <div style="color: #444;font-size: 12px;text-align: center;" ng-if="!noMoreItems">Scroll to show next expenses</div>
+                <!--<div style="color: #444;font-size: 12px;text-align: center;" ng-if="!noMoreItems">Scroll to show next expenses</div>
 
-                <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="30%"></ion-infinite-scroll>
+                <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="30%"></ion-infinite-scroll>-->
 
             </ion-content>
             <ion-footer-bar>
-              <div class="buttons">
-                <button id="addexpensebutton" ng-click="addExpense()" class="button button-clear icon-left ion-plus-circled"></button>
-              </div>
+                <div class="buttons">
+                    <button id="addexpensebutton" ng-click="addExpense()" class="button button-clear icon-left ion-plus-circled"></button>
+                </div>
             </ion-footer-bar>
 
         </ion-tab>

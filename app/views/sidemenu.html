@@ -10,8 +10,8 @@
     <ion-side-menu side="left" width="200" id="sidemenu">
 
         <ion-header>
-            <img style="height: 46px;" src="assets/images/logo_small.png" />
-            <div><img style="height: 24px;" src="assets/images/logo-medium.png" /></div>
+            <img style="height: 46px;" src="assets/images/logo_small.png" alt="logo" />
+            <div><img style="height: 24px;" src="assets/images/logo-medium.png" alt="Debal" /></div>
         </ion-header>
 
         <ion-content class="has-header" scroll="false">
@@ -23,24 +23,29 @@
                 </a>
 
                 <button class="item item-icon-left" ng-click="selectLanguage()">
+                    <i class="icon ion-android-share"></i>
+                    <span translate>Join a group</span>
+                </button>
+
+                <button class="item item-icon-left" ng-click="selectLanguage()">
                     <img class="icon flag" ng-src="assets/images/flag_{{device_lang}}.png" /> <!-- flag src: https://www.iconfinder.com/iconsets/finalflags -->
                     <span translate>Language</span>
                 </button>
 
                 <button class="item item-icon-left" ng-click="openModal()">
                     <i class="icon ion-chatbubble-working"></i>
-                    <span translate>Write to support</span>
+                    <span translate>Having an issue?</span>
                 </button>
 
                 <button ng-click="rateApp()" class="item item-icon-left">
                     <i class="icon ion-star"></i>
-                    <span translate>Rate the app</span>
+                    <span translate>Like the app?</span>
                 </button>
                 
 
                 <button ng-click="shareApp()" class="item item-icon-left">
-                    <i class="icon ion-android-share"></i>
-                    <span translate>Share the app !</span>
+                    <i class="icon ion-paper-airplane"></i>
+                    <span translate>Share the app!</span>
                 </button>
           </div>
 

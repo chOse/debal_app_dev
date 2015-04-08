@@ -1,3 +1,5 @@
+/* global App */
+
 App
 .controller('SaveExpenseCtrl', function($scope, $state, $rootScope, $ionicPopup, $filter, $stateParams, $location, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, CURRENCIES_SYMBOLS, gettextCatalog, LoaderService, EntriesModel, GroupsModel) {
 
@@ -9,13 +11,13 @@ App
     $scope.shares_sum = 0;
     $scope.expense = {'date': new Date()};
 
-    if($state.current.name=='app.editexpense') {
+    if($state.current.name==='app.editexpense') {
         $scope.curr_action = 'edit';
-        $scope.curr_title = gettextCatalog.getString("Modifier la dépense");
+        $scope.curr_title = gettextCatalog.getString("Edit expense");
     }
     else {
         $scope.curr_action = 'add';
-        $scope.curr_title = gettextCatalog.getString("Nouvelle dépense");
+        $scope.curr_title = gettextCatalog.getString("New expense");
     }
     
     $scope.$on('newGroups', function(event) {
@@ -24,7 +26,7 @@ App
     });
 
     $scope.$on('newEntries', function(event) {
-        if($state.current.name=='app.editexpense') {
+        if($state.current.name==='app.editexpense') {
             console.log("en / new data from server");
             $scope.getEntry();
         }
@@ -33,17 +35,17 @@ App
     $scope.$on('$ionicView.beforeEnter', function(event) {
         $scope.initGroup();
         $ionicSlideBoxDelegate.select(0);
-    })
+    });
 
 
     // Common functions for form controls
 
     $scope.nextSlide = function() {
         $ionicSlideBoxDelegate.next();
-    }
+    };
     $scope.previousSlide = function() {
         $ionicSlideBoxDelegate.previous();
-    }
+    };
 
     $scope.select_state = false;
 
@@ -58,25 +60,25 @@ App
     };
 
     $scope.validForm = function() {
-        if (typeof($scope.expense.spender)=='undefined') {
+        if (typeof($scope.expense.spender)==='undefined') {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur'),
-                template: gettextCatalog.getString("Préciser le nom du payeur.")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("Please give spender's name")
             });
         }
         else if(!is_amount($scope.expense.amount)) {
             var alertPopup = $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur de montant'),
-                template: gettextCatalog.getString("Le montant ne peut contenir que des chiffres et un point (pas de virgule !)")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("The amount may only contain digits and a dot (no commas!)")
             });
             alertPopup.then(function(res) {
                 document.getElementById("amount_field").focus();
             });
         }
-        else if ($scope.shares_sum==0) {
+        else if ($scope.shares_sum===0) {
             $ionicPopup.alert({
-                title: gettextCatalog.getString('Erreur'),
-                template: gettextCatalog.getString("Veuillez entrer au moins un bénéficiaire.")
+                title: gettextCatalog.getString('Error'),
+                template: gettextCatalog.getString("Please select at least one beneficiary.")
             });
         }
         else
@@ -117,7 +119,7 @@ App
 
     $scope.changeState = function(member, value, init) {
         var old_state = member.selected ? member.selected : false;
-        member.selected = (typeof value != 'undefined') ? value : old_state;
+        member.selected = (typeof value !== 'undefined') ? value : old_state;
 
         if(old_state!==value) {
             if(member.selected===true) {
@@ -149,7 +151,7 @@ App
 
         if($scope.expense.amount===0)
             $scope.expense.amount = null;
-    }
+    };
 
 
     // Save expense
@@ -173,7 +175,7 @@ App
         for(var i in $scope.groupMembers) {
             var arr = $scope.groupMembers[i];
 
-            if(expense.spender == arr.guid)
+            if(expense.spender === arr.guid)
                 var spender_server_guid = arr.id;
 
             if(arr.selected===true)
@@ -199,17 +201,17 @@ App
 
         // Save or edit ?
         var add_function = EntriesModel.save_entry;
-        if(typeof data.EntryId != 'undefined' && data.EntryId !== null)
+        if(typeof data.EntryId !== 'undefined' && data.EntryId !== null)
             add_function = EntriesModel.update_entry;
         
 
         add_function(data, beneficiaries, 
             function(entry_id) {
-                if(typeof entry_id != 'undefined' && !isNaN(entry_id)) {
+                if(typeof entry_id !== 'undefined' && !isNaN(entry_id)) {
                     if($rootScope.cached_balances && ($rootScope.cached_balances['group'+$scope.GroupId])) {
                         console.log("// Remove cached entries !!");
-                        delete $rootScope.cached_balances['group'+$scope.GroupId]
-                        delete $rootScope.cached_entries['group'+$scope.GroupId]
+                        delete $rootScope.cached_balances['group'+$scope.GroupId];
+                        delete $rootScope.cached_entries['group'+$scope.GroupId];
                     }
                     LoaderService.hide();
 
@@ -241,31 +243,33 @@ App
                 members_names[i].share = 0;
                 members_names[i].sharedAmount = 0;
 
-                if($state.current.name=='app.addexpense') {
-                    if(members_names[i].default_share!=0) {
+                if($state.current.name==='app.addexpense') {
+                    if(members_names[i].default_share!==0) {
                         
                         displayed_members.push(members_names[i]);
                         $scope.membersNames[members_names[i].guid] = members_names[i].username;
                     }
 
                 }
-                else if($state.current.name=='app.editexpense') {
+                else if($state.current.name==='app.editexpense') {
                     displayed_members.push(members_names[i]);
                     $scope.membersNames[members_names[i].guid] = members_names[i].username;
                 }
             }
             
             $scope.groupMembers = displayed_members;
-            if($state.current.name=='app.addexpense') {
+            if($state.current.name==='app.addexpense') {
                 $scope.select_state = false;
                 $scope.selectAll();
             }
 
             $scope.$apply();
+            
+            console.error($scope.groupMembers);
 
             if(callback) callback();
         });
-    }
+    };
 
 
     // Edit - Delete expense
@@ -273,11 +277,11 @@ App
     $scope.deleteExpense = function() {
        
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Confirmez la suppression'),
-            template: gettextCatalog.getString('Etes-vous sûr de vouloir supprimer cette dépense ?'),
+            title: gettextCatalog.getString('Confirm deleting expense'),
+            template: gettextCatalog.getString('Are you sure you want to remove this expense?'),
             buttons: [
-                { text: 'Annuler', onTap: function(e) { return false; } },
-                { text: '<b>Confirmer</b>', type: 'button-positive', onTap: function(e) { return true; } },
+                { text: 'Cancel', onTap: function(e) { return false; } },
+                { text: '<b>Confirm</b>', type: 'button-positive', onTap: function(e) { return true; } }
             ]
         });
         
@@ -286,8 +290,8 @@ App
                 EntriesModel.delete($scope.EntryId, function() {
                     if($rootScope.cached_balances && ($rootScope.cached_balances['group'+$scope.GroupId])) {
                         console.log("// Remove cached entries !!");
-                        delete $rootScope.cached_balances['group'+$scope.GroupId]
-                        delete $rootScope.cached_entries['group'+$scope.GroupId]
+                        delete $rootScope.cached_balances['group'+$scope.GroupId];
+                        delete $rootScope.cached_entries['group'+$scope.GroupId];
                     }
                     $location.path('app/groupexpenses/'+$scope.GroupId);
                     $scope.$apply();
@@ -299,7 +303,7 @@ App
 
     $scope.getEntry = function() {
 
-        if($state.current.name=='app.editexpense') {
+        if($state.current.name==='app.editexpense') {
             EntriesModel.read({EntryId: $scope.EntryId}, function(entry) {
 
                 $scope.expense = angular.copy(entry[0]);
@@ -312,14 +316,14 @@ App
 
                     for(var i in $scope.groupMembers) {
 
-                        $scope.groupMembers[i].visible = (($scope.groupMembers[i].default_share>0) || ($scope.groupMembers[i].share>0) || ($scope.groupMembers[i].guid == $scope.expense.spender));
+                        $scope.groupMembers[i].visible = (($scope.groupMembers[i].default_share>0) || ($scope.groupMembers[i].share>0) || ($scope.groupMembers[i].guid === $scope.expense.spender));
 
                         var curr_member = $scope.groupMembers[i];
 
                         if(typeof curr_member === 'object') {
 
                             for(var k in beneficiaries) {
-                                if(beneficiaries[k]['GroupsUserId']==curr_member['guid']) {
+                                if(beneficiaries[k]['GroupsUserId']===curr_member['guid']) {
                                     $scope.groupMembers[i].share = beneficiaries[k]['share'];
                                     $scope.changeState($scope.groupMembers[i], true, true);
                                     $scope.groupMembers[i].sharedAmount = beneficiaries[k]['shared_amount'];
@@ -331,26 +335,27 @@ App
                 });
             });
         }
-    }
+    };
 
     // Init form
     $scope.initGroup = function() {
         GroupsModel.read({GroupId: $scope.GroupId}, function(data) {
             $scope.group = data[0];
-            $scope.currency_symbol = (typeof(CURRENCIES_SYMBOLS[$scope.group.currency])!='undefined') ? CURRENCIES_SYMBOLS[$scope.group.currency] : $scope.group.currency;
+            $scope.currency_symbol = (typeof(CURRENCIES_SYMBOLS[$scope.group.currency])!=='undefined') ? CURRENCIES_SYMBOLS[$scope.group.currency] : $scope.group.currency;
 
             $scope.getMembers($scope.getEntry());
         });
-    }
+    };
 
     
 
     $scope.tel_keyboard = false;
 
     var device = ionic.Platform.device();
+    var devices_models_kb = ["SM-T530","SM-T111","SM-T110","SM-T311","SM-T310","SM-T315","KTU84L","SM-G900F","SM-G800F","GT-I9300","GT-P5210","C5303","GT-I9195","GT-I9500","GT-I9505","GT-I9506"];
 
-    if(typeof(device.model)!='undefined') {
-        if (device.model=="KTU84L" || device.model=="SM-G900F" || device.model=="SM-G800F" || device.model=="GT-I9300" || device.model=="GT-P5210" || device.model=="C5303" || device.model == "GT-I9195" || device.model == "GT-I9500" || device.model == "GT-I9505" || device.model == "GT-I9506")
+    if(typeof(device.model)!=='undefined') {
+        if (devices_models_kb.indexOf(device.model)>-1)
             $scope.tel_keyboard = true;
     }
 

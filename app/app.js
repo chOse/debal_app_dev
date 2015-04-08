@@ -1,3 +1,5 @@
+/* global Connection, analytics, ionic, angular */
+
 var App = angular.module('spendingsManager', ['tmh.dynamicLocale', 'ionic', 'spendingsManager.config', 'gettext', 'spendingsManager.db'])
 .filter('isEmpty', function () {
         var bar;
@@ -50,6 +52,7 @@ $stateProvider
     })
     .state('app.creategroup', {
         url: "/creategroup",
+        cache: false,
         views: {
         'menuContent' :{
           templateUrl: 'app/views/creategroup.html',
@@ -68,6 +71,7 @@ $stateProvider
     })
     .state('app.addexpense', {
         url: "/addexpense/:GroupId",
+        cache: false,
         views: {
         'menuContent' :{
             templateUrl: 'app/views/addexpense.html',
@@ -86,6 +90,7 @@ $stateProvider
     })
     .state('app.editexpense', {
         url: "/editexpense/:GroupId/:EntryId",
+        cache: false,
         views: {
         'menuContent' :{
             templateUrl: 'app/views/addexpense.html',
@@ -101,6 +106,7 @@ $stateProvider
   $ionicConfigProvider.backButton.text(true);
   $ionicConfigProvider.views.forwardCache(true);
   $ionicConfigProvider.backButton.previousTitleText(true);
+  $ionicConfigProvider.tabs.position('bottom');
 })
 .run(function($ionicPlatform, $state, $rootScope, $ionicSideMenuDelegate, $interval, tmhDynamicLocale, LocalStorageService, initService, SyncService, gettextCatalog, SUPPORTED_LANG) {
 
@@ -145,13 +151,13 @@ $stateProvider
 
         function handleSync() {
             
-            var online = (typeof(navigator.online)!=='undefined') ? navigator.onLine : (typeof(navigator.network)!=='undefined') ? (navigator.network.connection.type != Connection.NONE) : true;
+            var online = (typeof(navigator.online)!=='undefined') ? navigator.onLine : (typeof(navigator.network)!=='undefined') ? (navigator.network.connection.type !== Connection.NONE) : true;
             var logged_in = LocalStorageService.get("login");
 
             if(online && logged_in==="true" && !appPaused) {
 
                 syncCounter++;
-                if(syncCounter%syncForcePeriod==0)
+                if(syncCounter%syncForcePeriod===0)
                     var saveBandwidth = false;
                 else
                     var saveBandwidth = true;
@@ -169,21 +175,20 @@ $stateProvider
 
             LocalStorageService.set("locale", device_lang);
                 
-            if(SUPPORTED_LANG.indexOf(device_lang)==-1)
+            if(SUPPORTED_LANG.indexOf(device_lang)===-1)
                 device_lang = "en";
 
-            $rootScope.$apply(function() {
+            //$rootScope.$apply(function() {
 
                 gettextCatalog.setCurrentLanguage(device_lang);
 
-                if(typeof device_locale != 'undefined') {
+                if(typeof device_locale !== 'undefined') {
                     tmhDynamicLocale.set(device_locale);
                 }
-            });
+            //});
         };
 
-        if(typeof(LocalStorageService.get("locale"))!='undefined') {
-
+        if(typeof(LocalStorageService.get("locale"))!=='undefined') {
             this.loadLocale({value:LocalStorageService.get("locale")});
         }
 
@@ -206,13 +211,23 @@ $stateProvider
                 $ionicSideMenuDelegate.toggleLeft();
             }
 
-            else if($state.current.name=="app.groups" || $state.current.name=="login" || $state.current.name=="register") {
+            else if($state.current.name==="app.groups" || $state.current.name==="login" || $state.current.name==="register") {
                 e.preventDefault();
                 ionic.Platform.exitApp();
             }
 
-            else if($state.current.name=="app.groupexpenses") {
+            else if($state.current.name==="app.groupexpenses") {
                 $state.go('app.groups');
+            }
+        }
+        
+        if(typeof cordova !== 'undefined' && typeof cordova.plugins !== 'undefined' && typeof cordova.plugins.intercom !== "undefined") {
+            cordova.plugins.intercom.startSession();
+            if(typeof LocalStorageService.get('user_email') !== 'undefined' && LocalStorageService.get('user_name') !== 'undefined') {
+                cordova.plugins.intercom.updateAttributes({
+                    email: LocalStorageService.get('user_email'),
+                    name: LocalStorageService.get('user_name')
+                });
             }
         }
 
@@ -220,5 +235,7 @@ $stateProvider
             analytics.startTrackerWithId('UA-44005158-2');
             analytics.setUserId(LocalStorageService.get('user_id'));
         }
+        
+        
     });
-})
+});

@@ -30,9 +30,8 @@
     padding-bottom:5px;
 }
 #groupexpenses .expenseslist {
-        padding: 10px;
+    padding: 10px;
     padding-right: 20px;
-    padding-left:20px;
 }
 #groupexpenses .expenseslist .flex {
     display: -webkit-box;
@@ -42,6 +41,18 @@
     display: -ms-flexbox;
     display: flex;
 }
+#groupexpenses .expenseslist .flex:before {
+    font-size: 25pt;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 10px;
+    color:#ccc;
+}
+
 
 #groupexpenses .expenseslist .share_indicator {
     font-style: italic;
@@ -162,7 +173,7 @@
     bottom:inherit;
 }
 #groupexpenses .tabs-bottom ion-content.has-footer.has-tabs {
-    bottom:49px;
+    //bottom:49px;
 }
 #groupexpenses .bar-footer {
     background: transparent;
@@ -187,7 +198,7 @@
     font-size: 60px;
     color: rgba(218, 67, 54,1);
     box-shadow: 0 6px 10px rgba(0,0,0,.23),0 10px 30px rgba(0,0,0,.19);
-    background: transparent;
+    background: #fff;
     height: 52px;
     line-height: 52px;
     border-radius: 100%;
