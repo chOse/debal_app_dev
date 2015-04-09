@@ -269,4 +269,22 @@ font-size: 16px;
 }
 
 
+#addexpense .img_addexpense {
+    width: 22px;
+    margin: 4px;
+}
+
+#addexpense .img-text_addexpense{
+    padding: 0px 4px;
+}
+
+#addexpense .number2{
+margin-left:-4px;
+}
+
+
+#addexpense .center-text_padding {
+padding-top: 20px;
+}
+
 
