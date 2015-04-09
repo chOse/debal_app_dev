@@ -1,0 +1,9 @@
+#modal_joinrequest .user-choice {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	display: inline-block;
+	padding: 5px;
+	margin-right: 10px;
+	margin-bottom:10px;
+	font-size:10pt;
+}

@@ -1,5 +1,5 @@
 App.controller('GroupexpensesCtrl',
-    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
+    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate, $ionicModal, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
@@ -33,6 +33,28 @@ App.controller('GroupexpensesCtrl',
     /*$scope.$on('$stateChangeSuccess', function() {
         $scope.loadMore();
     });*/
+
+
+    /* Join request Modal */
+    $ionicModal.fromTemplateUrl('app/templates/joinrequest_modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });  
+
+    $scope.openJoinRequests = function() {
+        $scope.modal.show()
+    };
+
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+    /* End Join request Modal */
 
     $scope.goSettings = function() {
         $location.path('app/editgroup/' + $scope.GroupId);

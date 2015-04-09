@@ -42,6 +42,12 @@
                             <i class="icon ion-arrow-down-b icon-accessory"></i>
                             <select class="currency"  ng-model="group.currency" ng-options="curr.name_{{locale}} for (k, curr) in currencies" required="required"></select>
                         </label>
+
+                        <label class="item item-input item-icon-right item-label">
+                            <span translate class="input-label">Secondary Currency</span>
+                            <i class="icon ion-arrow-down-b icon-accessory"></i>
+                            <select class="currency"  ng-model="group.secondary_currency" ng-options="curr.name_{{locale}} for (k, curr) in currencies" required="required"></select>
+                        </label>
                     </form>
 
                      <button ng-click="deleteGroup()" class="button button-assertive button-block icon-left ion-ios7-trash-outline" style="width: 300px;margin: 20px auto;" translate>Delete group</button>

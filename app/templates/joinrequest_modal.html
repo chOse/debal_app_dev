@@ -1,0 +1,21 @@
+<ion-modal-view cache-view="false" id="modal_joinrequest">
+    <ion-header-bar>
+        <h1 class="title">Join requests</h1>
+        <button translate class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+        <p translate>Some users have requested access to the group. Giving them access will enable them to manage expenses with their own device.</p>
+    
+        <div class="card">
+            <div class="item item-text-wrap">
+                José (josé@josé.com) souhaite rejoindre le groupe
+        <button>Refuser</button> <button>Accepter</button>
+        <p>Select which existing user José should be merged with :</p>
+        <div class="user-choice" style="">Antoine</div> <div class="user-choice">Robert</div> <div translate class="user-choice">Add José as a new user to the group</div>
+
+            </div>
+        </div>
+        
+      <button class="button button-full button-energized" ng-click="closeModal()">Done</button>
+    </ion-content>
+</ion-modal-view>

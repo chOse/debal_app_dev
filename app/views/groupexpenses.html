@@ -3,6 +3,7 @@
         <ion-nav-title>{{group_data.name}}</ion-nav-title>
 
         <ion-nav-buttons side="right">
+            <button class="button badge badge-assertive" ng-click="openJoinRequests()">1</button>
             <button ng-click="goSettings()" style="margin-right:10px" class="button button-clear icon-left ion-gear-a"></button>
         </ion-nav-buttons>
 
@@ -21,12 +22,12 @@
                 <!--<div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>-->
                 <!--<div translate class="item item-divider">Expenses</div>-->
                 
-                <a collection-repeat="expense in expenses" class="expenseslist item" href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
+                <a class="expenseslist item" collection-repeat="expense in expenses" item-height="70"  href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
 
                     <div class="flex icon-left ion-android-list" style="">
                         <div class="title ">
                             
-                            <span ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Various</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
+                            <span class="title_line" ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Various</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
                             <p style="font-style: normal;font-size:12px;">
                                 <span translate>paid by</span> 
                                 <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
@@ -80,7 +81,9 @@
                             
                             <p class="col-right">
                                 <span translate ng-if="k>0">and</span>
-                                <strong class="amount">{{flow.amount | currency:group_data.currency_symbol}}</strong><br />
+                                <strong class="amount">{{flow.amount | currency:group_data.currency_symbol}}</strong>
+                                <span>(XXX $)</span>
+                                <br />
                                 <span translate>to</span>
                                 <strong ng-class="{true:'myself'}[flows[k].to==currentUserGuid]" class="beneficiary">{{membersNames[flows[k].to]}}</strong>
                             </p>
@@ -89,6 +92,8 @@
 
                     </li>
                 </ul>
+
+                <p>1 € = XXXX $</p>
 
                 <div translate class="item item-divider icon-left ion-android-share">Share balance</div>
                 <ul class="list">
