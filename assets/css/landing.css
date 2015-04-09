@@ -7,6 +7,11 @@
 	height:100%;
 }
 
+#landing #login-logo {
+    height:80% !important;
+    margin:20px;
+}
+
 .image-full{
 background: url(../images/logo_debal.png) no-repeat;
 height: 100%;
@@ -30,6 +35,9 @@ padding: 0px 30px;
 	color:white;
 }
 
+#landing .middle_content{
+	padding-top: 20px;
+}
 .bottom_content{
 	color:white;
 	bottom: 14px;
