@@ -7,9 +7,13 @@
 	height:100%;
 }
 
-#login-logo{
-	height: 80%;
-	margin:20px;
+.image-full{
+background: url(../images/logo_debal.png) no-repeat;
+height: 100%;
+width: 100%;
+background-position: center center;
+background-repeat: no-repeat;
+background-size: contain; // this can also be cover
 }
 
 #central_text{
