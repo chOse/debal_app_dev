@@ -95,6 +95,17 @@ App
             ]
         });
     }
+
+    $scope.selectLanguage2 = function() {
+        $scope.selectLanguagePopup = $ionicPopup.show({
+            templateUrl: 'app/templates/select_language2.html',
+            title: gettextCatalog.getString('Rejoindre un groupe'),
+            scope: $scope,
+            buttons: [
+                { text: gettextCatalog.getString('Cancel') },
+            ]
+        });
+    }
     
     $scope.shareApp = function() {
         if(typeof window.plugins.socialsharing != 'undefined') {
