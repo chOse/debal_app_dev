@@ -13,7 +13,7 @@
         <ion-tab id="expenses" title="{{'Expenses'|translate}}">
 
             <div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>
-            <ion-content has-bouncing="false" has-tabs="true" has-footer="false" class="has-tabs ionic-scroll">
+            <ion-content has-bouncing="false" has-tabs="true" has-footer="false" class="first-tab has-tabs ionic-scroll">
 
                 <ion-refresher on-refresh="doRefresh()"
                          pulling-text="{{'Manual sync'|translate}}"
@@ -59,7 +59,9 @@
 
         <ion-tab ng-click="showBalance()" title="{{'Debts'|translate}}">
 
-            <ion-content has-bouncing="false" has-tabs="true" class="ionic-scroll">
+            <div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>
+
+            <ion-content has-bouncing="false" has-tabs="true" class="second-tab ionic-scroll">
                 
                 <!--<div translate class="item item-divider">Who owes what?</div>-->
                 <ul class="list" style="margin-bottom:0">

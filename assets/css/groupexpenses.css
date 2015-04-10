@@ -189,7 +189,7 @@
     bottom:0;
 }
 
-#groupexpenses ion-content.has-header {
+#groupexpenses ion-content {
     top: 63px;
 }
 #groupexpenses .bar-footer {
