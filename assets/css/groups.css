@@ -42,6 +42,8 @@
     margin-top: -10px;
     margin-bottom: 10px;
     color: grey;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 #groups #group-buttons .list .line {
     height:1px;

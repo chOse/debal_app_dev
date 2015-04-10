@@ -1,4 +1,4 @@
-App.controller('GroupsCtrl', function($scope, $state, $location, $ionicSideMenuDelegate, GroupsModel, LocalStorageService, LoaderService) {
+App.controller('GroupsCtrl', function($scope, $state, $location, $ionicSideMenuDelegate, gettextCatalog, GroupsModel, LocalStorageService, LoaderService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
     
@@ -21,12 +21,37 @@ App.controller('GroupsCtrl', function($scope, $state, $location, $ionicSideMenuD
         else
             LoaderService.show();
 
+        getGroupMembers = function(group_data) {
+            GroupsModel.get_members_sharenotzero(group_data.GroupId, function(data) {
+                var members_list = "";
+                var members = [];
+                var connector1 = gettextCatalog.getString('with');
+                var connector2 = gettextCatalog.getString('and');
+
+                for(var i in data) {
+                    members.push(data[i].username);
+                }
+                var last = members[members.length-1];
+                members.pop();
+                var members_list = connector1 + " " + members.join(", ");
+
+                group_data.members_list = members_list + " " + connector2 + " " + last;
+                $scope.groups.push(group_data);
+                $scope.$apply();
+            });
+        };
+
         GroupsModel.read({}, function(data) {
-            $scope.groups = data;
-            console.error(data);
+            $scope.groups = [];
+            for(var i in data) {
+                getGroupMembers(data[i]);
+            }
+        
             LoaderService.hide();
         });
     };
+
+
 
     $scope.getThumbnailColor = function(groupName) {
 

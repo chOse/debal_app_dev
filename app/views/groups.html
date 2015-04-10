@@ -16,7 +16,7 @@
                 <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}">
                     <div class="thumbnail" style="background-color: {{getThumbnailColor(group.name)}};">{{group.name.toUpperCase()| limitTo : 1 : 0}}</div>
                     {{group.name}}
-                    <div class="secondLine">Avec Kévin, José et Gérard</div>
+                    <div class="secondLine">{{group.members_list}}</div>
 
                     <i class="icon ion-chevron-right icon-accessory"></i>
                     <div class="line"></div>
