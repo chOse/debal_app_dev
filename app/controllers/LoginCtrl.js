@@ -192,27 +192,27 @@ App
 
             if(status!==200) {
                 $ionicPopup.alert({
-                    title: gettextCatalog.getString('Erreur'),
-                    template: gettextCatalog.getString("Impossible de se connecter au serveur.")
+                    title: gettextCatalog.getString('Error'),
+                    template: gettextCatalog.getString("Unable to connect to server. Please try again.")
                 });
             }
             else if(response.result==="ERROR") {
                 if(response.data.email) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Erreur'),
-                        template: gettextCatalog.getString("Cette adresse email est déjà prise par un membre. Etes vous déjà inscrit ?")
+                        title: gettextCatalog.getString('Error'),
+                        template: gettextCatalog.getString("This email address is already used. Did you already register?")
                     });
                 }
                 else if(response.data.password) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Erreur'),
-                        template: gettextCatalog.getString("Le mot de passe doit faire au moins 6 caractères")
+                        title: gettextCatalog.getString('Error'),
+                        template: gettextCatalog.getString("Password must be at least 6 characters long")
                     });
                 }
                 else if(response.data.username) {
                     $ionicPopup.alert({
-                        title: gettextCatalog.getString('Erreur'),
-                        template: gettextCatalog.getString("Nom d'utilisateur invalide")
+                        title: gettextCatalog.getString('Error'),
+                        template: gettextCatalog.getString("Invalid username")
                     });
                 }
             }
@@ -236,8 +236,8 @@ App
 
             else {
                 $ionicPopup.alert({
-                    title: gettextCatalog.getString('Erreur'),
-                    template: gettextCatalog.getString("Impossible de procéder à l'inscription")
+                    title: gettextCatalog.getString('Error'),
+                    template: gettextCatalog.getString("Unable to proceed to subscribtion")
                 });
             }
             

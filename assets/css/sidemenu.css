@@ -15,6 +15,9 @@
 #sidemenu .list {
 	color:white;
 }
+#sidemenu .list .item span {
+	white-space:normal;
+}
 #sidemenu ion-content {
 	padding-top: 80px;
 }

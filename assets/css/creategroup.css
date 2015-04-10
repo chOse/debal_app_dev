@@ -198,26 +198,25 @@
     margin-right:10px;
 }
 
-#creategroup .creategroup_button{
+#creategroup .addMember {
     padding: 10px;
     width: 100%;
     margin: 0 auto;
     border-radius: 2px;
     line-height: 28px;
     color:grey;
-    border:1px solid grey;
-    border-style:dotted;
-}
-
-#creategroup .creategroup_button1{
+    border:1px dotted grey;
     background: none;
     margin-bottom:14px;
     display: inline-block;
     cursor:pointer;
     text-align: center;
 }
+#creategroup .addMember:before {
+    margin-right:10px;
+}
 
-#creategroup .creategroup_button1:active{
+#creategroup .addMember:active{
     -moz-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
     -webkit-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
     -o-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);

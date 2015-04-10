@@ -99,7 +99,7 @@ App
     $scope.selectLanguage2 = function() {
         $scope.selectLanguagePopup = $ionicPopup.show({
             templateUrl: 'app/templates/select_language2.html',
-            title: gettextCatalog.getString('Rejoindre un groupe'),
+            title: gettextCatalog.getString('Join a group'),
             scope: $scope,
             buttons: [
                 { text: gettextCatalog.getString('Cancel') },

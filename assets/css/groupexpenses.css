@@ -41,28 +41,42 @@
     display: -ms-flexbox;
     display: flex;
 }
-#groupexpenses .expenseslist .flex:before {
-    font-size: 25pt;
-    border: 1px solid #ccc;
+#groupexpenses .expenseslist .expense_icon, .expenseIconTip .expense_icon {
+    font-size: 30pt;
     border-radius: 5px;
     width: 40px;
     height: 40px;
     text-align: center;
     line-height: 40px;
-    margin-right: 20px;
+    margin-right: 10px;
     color:#ccc;
 }
+.expenseIconTip .expense_icon {
+    float:left;
+}
+.expenseIconTip .popup-body {
+    line-height:17px;
+}
+#groupexpenses .expenseslist .expense_icon.paid_by_me, .expenseIconTip .expense_icon.paid_by_me {
+    color:orange;
+}
+#groupexpenses .expenseslist .expense_icon.includes_me, .expenseIconTip .expense_icon.includes_me {
+    color:#00a8ec;
+}
+#groupexpenses .expenseslist .title_line {
+    font-size:11pt;
+}
 
 
-#groupexpenses .expenseslist .share_indicator {
-    font-style: italic;
-    font-size:12px;
+#groupexpenses .share_indicator {
+    font-size: 9pt;
+    line-height: 13px;
 }
-#groupexpenses .expenseslist .share_indicator .owes {
-    color:red;
+#groupexpenses .share_indicator.owes {
+    color:#00a8ec;
 }
-#groupexpenses .expenseslist .share_indicator .owed {
-    color:green;
+#groupexpenses .share_indicator.owed {
+    color:orange;
 }
 #groupexpenses .list .item div {
     color: #666;
@@ -154,10 +168,16 @@
 
 #groupexpenses .groupexpenses_subheader {
     text-align: center;
-    line-height: 29px;
+    line-height: 10pt;
     font-weight: bold;
     color: rgb(160, 228, 255);
-    background-color: #0e6bb9; 
+    background-color: #0e6bb9;
+    position: absolute;
+    top: 44px;
+    z-index: 2;
+    width: 100%;
+    font-size: 9pt;
+    padding: 3px;
 }
 
 #groupexpenses ion-content.has-tabs-top {
@@ -165,20 +185,18 @@
     height: inherit;
 }
 
-#groupexpenses .tab-nav.tabs {
-    //height: 30px;
-    //line-height: 30px;
-}
 #groupexpenses ion-content.has-footer.has-tabs {
-    bottom:inherit;
+    bottom:0;
 }
-#groupexpenses .tabs-bottom ion-content.has-footer.has-tabs {
-    //bottom:49px;
+
+#groupexpenses ion-content.has-header {
+    top: 63px;
 }
 #groupexpenses .bar-footer {
     background: transparent;
     height:1px;
 }
+
 #groupexpenses .bar-footer .buttons {
     text-align: right;
     display: inline-block;

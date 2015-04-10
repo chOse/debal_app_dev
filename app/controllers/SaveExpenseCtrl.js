@@ -63,7 +63,7 @@ App
         if (typeof($scope.expense.spender)==='undefined') {
             $ionicPopup.alert({
                 title: gettextCatalog.getString('Error'),
-                template: gettextCatalog.getString("Please give spender's name")
+                template: gettextCatalog.getString("Please select spender.")
             });
         }
         else if(!is_amount($scope.expense.amount)) {
@@ -277,8 +277,8 @@ App
     $scope.deleteExpense = function() {
        
         var confirmPopup = $ionicPopup.confirm({
-            title: gettextCatalog.getString('Confirm deleting expense'),
-            template: gettextCatalog.getString('Are you sure you want to remove this expense?'),
+            title: gettextCatalog.getString('Confirm'),
+            template: gettextCatalog.getString('Are you sure you want to delete this expense?'),
             buttons: [
                 { text: 'Cancel', onTap: function(e) { return false; } },
                 { text: '<b>Confirm</b>', type: 'button-positive', onTap: function(e) { return true; } }

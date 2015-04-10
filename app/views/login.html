@@ -13,11 +13,11 @@
             <form novalidate="novalidate" on-valid-submit="signIn(user)">
                 <div class="list">
                     <label class="item item-input validated">
-                        <input placeholder="{{'votre'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
+                        <input placeholder="{{'your'|translate}}@email.com" type="email" ng-model="user.email" required="required" name="email" />
                         <i class="icon ion-alert-circled error"></i>
                     </label>
                     <label class="item item-input validated">
-                        <input placeholder="{{'Mot de passe'|translate}}" id="password" type="password" ng-model="user.password" name="password" required="required">
+                        <input placeholder="{{'Password'|translate}}" id="password" type="password" ng-model="user.password" name="password" required="required">
                         <i class="icon ion-alert-circled error"></i>
                     </label>
                     <button translate ng-click="forgotPassword()" id="forgot-password" class="button button-small button-clear" type="button">Forgot your password?</button>

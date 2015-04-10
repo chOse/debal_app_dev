@@ -1,5 +1,5 @@
 App.controller('GroupexpensesCtrl',
-    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate, $ionicModal, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
+    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate, $ionicModal, $ionicPopup, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
@@ -21,18 +21,10 @@ App.controller('GroupexpensesCtrl',
         setTimeout(function() { console.log("delayed initing group"); $scope.initGroup(true); }, 500);
     });
 
-    $scope.$on('$ionicView.beforeEnter', function(event) {
-        //console.error($scope.expenses);
-    });
-
     $scope.$on('$ionicView.loaded', function(event) {
         console.error("loading view");
         $scope.initGroup();
     });
-
-    /*$scope.$on('$stateChangeSuccess', function() {
-        $scope.loadMore();
-    });*/
 
 
     /* Join request Modal */
@@ -56,6 +48,30 @@ App.controller('GroupexpensesCtrl',
     });
     /* End Join request Modal */
 
+    $scope.showIconTip = function(expense) {
+
+        if(expense.GroupsUserId == $scope.currentUserGuid) {
+            var msg = gettextCatalog.getString('This icon indicates that <strong>you paid</strong> for this expense.');
+            var css_class = "paid_by_me";
+        }
+        else if (expense.current_user_in_expense) {
+            var msg = gettextCatalog.getString('This icon indicates that <strong>you are included</strong> in this expense.');
+            var css_class = "includes_me";
+        }
+
+        else {
+            var msg = gettextCatalog.getString('This icon indicates that <strong>you did not pay nor are included</strong> in this expense.');
+            var css_class = "";
+        }
+
+        var alertPopup = $ionicPopup.alert({
+            cssClass : 'expenseIconTip',
+            title: gettextCatalog.getString('What is that icon?'),
+            template: '<i class="ion-android-list expense_icon ' + css_class + '"></i>' + msg
+        });
+
+    }
+
     $scope.goSettings = function() {
         $location.path('app/editgroup/' + $scope.GroupId);
     };
@@ -63,6 +79,10 @@ App.controller('GroupexpensesCtrl',
     $scope.addExpense = function() {
         $location.path('app/addexpense/' + $scope.GroupId);
     };
+
+    $scope.editExpense = function(EntryId) {
+        $location.path('app/editexpense/' + $scope.GroupId + '/' + EntryId);
+    }
 
 
     $scope.getGroupData = function(callback) {
@@ -88,70 +108,28 @@ App.controller('GroupexpensesCtrl',
         }
     };
 
-    // Triggerd automatically for loading expenses on scroll
-    $scope.loadMore = function() {
-        if(!$scope.expenses)
-            $scope.getEntries(function() {
-                $scope.loadExpenses();
-            });
-
-        else
-            $scope.loadExpenses();
-    };
-
-    // Get expenses from cache
-    $scope.loadExpenses = function() {
-
-        console.log("will load expenses");
-
-        limit_display = Math.min(max_display, $scope.expenses.length)-1;
-
-        if(!$scope.expenses_display)
-            $scope.expenses_display = $scope.expenses.slice(0,limit_display);
-   
-        if(typeof $scope.expenses[$scope.expenses_display.length] !== 'undefined')
-            $scope.expenses_display.push($scope.expenses[$scope.expenses_display.length]);
-
-        if ($scope.expenses_display.length === $scope.expenses.length)
-            $scope.noMoreItems = true;
-        
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-    };
-
-    // Reload expenses cache if table has been updated
-    $scope.refreshLoadedExpenses = function(callback, discret) {
-
-        $scope.getEntries(function() {
-            /*var limit_display = Math.min(max_display, $scope.expenses.length)-1;
-            var new_display = []
-            for(var i=0;i<=limit_display;i++) {
-                new_display.push($scope.expenses[i]);
-            }*/
-            //$scope.expenses_display = new_display;
-            callback();
-        });
-    };
-
     $scope.getEntries = function(callback) {
-        if(!$rootScope.cached_entries)
-            $rootScope.cached_entries = [];
 
-        if(!$rootScope.cached_entries['group' + $scope.GroupId]) {
-            console.log('cached entries not found');
-            EntriesModel.read({GroupId: $scope.GroupId}, function(data) {
-                $scope.expenses = data;
+        getBeneficiaries = function(entry_data) {
+            EntriesModel.get_beneficiaries(entry_data.EntryId, function(data) {
+                var current_user_in_expense = false;
+                for(var i in data) {
+                    if(data[i].GroupsUserId==$scope.currentUserGuid) {
+                        entry_data.shared_amount = data[i].shared_amount;
+                        current_user_in_expense = true;
+                    }
+                    entry_data.current_user_in_expense = current_user_in_expense;
 
-                $rootScope.cached_entries['group'+$scope.GroupId] = true;
-                console.log('entries have been cached');
-                if(callback) callback();
-            }, $scope.currentUserGuid);
-        }
-        
-        else {
-            console.log('cached entries found');
-            //$scope.expenses = $rootScope.cached_entries['group'+$scope.GroupId];
+                }
+                $scope.expenses.push(entry_data);
+            });
+        };
+        EntriesModel.read({GroupId: $scope.GroupId}, function(data) {
+            $scope.expenses = [];
+            for(var i in data)
+                getBeneficiaries(data[i]);
             if(callback) callback();
-        }
+        }, $scope.currentUserGuid);
     };
 
     $scope.getBalance = function(callback) {
@@ -185,12 +163,9 @@ App.controller('GroupexpensesCtrl',
     
     $scope.getMembersNames = function(callback) {
         GroupsModel.get_members($scope.GroupId, function(members_names) {
-
-            
             var group_data = [];
-
             members_names.map(function(arr) {
-                if(arr.user_id === LocalStorageService.get("user_id")) {
+                if(arr.user_id == LocalStorageService.get("user_id")) {
                     $scope.currentUserGuid = arr.guid;
                 }
                 $scope.membersNames[arr.guid] = arr.username;
@@ -212,9 +187,7 @@ App.controller('GroupexpensesCtrl',
         $scope.getGroupData(function() {
 
             $scope.getMembersNames(function () {
-
-                $scope.refreshLoadedExpenses(function() {
-
+                $scope.getEntries(function() {
                     $scope.$apply();
                     LoaderService.hide();
                     

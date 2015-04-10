@@ -12,47 +12,41 @@
 
         <ion-tab id="expenses" title="{{'Expenses'|translate}}">
 
-
+            <div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>
             <ion-content has-bouncing="false" has-tabs="true" has-footer="false" class="has-tabs ionic-scroll">
 
                 <ion-refresher on-refresh="doRefresh()"
                          pulling-text="{{'Manual sync'|translate}}"
                          refreshing-text="{{'Now syncing...'|translate}}..."
                          refreshing-icon="ion-loading-d"></ion-refresher>
-                <!--<div ng-show="group_data.public_key.length" class="groupexpenses_subheader"><span translate>Group key:</span> {{group_data.public_key}}</div>-->
+                
                 <!--<div translate class="item item-divider">Expenses</div>-->
                 
-                <a class="expenseslist item" collection-repeat="expense in expenses" item-height="70"  href="#/app/editexpense/{{GroupId}}/{{expense.EntryId}}">
+                <a class="expenseslist item" collection-repeat="expense in expenses" item-height="60">
 
-                    <div class="flex icon-left ion-android-list" style="">
-                        <div class="title ">
-                            
-                            <span class="title_line" ng-if="expense.title" style="white-space: normal;">{{expense.title}}</span><span ng-if="!expense.title" translate>Various</span> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
+                    <div class="flex">
+                        <div class="expense_icon" ng-class="{'paid_by_me' : expense.GroupsUserId === currentUserGuid, 'includes_me' : (expense.current_user_in_expense && expense.GroupsUserId !== currentUserGuid)}" ng-click="showIconTip(expense)">
+                            <i class="ion-android-list"></i>
+                        </div>
+                        <div class="title" ng-click="editExpense(expense.EntryId)">
+                            <p class="title_line" ng-if="expense.title">{{expense.title}}</p><p ng-if="!expense.title" translate>Various</p> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
                             <p style="font-style: normal;font-size:12px;">
                                 <span translate>paid by</span> 
                                 <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
                                 <strong translate class="myself" ng-if="expense.GroupsUserId==currentUserGuid">You</strong>
                             </p>
-                            <!--
-                            <div class="share_indicator">
-                                <span ng-class="{'owed': expense.GroupsUserId==currentUserGuid}" ng-if="expense.GroupsUserId==currentUserGuid">On vous doit : {{expense.amount-expense.shared_amount|currency:group_data.currency_symbol}}</span>
-                                <span ng-class="{'owes': expense.GroupsUserId!=currentUserGuid}" ng-if="expense.GroupsUserId!=currentUserGuid && expense.shared_amount">Vous devez : {{expense.shared_amount|currency:group_data.currency_symbol}}</span>
-                            </div> -->
-                            
                         </div>
 
                         <div class="amount">
                             <h2 style="color:#00a8ec">{{expense.amount | currency:group_data.currency_symbol}}</h2>
                             <p style="font-size:12px">{{ expense.date | date: 'shortDate'}}</p>
+                            <!--<p class="share_indicator" ng-class="{'owed': expense.GroupsUserId==currentUserGuid}" ng-if="expense.GroupsUserId==currentUserGuid">{{expense.amount-expense.shared_amount|currency:group_data.currency_symbol}}</p>
+                            <p class="share_indicator" ng-class="{'owes': expense.GroupsUserId!=currentUserGuid}" ng-if="expense.GroupsUserId!=currentUserGuid && expense.current_user_in_expense">{{expense.shared_amount|currency:group_data.currency_symbol}}</p>-->
                         </div>
                     </div>
                 </a>
 
                 <span translate class="item item-icon-right" ng-click="addExpense()" ng-show="!expenses.length">No expense added</span>
-
-                <!--<div style="color: #444;font-size: 12px;text-align: center;" ng-if="!noMoreItems">Scroll to show next expenses</div>
-
-                <ion-infinite-scroll ng-if="!noMoreItems" on-infinite="loadMore()" distance="30%"></ion-infinite-scroll>-->
 
             </ion-content>
             <ion-footer-bar>
