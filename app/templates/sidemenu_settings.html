@@ -1,0 +1,9 @@
+<div class="options_box language">
+	<p class="options_title" translate>Language</p>
+	<img src="assets/images/flag_fr.png" ng-click="changeLanguage('fr')" />
+	<img src="assets/images/flag_en.png" ng-click="changeLanguage('en')" />
+</div>
+<div class="options_box last" ng-if="!device_android">
+	<p class="options_title" translate>No dot/period on the numeric keypad?</p>
+	<ion-checkbox ng-change="changeKeyboard()" ng-model="settings.keyboard">Use telephone number keyboard</ion-checkbox>
+</div>

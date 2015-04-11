@@ -1,5 +1,5 @@
 App.controller('GroupexpensesCtrl',
-    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate, $ionicModal, $ionicPopup, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
+    function($scope, $stateParams, $rootScope, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate, $ionicPopup, $location, $ionicTabsDelegate, gettextCatalog, EntriesModel, GroupsModel, CURRENCIES_LIST, CURRENCIES_SYMBOLS, LoaderService, LocalStorageService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
@@ -27,26 +27,7 @@ App.controller('GroupexpensesCtrl',
     });
 
 
-    /* Join request Modal */
-    $ionicModal.fromTemplateUrl('app/templates/joinrequest_modal.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.modal = modal;
-    });  
-
-    $scope.openJoinRequests = function() {
-        $scope.modal.show()
-    };
-
-    $scope.closeModal = function() {
-        $scope.modal.hide();
-    };
-
-    $scope.$on('$destroy', function() {
-        $scope.modal.remove();
-    });
-    /* End Join request Modal */
+    
 
     $scope.showIconTip = function(expense) {
 

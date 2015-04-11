@@ -85,15 +85,18 @@ App
         });
     }
 
-    $scope.selectLanguage = function() {
-        $scope.selectLanguagePopup = $ionicPopup.show({
-            templateUrl: 'app/templates/select_language.html',
-            title: gettextCatalog.getString('Select a language'),
+    $scope.openSettings = function() {
+        $scope.device_android = ionic.Platform.isAndroid();
+        $scope.settings = {'keyboard':(LocalStorageService.get("setting_tel_keyboard")==="true")};
+        $scope.settingsPopup = $ionicPopup.show({
+            templateUrl: 'app/templates/sidemenu_settings.html',
+            title: gettextCatalog.getString('Settings'),
             scope: $scope,
             buttons: [
-                { text: gettextCatalog.getString('Cancel') },
+                { text: gettextCatalog.getString('Close') },
             ]
         });
+        $ionicSideMenuDelegate.toggleLeft();
     }
 
     $scope.selectLanguage2 = function() {
@@ -126,9 +129,13 @@ App
 
         $scope.device_lang = device_lang;
 
-        $scope.selectLanguagePopup.close();
+        $scope.settingsPopup.close();
         $ionicSideMenuDelegate.toggleLeft();
         $window.location.reload();
+    }
+
+    $scope.changeKeyboard = function() {
+        LocalStorageService.set("setting_tel_keyboard",$scope.settings.keyboard);
     }
 
     

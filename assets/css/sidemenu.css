@@ -44,16 +44,36 @@
 	left: 16px;
 	opacity:0.8;
 }
-#select_language {
+
+/* SETTINGS POPUP */
+.options_box {
 	text-align:center;
+	font-size: 11pt;
+	margin-bottom: 20px;
 }
-#select_language img {
+.options_box.last {
+	margin-bottom:0;
+}
+.options_box .options_title {
+	text-align:left;
+}
+.options_box.language img+img {
 	margin-left:20px;
 }
-#select_language img:first-child {
-	margin-left:0;
-}
 
+.options_box .item-checkbox {
+	font-size: 10pt;
+	border: none;
+	background: inherit;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+.options_box .item-checkbox .item-content {
+	white-space: normal;
+	word-wrap: break-word;
+	text-align: left;
+}
+/* END SETTINGS POPUP */
 
 #modal-feedback {
     border: 2px solid #666;

@@ -1,7 +1,7 @@
 /* global App */
 
 App
-.controller('SaveExpenseCtrl', function($scope, $state, $rootScope, $ionicPopup, $filter, $stateParams, $location, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, CURRENCIES_SYMBOLS, gettextCatalog, LoaderService, EntriesModel, GroupsModel) {
+.controller('SaveExpenseCtrl', function($scope, $state, $rootScope, $ionicPopup, $filter, $stateParams, $location, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, CURRENCIES_SYMBOLS, gettextCatalog, LocalStorageService, LoaderService, EntriesModel, GroupsModel) {
 
     $ionicSideMenuDelegate.canDragContent(false);
 
@@ -354,10 +354,8 @@ App
     var device = ionic.Platform.device();
     var devices_models_kb = ["SM-T530","SM-T111","SM-T110","SM-T311","SM-T310","SM-T315","KTU84L","SM-G900F","SM-G800F","GT-I9300","GT-P5210","C5303","GT-I9195","GT-I9500","GT-I9505","GT-I9506"];
 
-    if(typeof(device.model)!=='undefined') {
-        if (devices_models_kb.indexOf(device.model)>-1)
-            $scope.tel_keyboard = true;
-    }
+    if(LocalStorageService.get("setting_tel_keyboard")==="true" || (typeof(device.model)!=='undefined' && devices_models_kb.indexOf(device.model)>-1))
+        $scope.tel_keyboard = true;
 
     // Tracking
     if (typeof analytics !== 'undefined')
