@@ -1,4 +1,4 @@
-App.controller('GroupsCtrl', function($scope, $state, $location, $ionicSideMenuDelegate, gettextCatalog, GroupsModel, LocalStorageService, LoaderService) {
+App.controller('GroupsCtrl', function($scope, $state, $location, $ionicSideMenuDelegate, $ionicModal, gettextCatalog, GroupsModel, LocalStorageService, LoaderService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
     
@@ -13,6 +13,27 @@ App.controller('GroupsCtrl', function($scope, $state, $location, $ionicSideMenuD
     $scope.goCreategroup = function() {
         $location.path('app/creategroup');
     }
+
+    /* Join request Modal */
+    $ionicModal.fromTemplateUrl('app/templates/joinrequest_modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });  
+
+    $scope.openJoinRequests = function() {
+        $scope.modal.show()
+    };
+
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+    /* End Join request Modal */
 
 
     $scope.getGroups = function(discret) {
