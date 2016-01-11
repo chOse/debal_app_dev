@@ -1,0 +1,131 @@
+
+/* Onglet bilan */
+#group-balance .debts  {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin:0 auto 5px auto;
+    font-size:11px;
+}
+#group-balance li.item {
+    padding-bottom: 10px;
+}
+#group-balance .item.myself  {
+    font-size:12px;
+}
+
+#group-balance .myself {
+    color:red;
+}
+
+#group-balance .debts .col-center {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 10px;
+}
+#group-balance .debts.last .col-center {
+    border-bottom:none;
+}
+#group-balance .debts .col-left strong  {
+    color:#448FAD;
+}
+
+#group-balance .myself .debts .col-left strong  {
+    color:#00a8ec;
+}
+#group-balance .debts .col-left strong.amount {
+    color:orange;
+}
+#group-balance .debts .col-right strong.beneficiary.myself {
+    color:#00a8ec;
+    text-decoration:underline;
+    font-weight:normal;
+}
+
+#group-balance .col-left {
+    text-align:left;
+    float:left;
+}
+#group-balance .col-right {
+    text-align:right;
+    float:right;
+}
+#group-balance ion-content.has-footer.has-tabs {
+    bottom:49px;
+}
+/* Footer START */
+#group-balance .bar-footer {
+    background: transparent;
+    height:1px;
+}
+
+
+#group-balance .tabs.footer .tab-item {
+    font-weight:bold;
+}
+#group-balance .tabs.footer .tab-item.button {
+    border-top:none;
+    border-bottom:none;
+    border-right:none;
+}
+
+/* Footer END */
+
+/* POPOVER */
+#group-balance-options .list a.item.icon:before {
+    margin-right:5px;
+}
+
+#group-balance-options {
+    height: 213px;
+    width: 250px;
+
+    a.item.disabled {
+        color:#EEE;
+    }
+}
+
+/* POPUP */
+#popup_groupbalance_secondarycurrency .currencyWarning {
+    color: #ef473a;
+    font-size: 11px;
+    font-style: italic;
+    float: right;
+}
+#popup_groupbalance_secondarycurrency label {
+    padding-left:10px;
+    margin-bottom: 10px;
+}
+#popup_groupbalance_secondarycurrency label.exchangeRate  {
+    margin-bottom:0;
+    float: left;
+    width: 180px;
+}
+
+#popup_groupbalance_secondarycurrency .exchangeRate input {
+    text-align: center;
+    padding-right: 0;
+    height: 25px;
+    line-height: 25px;
+    font-size: 0.9em;
+}
+
+#popup_groupbalance_secondarycurrency .currency {
+    margin-right: 25px !important;
+    max-width:inherit !important;
+    height: 35px;
+}
+
+#popup_groupbalance_secondarycurrency .exchangeRateButton.button.icon {
+    top: -6px;
+    right: -7px;
+    color: #0e6bb9;
+    margin: 0;
+    padding: 0;
+}
+#popup_groupbalance_secondarycurrency .exchangeRateButton.button.icon:before {
+    font-size: 38px;
+    padding: 0;   
+}

@@ -1,4 +1,4 @@
-App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootScope, $ionicPopup, $http, gettext, LocalStorageService) {
+App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootScope, $ionicPopup, $timeout, $http, gettext, LocalStorageService) {
 
     this.current_api_call = [];
 
@@ -8,7 +8,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
 
     $rootScope.$on('blockSync', function(event) {
         console.error("received block Sync");
-        setTimeout(function() { self.block_sync = false; }, 4000);
+        setTimeout(function() { self.block_sync = false; }, self.syncTimeout); // Same timeout as $http's
         self.block_sync = true;
     });
 
@@ -17,9 +17,13 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         self.block_sync = false;
     });
 
+    this.syncTimeout = 25000;
+
     this.api_send = function(method, data, callback) {
 
         var self = this;
+
+        self.syncTimeout = (method=="sync" && self.firstSync===true) ? 100000 : 25000;
 
         if(this.current_api_call.indexOf(method)===-1 && !this.block_sync) {
 
@@ -28,9 +32,9 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             var APIData = API_ROUTES[method];
 
             var ajaxdata = {
-                url: GENERAL_CONFIG['API_URL'] + APIData.url,
+                url: GENERAL_CONFIG.API_URL + APIData.url,
                 method: APIData.type,
-                timeout: 10000,
+                timeout: self.syncTimeout,
                 data : {}
             };
 
@@ -42,11 +46,18 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
 
             else
                 ajaxdata.data = data;
-                
+            
             if (APIData.auth) {
                 ajaxdata.headers = {
                     'Authorization': "Basic " + LocalStorageService.get("user_basic")
                 };
+            }
+
+            if(ajaxdata.method==="POST" && typeof ajaxdata.data.info == 'undefined') {
+                ajaxdata.data.info = {
+                    locale:LocalStorageService.get("locale"),
+                    version:LocalStorageService.get("app_version")
+                }
             }
             
             $http(ajaxdata)
@@ -56,21 +67,18 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
 
                     callback(data, status);
 
-                    if(status==401 && method!="auth") {
+                    if(status==401 && method!="auth" && LocalStorageService.get('login')) {
 
                         var alertPopup = $ionicPopup.alert({
-                            title: gettext('Erreur'),
-                            template: gettext("Vos informations de connexions ne sont plus valides. Vous allez être déconnecté.")
+                            title: gettext('Error'),
+                            template: gettext("Your connection credentials are no longer valid. You will be disconnected.")
                         });
                         
                         alertPopup.then(function(res) {
                             LocalStorageService.clear('login');
                             $state.go('login');
-                        });
-                        
+                        });   
                     }
-                    
-
                 })
                 .success(function(data, status) {
 
@@ -89,12 +97,14 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         }
     };
 
+   
+
     this.sync_now = function(callback, saveBandwidth) {
 
         var username = LocalStorageService.get("user_email");
         var password = LocalStorageService.get("user_password");
 
-        clientData = {'username': username, 'password': password}
+        clientData = {'username': username, 'password': password};
 
         this.syncNow(this.callBackSyncProgress, clientData, callback, saveBandwidth);
     };
@@ -106,7 +116,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         if(typeof(this.syncStarted)!='undefined' && this.syncStarted===true)
             console.error("SYNC ALREADY STARTED");
 
-
         else {
 
             this.syncStarted = true;
@@ -115,17 +124,19 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                 self.syncStarted = false;
 
                 if(r.syncOK) {
-                    callback(true);
+                    if(callback)
+                        callback(true);
+
                     if(r.localDataUpdated) {
                         $rootScope.$broadcast('newGroups');
                         $rootScope.$broadcast('newEntries');
                     }
-                    
-                    
                 }
 
-                else
+                else {
+                    //self.firstSync = false;
                     callback(false);
+                }
             }, saveBandwidth);
         } 
     };
@@ -197,21 +208,37 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             //create triggers to automatically fill the new_elem table (this table will contains a pointer to all the modified data)
             for (i = 0; i < self.tablesToSync.length; i++) {
                 var curr = self.tablesToSync[i];
-                self._executeSql('CREATE TRIGGER IF NOT EXISTS update_' + curr.tableName + '  AFTER UPDATE ON ' + curr.tableName + ' ' +
+                if(curr.trigger===true) {
+                    self._executeSql('CREATE TRIGGER IF NOT EXISTS update_' + curr.tableName + '  AFTER UPDATE ON ' + curr.tableName + ' ' +
                         'BEGIN INSERT INTO new_elem (table_name, id) VALUES ("' + curr.tableName + '", new.' + curr.idName + '); END;', [], transaction);
 
-                self._executeSql('CREATE TRIGGER IF NOT EXISTS insert_' + curr.tableName + '  AFTER INSERT ON ' + curr.tableName + ' ' +
-                        'BEGIN INSERT INTO new_elem (table_name, id) VALUES ("' + curr.tableName + '", new.' + curr.idName + '); END;', [], transaction);
+                    self._executeSql('CREATE TRIGGER IF NOT EXISTS insert_' + curr.tableName + '  AFTER INSERT ON ' + curr.tableName + ' ' +
+                            'BEGIN INSERT INTO new_elem (table_name, id) VALUES ("' + curr.tableName + '", new.' + curr.idName + '); END;', [], transaction);
+                }
+                
             }
         });//end tx
         self._selectSql('SELECT last_sync FROM sync_info', null, function(res) {
 
-            if (res.length === 0 || res[0] == 0) {//First sync (or data lost)
+            //First sync (or data lost)
+            if (res.length === 0 || res[0] == 0) {
                 self._executeSql('INSERT OR REPLACE INTO sync_info (last_sync) VALUES (0)', []);
                 self.firstSync = true;
                 self.syncInfo.lastSyncDate = 0;
+
+                // Get exchange rates
+                $http({method: 'GET', url: GENERAL_CONFIG.CURR_RATES_URL}).success(function(data, status) {
+                    if(status===200 && typeof data !== 'undefined' && objectLength(data)>0 && typeof fx !== "undefined" && fx.rates) {
+                        LocalStorageService.set("exchange_rates", JSON.stringify(data.rates));
+                        LocalStorageService.set("exchange_timestamp", data.timestamp);
+                        LocalStorageService.set("exchange_base", data.base);
+                    }
+                });
+
                 callBack(true);
-            } else {
+            }
+
+            else {
                 self.syncInfo.lastSyncDate = res[0].last_sync;
                 if (self.syncInfo.lastSyncDate === 0) {
                     self.firstSync = true;
@@ -230,6 +257,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
     this.syncNow = function(callBackProgress, clientData, callBackEndSync, saveBandwidth) {
 
         this.syncInfo.locale = LocalStorageService.get("locale");
+        this.syncInfo.version = LocalStorageService.get("app_version");
         
         var self = this;
 
@@ -262,7 +290,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                     self.syncResult.codeStr = 'nothingToSend';
                     self.syncResult.message = 'No new data to send to the server';
                     self.cbEndSync(self.syncResult);
-                    return
+                    return;
                 } 
 
                 callBackProgress('Sending ' + self.syncResult.nbSent + ' elements to the server', 20, 'sendData');
@@ -282,7 +310,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                     });
                 });
             });
-        }
+        };
 
         // Preventive fix : add missing server id when needed (this should not happen but we never know) before proceeding to sync
         self.db.transaction(function(tx) {
@@ -330,17 +358,29 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             var i, counter = 0, nbTables = self.tablesToSync.length, currTable;
 
             self.tablesToSync.forEach(function(currTable) {//a simple for will not work here because we have an asynchronous call inside
-                self._getDataToSave(currTable.tableName, currTable.idName, self.firstSync, tx, function(data) {
-                    dataToSync.data[currTable.tableName] = data;
-                    nbData += data.length;
+
+                // Do not send data from "syncWay down" tables
+                if(typeof currTable.syncWay=='undefined' || (typeof currTable.syncWay!='undefined' && currTable.syncWay!='down')) {
+                    self._getDataToSave(currTable.tableName, currTable.idName, self.firstSync, tx, function(data) {
+                        dataToSync.data[currTable.tableName] = data;
+                        nbData += data.length;
+                        counter++;
+                        if (counter === nbTables) {//only call the callback at the last table
+                            self.log('Data fetched from the local DB');
+                            self.syncResult.nbSent = nbData;
+                            callBack(dataToSync);
+                        }
+                    });
+                }
+                else {
                     counter++;
                     if (counter === nbTables) {//only call the callback at the last table
                         self.log('Data fetched from the local DB');
-                        //dataToSync.info.nbDataToBackup = nbData;
                         self.syncResult.nbSent = nbData;
                         callBack(dataToSync);
                     }
-                });
+                }
+                
             });//end for each
         });//end tx
     };
@@ -360,8 +400,8 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
     this._sendDataToServer = function(dataToSync, callBack) {
 
         var self = this;
-        self.api_send('sync', dataToSync, function(data, status) {
 
+        self.api_send('sync', dataToSync, function(data, status) {
             if(status===200 && data instanceof Object)
                 callBack(data);
 
@@ -380,18 +420,133 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         var self = this;
         self.serverData = serverData;
 
-        if (!serverData || serverData.result === 'ERROR') {
-            self.syncResult.syncOK = false;
-            self.syncResult.codeStr = 'syncKoServer';
-            if (serverData) {
-                self.syncResult.message = serverData.message;
-            } else {
-                self.syncResult.message = 'No answer from the server';
-            }
-            self.cbEndSync(self.syncResult);
-            return;
+        // SYNC OK, UPDATE ROWS
+        if(serverData && typeof serverData.result != 'undefined' && serverData.result === 'OK' && typeof serverData.data != 'undefined' && objectLength(serverData.data)>0) {
+            self.db.transaction(function(tx) {
+                var counterNbTable = 0, nbTables = self.tablesToSync.length;
+                var counterNbElm = 0;
+                var ServerIdsToDelete = []; // Server ids to delete from trigger
+                var updatedEntriesIds = [];
+
+                self.ModifiedServerIds = [];
+
+                while(self.ModifiedServerIds.length > 0) {
+                    self.ModifiedServerIds.pop();
+                }
+
+                self.tablesToSync.forEach(function(table) {
+                    self.ModifiedServerIds[table.tableName] = [];
+                    var currData = serverData.data[table.tableName];
+                    if (!currData) {
+                        //Should always be defined (even if 0 elements)
+                        //Must not be null
+                        currData = [];
+                    }
+                    var nb = currData.length;
+                    counterNbElm += nb;
+                    self.log('There are ' + nb + ' new or modified elements in the table ' + table.tableName + ' to save in the local DB');
+
+                    var i = 0, listIdToCheck = [], listServerIdToCheck = [];
+
+                    ServerIdsToDelete[table.tableName] = [];
+
+                    for (i = 0; i < nb; i++) {
+                        var local_id = serverData.data[table.tableName][i][table.idName];
+                        var server_id = serverData.data[table.tableName][i]['id'];
+
+                        if(typeof(local_id)!='undefined')
+                            listIdToCheck.push(local_id);
+
+                        else {
+                            
+                            listServerIdToCheck.push(server_id);
+                            ServerIdsToDelete[table.tableName].push(server_id);
+                        }
+
+                        self.ModifiedServerIds[table.tableName].push(server_id);
+
+
+                        if(table.tableName=="entries_groups_users") {
+                            if(typeof(serverData.data[table.tableName][i]['EntriesGroupsUserId'])==='undefined')
+                                updatedEntriesIds.push(serverData.data[table.tableName][i]['entry_id']);
+                        } 
+
+                    }
+
+                    insertOrUpdateFields = function(nb, tableName, idName, listIdToCheck, listServerIdToCheck) {
+
+                        self._getIdExitingInDB(tableName, idName, listIdToCheck, listServerIdToCheck, tx, function(idInDb, serverIdInDb) {
+                            
+                            var curr = null, sql = null;
+
+                            for (i = 0; i < nb; i++) {
+
+                                curr = serverData.data[tableName][i];
+            
+                                // Local id specified then update
+                                if (idInDb[curr[idName]]) {//update
+                                    /*ex : UPDATE "tableName" SET colonne 1 = [valeur 1], colonne 2 = [valeur 2]*/
+                                    sql = self._buildUpdateSQL(tableName, curr);
+                                    sql += ' WHERE ' + idName + ' = "' + curr[idName] + '"';
+                                    self._executeSql(sql, [], tx);
+                                }
+
+                                // Local id not specified but server id is in db then update
+                                else if (serverIdInDb[curr['id']]) {//update
+                                    sql = self._buildUpdateSQL(tableName, curr);
+                                    sql += ' WHERE id = "' + curr['id'] + '"';
+                                    self._executeSql(sql, [], tx);
+                                }
+
+                                // Otherwise insert
+                                else {
+                                    var attList = self._getAttributesList(curr);
+                                    sql = self._buildInsertSQL(tableName, curr, attList);
+                                    var attValue = self._getMembersValue(curr, attList);
+                                    self._executeSql(sql, attValue, tx);
+
+                                }
+
+                            }//end for
+
+                            counterNbTable++;
+
+                            // Callback at the end
+                            if (counterNbTable === nbTables) {
+                                //TODO set counterNbElm to info
+                                self.syncResult.nbUpdated = counterNbElm;
+                                self._finishSync(serverData.syncDate, ServerIdsToDelete, counterNbElm, tx, callBack);
+                            }
+                        });//end getExisting Id
+                    }; // end insertOrUpdateFields
+
+                    // Only for egu : clean previous egus for updated entries (delete is not supported)
+                    if(table.tableName=="entries_groups_users") {
+
+                        var SQL = 'SELECT EntriesGroupsUserId FROM entries_groups_users WHERE entry_id IN ("' + self._arrayToString(updatedEntriesIds, '","') + '")';
+
+                        var delete_from_trigger = [];
+                        self._selectSql(SQL, tx, function(ids) {
+
+                            for (var i = 0; i < ids.length; ++i) {
+                                delete_from_trigger.push(ids[i]['EntriesGroupsUserId']);
+                            }
+
+                            // DELETE FROM EntriesGroupsUser WHERE EntriesGroupsUserId IN (GrousUserIds)
+                            self._executeSql('DELETE FROM entries_groups_users WHERE entry_id IN("' + self._arrayToString(updatedEntriesIds, '","') + '")', [], tx, function() {
+                                self._executeSql('DELETE FROM new_elem WHERE table_name = "entries_groups_users" AND id IN("' + self._arrayToString(delete_from_trigger, '","') + '")', [], tx);
+                                insertOrUpdateFields(nb, table.tableName, table.idName, listIdToCheck, listServerIdToCheck);  
+                            });
+                        });
+                    }
+                    else
+                        insertOrUpdateFields(nb, table.tableName, table.idName, listIdToCheck, listServerIdToCheck);
+                });//end forEach
+            });//end tx
         }
-        if (typeof serverData.data === 'undefined' || serverData.data.length === 0) {
+
+        // SYNC OK, EMPTY RESPONSE
+        else if (serverData.result === 'OK' && (typeof serverData.data === 'undefined' || objectLength(serverData.data) === 0)) {
             //nothing to update
             self.db.transaction(function(tx) {
 
@@ -400,129 +555,22 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             });
             return;
         }
-        self.db.transaction(function(tx) {
-            var counterNbTable = 0, nbTables = self.tablesToSync.length;
-            var counterNbElm = 0;
-            var ServerIdsToDelete = []; // Server ids to delete from trigger
-            var updatedEntriesIds = [];
 
-            self.ModifiedServerIds = [];
-
-            while(self.ModifiedServerIds.length > 0) {
-                self.ModifiedServerIds.pop();
+        // ANY OTHER CASE > ERROR
+        //if (!serverData || serverData.result === 'ERROR' || serverData.result !== 'OK') {
+        else {
+            console.error("sync ERROR");
+            self.syncResult.syncOK = false;
+            self.syncResult.codeStr = 'syncKoServer';
+            if (serverData) {
+                self.syncResult.message = serverData.message;
             }
-
-
-
-            self.tablesToSync.forEach(function(table) {
-                self.ModifiedServerIds[table.tableName] = [];
-                var currData = serverData.data[table.tableName];
-                if (!currData) {
-                    //Should always be defined (even if 0 elements)
-                    //Must not be null
-                    currData = [];
-                }
-                var nb = currData.length;
-                counterNbElm += nb;
-                self.log('There are ' + nb + ' new or modified elements in the table ' + table.tableName + ' to save in the local DB');
-
-                var i = 0, listIdToCheck = [], listServerIdToCheck = [];
-
-                ServerIdsToDelete[table.tableName] = [];
-
-                for (i = 0; i < nb; i++) {
-                    var local_id = serverData.data[table.tableName][i][table.idName];
-                    var server_id = serverData.data[table.tableName][i]['id'];
-
-                    if(typeof(local_id)!='undefined')
-                        listIdToCheck.push(local_id);
-
-                    else {
-                        
-                        listServerIdToCheck.push(server_id);
-                        ServerIdsToDelete[table.tableName].push(server_id);
-                    }
-
-                    self.ModifiedServerIds[table.tableName].push(server_id);
-
-
-                    if(table.tableName=="entries_groups_users") {
-                        if(typeof(serverData.data[table.tableName][i]['EntriesGroupsUserId'])==='undefined')
-                            updatedEntriesIds.push(serverData.data[table.tableName][i]['entry_id']);
-                    } 
-
-                }
-
-                insertOrUpdateFields = function(nb, tableName, idName, listIdToCheck, listServerIdToCheck) {
-
-                    self._getIdExitingInDB(tableName, idName, listIdToCheck, listServerIdToCheck, tx, function(idInDb, serverIdInDb) {
-                        
-                        var curr = null, sql = null;
-
-                        for (i = 0; i < nb; i++) {
-
-                            curr = serverData.data[tableName][i];
-        
-                            // Local id specified then update
-                            if (idInDb[curr[idName]]) {//update
-                                /*ex : UPDATE "tableName" SET colonne 1 = [valeur 1], colonne 2 = [valeur 2]*/
-                                sql = self._buildUpdateSQL(tableName, curr);
-                                sql += ' WHERE ' + idName + ' = "' + curr[idName] + '"';
-                                self._executeSql(sql, [], tx);
-                            }
-
-                            // Local id not specified but server id is in db then update
-                            else if (serverIdInDb[curr['id']]) {//update
-                                sql = self._buildUpdateSQL(tableName, curr);
-                                sql += ' WHERE id = "' + curr['id'] + '"';
-                                self._executeSql(sql, [], tx);
-                            }
-
-                            // Otherwise insert
-                            else {
-                                var attList = self._getAttributesList(curr);
-                                sql = self._buildInsertSQL(tableName, curr, attList);
-                                var attValue = self._getMembersValue(curr, attList);
-                                self._executeSql(sql, attValue, tx);
-
-                            }
-
-                        }//end for
-
-                        counterNbTable++;
-
-                        // Callback at the end
-                        if (counterNbTable === nbTables) {
-                            //TODO set counterNbElm to info
-                            self.syncResult.nbUpdated = counterNbElm;
-                            self._finishSync(serverData.syncDate, ServerIdsToDelete, counterNbElm, tx, callBack);
-                        }
-                    });//end getExisting Id
-                }; // end insertOrUpdateFields
-
-                // Only for egu : clean previous egus for updated entries (delete is not supported)
-                if(table.tableName=="entries_groups_users") {
-
-                    var SQL = 'SELECT EntriesGroupsUserId FROM entries_groups_users WHERE entry_id IN ("' + self._arrayToString(updatedEntriesIds, '","') + '")';
-
-                    var delete_from_trigger = [];
-                    self._selectSql(SQL, tx, function(ids) {
-
-                        for (var i = 0; i < ids.length; ++i) {
-                            delete_from_trigger.push(ids[i]['EntriesGroupsUserId']);
-                        }
-
-                        // DELETE FROM EntriesGroupsUser WHERE EntriesGroupsUserId IN (GrousUserIds)
-                        self._executeSql('DELETE FROM entries_groups_users WHERE entry_id IN("' + self._arrayToString(updatedEntriesIds, '","') + '")', [], tx, function() {
-                            self._executeSql('DELETE FROM new_elem WHERE table_name = "entries_groups_users" AND id IN("' + self._arrayToString(delete_from_trigger, '","') + '")', [], tx);
-                            insertOrUpdateFields(nb, table.tableName, table.idName, listIdToCheck, listServerIdToCheck);  
-                        });
-                    });
-                }
-                else
-                    insertOrUpdateFields(nb, table.tableName, table.idName, listIdToCheck, listServerIdToCheck);
-            });//end forEach
-        });//end tx
+            else {
+                self.syncResult.message = 'No answer from the server';
+            }
+            self.cbEndSync(self.syncResult);
+            return;
+        }
     };
     /** return the listIdToCheck curated from the id that doesn't exist in tableName and idName
      * (used in the DBSync class to know if we need to insert new elem or just update)
@@ -564,8 +612,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
 
     this._finishSync = function(syncDate, ServerIdsToDelete, counterNbElm, tx, callBack) {
         var self = this, tableName, idsToDelete, idName, i, idValue, idsString;
-        this.firstSync = false;
-
         
         if(counterNbElm>0) {
             this.tablesToSync.forEach(function(table) {
@@ -592,9 +638,29 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         }
 
         // Update sqlite_seq
-        if(typeof self.serverData.sqlseq != 'undefined')
+        if(typeof self.serverData.sqlseq !== 'undefined')
             self.updateSQLiteSeq(self.serverData.sqlseq, tx);
+ 
 
+        // Listen to new Join Request
+        if(typeof self.serverData.data.groups_requests !== 'undefined' && objectLength(self.serverData.data.groups_requests)>0) {
+            for(var i in self.serverData.data.groups_requests) {
+                var req = self.serverData.data.groups_requests[i];
+                if(req.status*1 ===0) {
+                    $rootScope.$broadcast('newJoinRequest');
+                    break;
+                }
+            }
+        }
+
+        // Listen to changes on current user
+        var SQL = 'SELECT id,username,email from users WHERE id =' + LocalStorageService.get("user_id");
+        self._selectSql(SQL, tx, function(values) {
+            if(values.length>0) {
+                LocalStorageService.set('user_name', values[0].username);
+                LocalStorageService.set('user_email', values[0].email);
+            }
+        });
 
         this.syncInfo.lastSyncDate = syncDate;
         this._executeSql('UPDATE sync_info SET last_sync = "' + syncDate + '"', [], tx);
@@ -627,7 +693,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                 idsString = self._arrayToString(idsToDelete, ',');
                 self._executeSql('DELETE FROM new_elem WHERE table_name = "'+tableName+'" AND id IN ('+idsString+')', [], tx);
             }
-
             // Delete also ids from server data without any local id specified
             if(ServerIdsToDelete[tableName].length > 0) {
                 serverIdsString = self._arrayToString(ServerIdsToDelete[tableName], ',');
@@ -635,7 +700,15 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
             }
         }
 
+        // Remove elements that are missing servers ids (sync failed for some reason, removing those elements ensures data consistency)
+        var i = 0;
+        for (tableName in self.clientData.data) {
+            i++;
+            self._executeSql('DELETE FROM "'+tableName+'" WHERE id IS NULL', [], tx);
+        }
+
         callBack();
+        this.firstSync = false;
         self.clientData = null;
         self.serverData = null;
     };
@@ -654,7 +727,7 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                 }
             }
         });
-    }
+    };
 
 
     /***************** DB  util ****************/
@@ -734,10 +807,14 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
 
         var nb = members.length;
         for (var i = 0; i < nb; i++) {
-            sql += '"' + members[i] + '" = "' + values[i] + '"';
-            if (i < nb - 1) {
-                sql += ', ';
+            if(values[i]!==null) {
+                sql += '"' + members[i] + '" = "' + values[i] + '"';
+                if (i < nb - 1) {
+                    sql += ', ';
+                }
             }
+            
+            
         }
 
         return sql;

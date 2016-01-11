@@ -1,0 +1,224 @@
+/* Footer START */
+#group-members .add-member {
+  font-size: 15px; }
+
+#group-members .ion-checkmark-round {
+  margin-left: 10px;
+  color: red; }
+
+#group-members .item-input-wrapper {
+  background: #Fff;
+  white-space: normal; }
+
+#group-members .item-input-wrapper i {
+  margin-right: 8px;
+  margin-left: -8px; }
+
+#group-members .label-members {
+  border-bottom: 0; }
+
+#group-members .ion-arrow-down-b {
+  font-size: 25px; }
+
+#group-members .userlist.nomargin {
+  box-shadow: none;
+  margin-left: 0;
+  margin-right: 0; }
+
+#group-members .userlist .user-options:before {
+  font-size: 40px;
+  color: #8C8A8A; }
+
+#group-members .ion-android-person-add:before {
+  margin-right: 5px; }
+
+#group-members .members_title {
+  height: 25px;
+  background: #00a8ec;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  margin-top: 20px;
+  line-height: 25px;
+  font-size: 16px; }
+
+#group-members .card {
+  margin-top: 4px;
+  margin-bottom: 4px; }
+
+#group-members .currency {
+  margin-right: 75px; }
+
+#group-members .add-member {
+  margin-left: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 35px;
+  line-height: 35px;
+  width: 120px;
+  margin-top: -45px;
+  border-radius: 5px; }
+
+#group-members div.disabled, #group-members div.disabled label {
+  background: #eee; }
+
+#group-members label.ion-android-social-user.disabled::before {
+  color: #ccc; }
+
+#group-members .share-status.button-small:before {
+  font-size: 20px; }
+
+#group-members .share-status input {
+  padding-right: 0; }
+
+#group-members .share-status {
+  text-align: center;
+  font-size: 15px;
+  width: 60px;
+  height: 25px;
+  line-height: 25px;
+  font-weight: bold; }
+
+#group-members input[readonly] {
+  background-color: #fff; }
+
+#group-members .tip {
+  position: absolute;
+  right: 5px;
+  font-size: 11px;
+  color: #3D3D3D; }
+
+#group-members .tip.visible {
+  visibility: visible; }
+
+#group-members .tip.hidden {
+  visibility: hidden; }
+
+.bar-header a.button.ion-checkmark.edited {
+  color: orange; }
+
+#group-members ion-content {
+  background: #ececec; }
+
+#group-members .userlist label div p {
+  margin: 0;
+  white-space: normal; }
+
+#group-members .userlist label div .info {
+  font-size: 11px;
+  overflow: initial;
+  text-overflow: initial;
+  white-space: initial; }
+
+#group-members .userlist label div .info.not_registered {
+  color: red; }
+
+#group-members .userlist label div .info.share {
+  font-size: 12px; }
+
+#group-members .user_avatar, #creategroup .user_avatar, #modal_joinrequest .user_avatar, #popup_joinrequest_selectmember .user_avatar {
+  height: 50px;
+  width: 50px;
+  border: 1px solid;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 50px;
+  flex-shrink: 0;
+  background-color: #eee;
+  border-color: transparent;
+  font-size: 18px;
+  color: #8C8A8A; }
+
+#group-members .current-user .user_avatar, #creategroup .current-user .user_avatar {
+  color: orange; }
+
+#group-members .registered-user .user_avatar {
+  color: #00a8ec; }
+
+#group-members .guest-user .user_avatar {
+  color: gray; }
+
+#group-members .user_avatar.stroke {
+  border: 1px dashed #ccc; }
+
+.popup-body .button.ion-android-contacts {
+  display: inline;
+  width: 88px;
+  font-size: 12px;
+  height: 34px;
+  min-height: initial;
+  margin-left: 4px; }
+
+#group-members div.username {
+  margin-left: 20px; }
+
+#group-members div.username_small {
+  margin-left: 10px; }
+
+/* Footer END */
+/* user options popover */
+#user-options a.icon:before {
+  margin-right: 5px; }
+
+#user-options a.ion-person-add {
+  font-weight: bold;
+  color: orange; }
+
+#user-options a.disabled {
+  color: #ccc;
+  font-weight: normal; }
+
+#user-options.popover {
+  height: 215px; }
+
+#edit_user_share {
+  text-align: center; }
+
+#edit_user_share .share-status {
+  width: 90px;
+  font-weight: bold;
+  background-color: #C5C5C5;
+  color: #fff;
+  font-size: 13px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+#edit_user_share .ion-minus, #edit_user_share .ion-plus {
+  height: 31px;
+  width: 31px; }
+
+#edit_user_share .ion-plus {
+  margin-left: 10px; }
+
+#edit_user_share .ion-minus {
+  margin-right: 10px; }
+
+#group-members .addMember {
+  padding: 10px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 2px;
+  line-height: 28px;
+  color: grey;
+  border: 1px dotted grey;
+  background: none;
+  margin-bottom: 14px;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center; }
+
+#group-members .addMember:before {
+  margin-right: 10px; }
+
+#group-members .addMember:active {
+  -moz-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  background-color: lightgray; }
+
+#group-members form .has-success {
+  border: none; }
+
+#group-members .card {
+  box-shadow: none; }

@@ -1,0 +1,35 @@
+<ion-view id="group-members" view-title="{{group.name}}">
+
+    <ion-content has-bouncing="false">
+
+        <ion-refresher on-refresh="doRefresh()"
+                 pulling-text="{{'Manual sync'|translate}}"
+                 refreshing-text="{{'Now syncing...'|translate}}..."
+                 refreshing-icon="ion-loading-d"></ion-refresher>
+        
+        
+        <div class="list">
+            <div ng-class="{'disabled': member.share==0}" ng-repeat="member in group.members" class="userlist item item-input-inset" ng-show="member.deleted == 0">
+                <label ng-click="openPopover($event, member, $index)" class="item-input-wrapper" ng-class="{'current-user': member.current_user, 'registered-user': member.registered && !member.current_user, 'guest-user': !member.registered && !member.current_user}">
+                    <div class="user_avatar" ng-class="{'stroke': member.share==0}">{{member.username.toUpperCase()| limitTo : 3 : 0}}</div>
+                    <div class="username" required="required">
+                        <p class="username" ng-show="!member.display_name">{{member.username}}</p>
+                        <p class="username" ng-show="member.display_name">{{member.display_name}}</p>
+                        <p class="info" ng-show="member.registered || member.current_user">{{member.email}}</p>
+                        <p class="info not_registered" ng-show="!member.registered && !member.current_user && !member.invited && member.share!=0" translate>Invite them to manage the group!</p>
+                        <p class="info" ng-show="member.invited && !member.registered && !member.current_user"><span translate>Invited</span> ({{member.invite_email}})</p>
+                        <p class="info share">{{member.share}} <span translate translate-n="member.share" translate-plural="default shares">default share</span></p>
+                        <p translate class="info share" ng-show="member.share==0">Change their share to have them back in the group</p>
+                    </div>
+                </label>
+                <button translate ng-click="openPopover($event, member, $index)" class="button user-options button-small icon-left button-clear ion-ios-more-outline button-energized"></button>
+            </div>
+        </div>
+
+    </ion-content>
+
+    <ion-footer-bar>
+        <button class="floatingButton icon ion-android-person-add" ng-click="addMember()"></button>
+    </ion-footer-bar>
+
+</ion-view>

@@ -1,234 +1,130 @@
 /* Footer START */
-#creategroup .bar.bar-footer {
-    padding: 0;
-}
-.bar .title {
-
-}
-#creategroup .bar.bar-footer .button {
-    margin: 0;
-    font-size: 21px;
-    font-weight:bold;
-    border:none;
-}
-#creategroup .bar.bar-footer .button i {
-    margin-right:10px;
-}
-#creategroup .add-member {
-	font-size:15px;
-}
-#creategroup .ion-checkmark-round {
-	margin-left:10px;
-	color:red;
-}
 #creategroup .item-input-wrapper {
-    background:#Fff;
-    white-space: normal;
-}
+  background: #Fff;
+  white-space: normal; }
+
 #creategroup .item-input-wrapper i {
-    margin-right: 8px;
-    margin-left: -8px;
-}
+  margin-right: 8px;
+  margin-left: -8px; }
+
 #creategroup .label-members {
-    border-bottom:0;
-}
+  border-bottom: 0; }
+
 #creategroup .ion-arrow-down-b {
-    font-size: 25px;
-}
+  font-size: 25px; }
+
 #creategroup .userlist.nomargin {
-    box-shadow:none;
-    margin-left: 0;
-    margin-right: 0;
-}
-#creategroup .userlist a.ion-android-more {
-    font-size:15px;
-    color:orange;
-}
-#creategroup .userlist a.ion-android-more:before {
-    margin-top: 4px;
-    margin-right: 3px;
-}
-#creategroup .ion-android-add-contact:before {
-    margin-right:5px;
-}
+  box-shadow: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+#creategroup .userlist a.ion-android-more-vertical {
+  font-size: 15px;
+  color: orange; }
+
+#creategroup .userlist a.ion-android-more-vertical:before {
+  margin-top: 5px;
+  margin-right: 3px;
+  font-size: 14pt; }
+
+#creategroup .ion-android-person-add:before {
+  margin-right: 5px; }
+
 #creategroup .members_title {
-    height: 25px;
-    background: #00a8ec;
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    margin-top: 20px;
-    line-height: 25px;
-    font-size: 16px;
-}
+  height: 25px;
+  background: #00a8ec;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  margin-top: 20px;
+  line-height: 25px;
+  font-size: 16px; }
+
 #creategroup .card {
-    margin-top:4px;
-    margin-bottom:4px;
-}
+  margin-top: 4px;
+  margin-bottom: 4px; }
+
 #creategroup .currency {
-    margin-right:35px;
-}
-#creategroup .current-user {
-    color: orange;
-}
-#creategroup .add-member {
-    margin-left: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 35px;
-    line-height: 35px;
-    width: 120px;
-    margin-top: -45px;
-    border-radius: 5px;
-}
-#creategroup div.disabled, #creategroup div.disabled  label {
-    background:#eee;
-}
-#creategroup label.ion-android-social-user.disabled::before {
-    color:#ccc;
-}
+  margin-right: 35px; }
+
+#creategroup div.disabled, #creategroup div.disabled label {
+  background: #eee; }
+
+#creategroup label.ion-person.disabled::before {
+  color: #ccc; }
+
 #creategroup .share-status.button-small:before {
-    font-size:20px;
-} 
+  font-size: 20px; }
 
-#creategroup .share-status input {
-    padding-right: 0;
-}
-#creategroup .share-status {
-    text-align: center;
-    font-size: 15px;
-    width: 60px;
-    height: 25px;
-    line-height: 25px;
-    font-weight:bold;
-}
 #creategroup input[readonly] {
-    background-color:#fff;
-}
-#creategroup .tip {
-    position: absolute;
-    right: 5px;
-    font-size: 11px;
-    color: #3D3D3D;
-}
-#creategroup .tip.visible {
-  visibility: visible;
-}
-#creategroup .tip.hidden {
-  visibility: hidden;
-}
-.bar-header a.button.ion-checkmark.edited {
-    color:orange;
-}
-#creategroup ion-content {
-    background:#ececec;
-}
-#creategroup .userlist label div p {
-    margin:0;
-    white-space: normal;
-}
-#creategroup .userlist label div .info {
-    font-size:11px;
-    overflow: initial;
-    text-overflow: initial;
-    white-space: initial;
-}
-#creategroup div.userlist label.ion-android-social-user:before {
-    font-size: 30px;
-}
-#creategroup div.userlist label.ion-android-social-user.current-user:before {
-    color:orange;
-}
-#creategroup div.userlist label.ion-android-social-user.registered-user:before {
-    color:green;
-}
-#creategroup div.userlist label.ion-android-social-user.guest-user:before {
-    color:gray;
-    content: "\f143";
-    margin-left: 3px;
-    padding-left:7px;
-    padding-right:7px;
-}
-.popup-body .button.ion-android-contacts {
-    display: inline;width: 88px;font-size: 12px;height: 34px;min-height: initial;margin-left: 4px;
-}
-#creategroup div.username {
-    margin-left: 20px;
-}
-#creategroup div.username_small {
-    margin-left: 10px;
-}
+  background-color: #fff; }
 
+#creategroup ion-content {
+  background: #ececec; }
+
+#creategroup div.username {
+  margin-left: 20px; }
+
+#creategroup div.username_small {
+  margin-left: 10px; }
+
+#creategroup button.user_share, #creategroup button.user_remove {
+  width: 45px;
+  height: 45px;
+  color: #fff;
+  border: none; }
+
+#creategroup button.user_share:active {
+  background-color: #A3A2A2; }
+
+#creategroup button.user_share {
+  line-height: 15px;
+  background-color: #C5C5C5; }
+
+#creategroup button.user_share span {
+  font-size: 12px; }
+
+#creategroup button.user_remove {
+  background-color: red;
+  border-radius: 0; }
+
+#creategroup button[disabled].user_remove {
+  display: none; }
 
 /* Footer END */
+#creategroup .addMember {
+  padding: 10px;
+  width: 100%;
+  margin: 0 auto 14px;
+  border-radius: 2px;
+  line-height: 28px;
+  color: grey;
+  border: 1px dotted grey;
+  background: 0 0;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center; }
 
+#creategroup .addMember:active {
+  background-color: #d0d0d0; }
 
+#creategroup .addMember:before {
+  margin-right: 10px; }
 
-/* user options popover */
-#user-options a.icon:before {
-    margin-right:5px;
-}
-#user-options a.ion-person-add {
-    font-weight:bold;
-    color:orange;
-}
-#user-options a.disabled {
-    color:#ccc;
-    font-weight:normal;
-}
-#user-options.popover {
-    height:215px;
-}
-
-#edit_user_share {
-    text-align:center;
-}
-#edit_user_share .share-status {
-    width:70px;
-    font-weight:bold;
-}
-#edit_user_share .ion-minus,#edit_user_share .ion-plus {
-    height:31px;
-    width:31px;
-}
-#edit_user_share .ion-plus {
-    margin-left:10px;
-}
-#edit_user_share .ion-minus {
-    margin-right:10px;
-}
-
-#creategroup .creategroup_button{
-    padding: 10px;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 2px;
-    line-height: 28px;
-    color:grey;
-    border:1px solid grey;
-    border-style:dotted;
-}
-
-#creategroup .creategroup_button1{
-    background: none;
-    margin-bottom:14px;
-    display: inline-block;
-    cursor:pointer;
-    text-align: center;
-}
-
-#creategroup .creategroup_button1:active{
-    -moz-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-    -webkit-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-    -o-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-    box-shadow: inset  1px 2px 0px 0px rgba(0,0,0,0.2);
-    background-color: rgb(211,211,211);
-}
-
-#creategroup form .has-success{
-    border:none;
-}
-
-#creategroup .card{
-    box-shadow:none;
-}
+#creategroup .item-input select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  max-width: 65%;
+  border: none;
+  background: 0 0;
+  color: #333;
+  text-indent: .01px;
+  text-overflow: '';
+  white-space: nowrap;
+  font-size: 14px;
+  cursor: pointer;
+  display: block;
+  padding-right: 35px; }

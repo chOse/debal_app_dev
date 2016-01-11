@@ -1,16 +1,28 @@
 App.directive('submitOn', function() {
-        return {
-            link: function(scope, elm, attrs) {
-                scope.$on(attrs.submitOn, function() {
-                    //We can't trigger submit immediately, or we get $digest already in progress error :-[ (because ng-submit does an $apply of its own)
-                    setTimeout(function() {
-                        elm.trigger('submit');
-                    });
+    return {
+        link: function(scope, elm, attrs) {
+            scope.$on(attrs.submitOn, function() {
+                //We can't trigger submit immediately, or we get $digest already in progress error :-[ (because ng-submit does an $apply of its own)
+                setTimeout(function() {
+                    elm.trigger('submit');
                 });
-            }
-        };
-    });
-
+            });
+        }
+    };
+});
+App.directive('stringToNumber', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      ngModel.$parsers.push(function(value) {
+        return '' + value;
+      });
+      ngModel.$formatters.push(function(value) {
+        return parseFloat(value, 10);
+      });
+    }
+  };
+});
 App.directive('onValidSubmit', ['$parse', '$timeout', function($parse, $timeout) {
         return {
             require: '^form',

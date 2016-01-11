@@ -1,0 +1,237 @@
+/* Footer START */
+
+
+#editgroup .ion-checkmark-round {
+	margin-left:10px;
+	color:red;
+}
+#editgroup .item-input-wrapper {
+    background:#Fff;
+    white-space: normal;
+}
+#editgroup .item-input-wrapper i {
+    margin-right: 8px;
+    margin-left: -8px;
+}
+#editgroup .label-members {
+    border-bottom:0;
+}
+#editgroup .ion-arrow-down-b {
+    font-size: 25px;
+}
+#editgroup .userlist.nomargin {
+    box-shadow:none;
+    margin-left: 0;
+    margin-right: 0;
+}
+#editgroup .userlist a.ion-android-more-vertical {
+    font-size:15px;
+    color:orange;
+}
+#editgroup .userlist a.ion-android-more-vertical:before {
+    margin-top: 5px;
+    margin-right: 3px;
+    font-size: 14pt;
+}
+#editgroup .ion-android-person-add:before {
+    margin-right:5px;
+}
+#editgroup .members_title {
+    height: 25px;
+    background: #00a8ec;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    margin-top: 20px;
+    line-height: 25px;
+    font-size: 16px;
+}
+#editgroup .card {
+    margin-top:4px;
+    margin-bottom:4px;
+}
+#editgroup .currency {
+    margin-right:35px;
+}
+#editgroup .current-user {
+    color: orange;
+}
+#editgroup .add-member {
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 35px;
+    line-height: 35px;
+    width: 120px;
+    margin-top: -45px;
+    border-radius: 5px;
+}
+#editgroup div.disabled, #editgroup div.disabled  label {
+    background:#eee;
+}
+#editgroup label.ion-person.disabled::before {
+    color:#ccc;
+}
+#editgroup .share-status.button-small:before {
+    font-size:20px;
+} 
+
+#editgroup .share-status input {
+    padding-right: 0;
+}
+#editgroup .share-status {
+    text-align: center;
+    font-size: 15px;
+    width: 60px;
+    height: 25px;
+    line-height: 25px;
+    font-weight:bold;
+}
+#editgroup input[readonly] {
+    background-color:#fff;
+}
+#editgroup .tip {
+    position: absolute;
+    right: 5px;
+    font-size: 11px;
+    color: #3D3D3D;
+}
+#editgroup .tip.visible {
+  visibility: visible;
+}
+#editgroup .tip.hidden {
+  visibility: hidden;
+}
+.bar-header a.button.ion-checkmark.edited {
+    color:orange;
+}
+#editgroup ion-content {
+    background:#ececec;
+}
+#editgroup .userlist label div p {
+    margin:0;
+    white-space: normal;
+}
+#editgroup .userlist label div p.username {
+    font-size:12pt;
+}
+#editgroup .userlist label div .info {
+    font-size:11px;
+    overflow: initial;
+    text-overflow: initial;
+    white-space: initial;
+}
+#editgroup div.userlist label.ion-person:before {
+    font-size: 30px;
+    border: 1px solid #ccc;
+border-radius: 5px;
+width: 40px;
+height: 40px;
+text-align: center;
+line-height: 40px;
+}
+#editgroup div.userlist label.ion-person.current-user:before {
+    color:orange;
+}
+#editgroup div.userlist label.ion-person.registered-user:before {
+    color:green;
+}
+#editgroup div.userlist label.ion-person.guest-user:before {
+    color:gray;
+    content: "\f143";
+    margin-left: 3px;
+    padding-left:7px;
+    padding-right:7px;
+}
+.popup-body .button.ion-android-contacts {
+    display: inline;width: 88px;font-size: 12px;height: 34px;min-height: initial;margin-left: 4px;
+}
+#editgroup div.username {
+    margin-left: 20px;
+}
+#editgroup div.username_small {
+    margin-left: 10px;
+}
+
+
+/* Footer END */
+
+
+
+/* user options popover */
+#user-options a.icon:before {
+    margin-right:5px;
+}
+#user-options a.ion-person-add {
+    font-weight:bold;
+    color:orange;
+}
+#user-options a.disabled {
+    color:#ccc;
+    font-weight:normal;
+}
+#user-options.popover {
+    height:215px;
+}
+
+#edit_user_share {
+    text-align:center;
+}
+#edit_user_share .share-status {
+    width:70px;
+    font-weight:bold;
+}
+#edit_user_share .ion-minus,#edit_user_share .ion-plus {
+    height:31px;
+    width:31px;
+}
+#edit_user_share .ion-plus {
+    margin-left:10px;
+}
+#edit_user_share .ion-minus {
+    margin-right:10px;
+}
+
+#editgroup form .has-success {
+    border:none;
+}
+
+#editgroup .card {
+    box-shadow:none;
+}
+#editgroup .has-tabs-top.pane {
+    top: 93px;
+    height: inherit;
+}
+
+#editgroup .bar-footer {
+    display:none;
+    height:1px;
+}
+
+#editgroup .item-input select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    max-width: 65%;
+    border: none;
+    background: 0 0;
+    color: #333;
+    text-indent: .01px;
+    text-overflow: '';
+    white-space: nowrap;
+    font-size: 14px;
+    cursor: pointer;
+    display: block;
+}
+
+#editgroup .tabs-bottom ion-content.has-footer.has-tabs {
+    bottom:44px;
+}
+#editgroup .tabs-top ion-content.has-footer.has-tabs-top {
+    bottom:inherit;
+}
+#editgroup .tabs-bottom ion-footer-bar.bar-footer, 
+#editgroup .tabs-top ion-footer-bar.bar-footer {
+    bottom:inherit;
+}

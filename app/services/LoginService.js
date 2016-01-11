@@ -1,12 +1,13 @@
-App.service('LoginService', function(LocalStorageService, initService, $http, SyncService) {
+App.service('LoginService', function(LocalStorageService, SyncService, initService) {
 
 
     this.login = function(userData, callback) {
 
         var pwd = userData.password;
+        var _this = this;
         SyncService.api_send("auth", userData, function(data, status) {
-            if(data.result == "OK") 
-                changeLoginStatus(true, data.data, pwd);
+            if(typeof data != "undefined" && typeof data.result!="undefined" && data.result == "OK") 
+                _this.changeLoginStatus(true, data.data, pwd);
 
             callback(data, status);
                     
@@ -20,11 +21,11 @@ App.service('LoginService', function(LocalStorageService, initService, $http, Sy
     this.register = function(userData, callback)  {
 
         var pwd = userData.data.password;
-
+        var _this = this;
         SyncService.api_send("register", userData, function(data, status) {
 
             if(data.result=="OK")
-                changeLoginStatus(true, data.data, pwd);
+                _this.changeLoginStatus(true, data.data, pwd);
 
             callback(data, status);
         });
@@ -34,7 +35,7 @@ App.service('LoginService', function(LocalStorageService, initService, $http, Sy
         return LocalStorageService.get("login");
     };
     
-    var changeLoginStatus = function(status, data, pwd) {
+    this.changeLoginStatus = function(status, data, pwd) {
 
         LocalStorageService.set("login", status);
 
@@ -44,10 +45,24 @@ App.service('LoginService', function(LocalStorageService, initService, $http, Sy
             var user_id = data.id;
             var user_name = data.username;
 
+            // Analytics
+            if (typeof analytics !== 'undefined')
+                analytics.setUserId(user_id);
+
+            // Intercom
+            if(typeof intercom != 'undefined') {
+                intercom.registerIdentifiedUser({userId: user_id});
+                intercom.updateUser({ email: user_email, name: user_name });
+            }
+
             LocalStorageService.set("user_email", user_email);
             LocalStorageService.set("user_name", user_name);
             LocalStorageService.set("user_id", user_id);
             LocalStorageService.set("user_basic", btoa(user_email + ":" + pwd));
+        }
+
+        else if(status===false) {
+            initService.reInit();
         }
     };
 });

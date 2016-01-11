@@ -1,0 +1,13 @@
+<ion-modal-view cache-view="false" id="modal-addexpense-categories">
+    <ion-header-bar class="bar-calm bar-secondary">
+    	<h1 translate class="title">Pick a category</h1>
+        <button translate class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content has-bouncing="false" class="padding" style="background:#ECECEC">
+    	<ul class="categories center-text">
+    	    <li class="cat-item" ng-repeat="category in categories" ng-click="selectCategory(category)">
+    	    	<i ng-if="category" class="glyphicons glyphicons-{{category.icon}}"></i>
+    	    </li>
+    	</ul>
+    </ion-content>
+</ion-modal-view>

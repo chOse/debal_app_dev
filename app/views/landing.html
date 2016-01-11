@@ -1,13 +1,13 @@
-<ion-view cache-view="false" title="Landing" id="landing">
-	<ion-content scroll="false">
-
-		<div id="backgroundlanding">
-			<section class="text-center top_content">
-				<img id="login-logo" src="assets/images/logo_debal.png" />
-			</section>
+<ion-view title="Landing" id="landing">
+	<ion-content id="backgroundlanding">
+        <section class="text-center top_content" style="padding: 2%;">
+        	<img src="assets/images/logo_small.png" width="100" height="100" /><br />
+        	<img src="assets/images/logo-medium.png" width="150" height="52" />
+			
+        </section>
 
 			<section class="text-center middle_content">
-				<div translate id="central_text">Wherever you are, add expenses <strong>even without Internet access!</strong></div>
+				<div translate id="central_text">Wherever you are, manage expenses with your friends <strong>even without Internet access!</strong></div>
 			</section>
 
 			<section class="text-center bottom_content">
@@ -20,6 +20,5 @@
 				<div translate id="mid_text">You already have an account,</div>
 				<button translate type="button" ng-click="goLogin()" class="landing_button landing_button3">Connect</button>
 			</section>
-		</div>
 	</ion-content>
 </ion-view>

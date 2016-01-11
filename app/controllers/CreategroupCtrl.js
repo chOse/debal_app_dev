@@ -1,5 +1,7 @@
+/* global App, angular, cordova, analytics */
+
 App
-.controller('CreategroupCtrl', function($scope, $rootScope, $state, $location, $ionicPopup, $ionicSideMenuDelegate, $ionicScrollDelegate, gettextCatalog, LocalStorageService, LoaderService, CURRENCIES_LIST, CURRENCIES_DEFAULT, LocalStorageService, GroupsModel, UsersModel) {
+.controller('CreategroupCtrl', function($scope, $rootScope, $state, $ionicPopup, $ionicSideMenuDelegate, $ionicScrollDelegate, gettextCatalog, LocalStorageService, CURRENCIES_LIST, CURRENCIES_DEFAULT, LocalStorageService, GroupsModel, UsersModel) {
 
     $ionicSideMenuDelegate.canDragContent(false);
 
@@ -10,11 +12,11 @@ App
     $scope.group.members = [$scope.current_user];
 
     var locale = LocalStorageService.get('locale');
-    $scope.locale = (typeof CURRENCIES_LIST["EUR"]["name_" + locale] != 'undefined') ? locale : 'en';
+    $scope.locale = (typeof CURRENCIES_LIST["EUR"]["name_" + locale] !== 'undefined') ? locale : 'en';
 
     function checkName(name) {
         for (var i in $scope.group.members) {
-            if($scope.group.members[i].username.toLowerCase()==name.toLowerCase())
+            if($scope.group.members[i].username.toLowerCase()===name.toLowerCase())
                 return false;
         }
         return true;
@@ -48,11 +50,11 @@ App
                 { text: gettextCatalog.getString('Cancel') },
                 {
                     text: gettextCatalog.getString('Confirm'),
-                    type: 'button-positive',
+                    type: 'button-calm',
                     onTap: function(e) {
                         return true;
                     }
-                },
+                }
             ]
         });
         myPopup.then(function(t) {
@@ -60,10 +62,10 @@ App
                 member.share = $scope.editshare_member.share;
             
         });
-    }
+    };
 
     $scope.addMember = function() {
-        $scope.data = {}
+        $scope.data = {};
 
         var myPopup = $ionicPopup.show({
             template: '<input autofocus type="text" class="add-user-input" ng-model="data.username">',
@@ -73,22 +75,23 @@ App
             buttons: [
                 { text: gettextCatalog.getString('Cancel') },
                 {
-                    text: '<b>' + gettextCatalog.getString('Add') + '</b>',
-                    type: 'button-positive',
+                    text: gettextCatalog.getString('Add'),
+                    type: 'button-calm',
                     onTap: function(e) {
                         if (!$scope.data.username)
                             e.preventDefault();
                         else
                             return $scope.data.username;
                     }
-                },
+                }
             ]
         });
-        if(typeof(cordova)!='undefined' && typeof(cordova.plugins.Keyboard)!='undefined')
+        
+        if(typeof(cordova)!=='undefined' && typeof(cordova.plugins.Keyboard)!=='undefined')
             cordova.plugins.Keyboard.show();
 
         myPopup.then(function(res) {
-            if(typeof(cordova)!='undefined' && typeof(cordova.plugins.Keyboard)!='undefined')
+            if(typeof(cordova)!=='undefined' && typeof(cordova.plugins.Keyboard)!=='undefined')
                         cordova.plugins.Keyboard.close();
             if(res) {
                 if($scope.data.username && checkName($scope.data.username)) {
@@ -110,7 +113,7 @@ App
     };
 
     $scope.validForm = function(callback) {
-        if(typeof($scope.group.name)=='undefined') {
+        if(typeof($scope.group.name)==='undefined') {
             $ionicPopup.alert({
                 title: gettextCatalog.getString('Error'),
                 template: gettextCatalog.getString("Please enter a name for the group!")
@@ -126,7 +129,7 @@ App
         }
         else
             callback(true);
-    }
+    };
 
     $scope.addGroup = function() {
 
@@ -148,25 +151,24 @@ App
                     group_members.push({
                         users : {
                             username : c.username,
-                            UserId : (typeof(c.UserId)!='undefined') ? c.UserId : null,
+                            UserId : (typeof(c.UserId)!=='undefined') ? c.UserId : null
                             
                         },
                         groups_users : {
                             share : c.share,
-                            user_id : (typeof(c.id)!='undefined') ? c.id : null,
+                            user_id : (typeof(c.id)!=='undefined') ? c.id : null
                         }
-                    })
+                    });
                 }
 
                 GroupsModel.create_group(group, group_members, 
-                    function(group_id) {
+                    function(GroupId) {
 
-                        if(typeof group_id != 'undefined' && !isNaN(group_id)) {
+                        if(typeof GroupId !== 'undefined' && !isNaN(GroupId)) {
                             // unBlock Sync after processing
                             $rootScope.$broadcast('unblockSync');
-
-                            $location.path('app/groupexpenses/' + group_id);
-                            $scope.$apply()
+                            $state.go('app.group.tabs.expenses', {GroupId:GroupId});
+                            $scope.$apply();
                         }
 
                         else {
@@ -175,7 +177,7 @@ App
                     }
                 );
             }
-        })
+        });
     };
 
     // Retrieve UserId
@@ -183,8 +185,5 @@ App
         $scope.current_user.UserId = r[0].UserId;
     });
 
-    // Tracking
-    if (typeof analytics !== 'undefined')
-        analytics.trackView($state.current.name);
-
+    $scope.trackView();
 });

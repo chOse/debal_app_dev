@@ -1,0 +1,12 @@
+<div id="popup_joinrequest_selectmember">
+	<div class="infoline" translate>Select which user from group <b>{{joinRequest.request.groupName}}</b> should <b>{{joinRequest.request.username}}</b> be merged with :</div>
+	<button class="user_box" ng-repeat="member in joinRequest.groupMembers" ng-click="selectMember($index)" ng-class="{'on' : member.selected}">
+		<div class="user_avatar" >{{member.username.toUpperCase()| limitTo : 3 : 0}}<br /><i class="ion-checkmark-round"></i></div>
+		<p>{{member.username}}</p>
+	</button>
+	
+	<button class="user_box new" ng-click="selectMember('new')" ng-class="{'on':joinRequest.selected_member==='new'}">
+		<div class="user_avatar"><i class="ion-person-add"></i></div>
+		<p translate>New user</p>
+	</button>
+</div>

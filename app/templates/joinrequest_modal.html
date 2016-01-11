@@ -1,0 +1,24 @@
+<ion-modal-view cache-view="false" id="modal_joinrequest">
+
+    <ion-header-bar class="bar-calm">
+        <h1 class="title" translate>Join requests</h1>
+        <button translate class="button button-clear button-primary" ng-click="modal.hide()">Close</button>
+    </ion-header-bar>
+
+    <ion-content has-bouncing="false" >
+        <div class="infoline" translate>Some users have requested access to some of your groups. Giving them access will enable them to manage expenses with their own device.</div>
+    
+        <div class="list" ng-repeat="request in joinrequests.requests">
+            <div class="item item-text-wrap">
+                <div class="user_avatar">{{request.username.toUpperCase()| limitTo : 3 : 0}}</div>
+                <p class="username">{{request.username}}</p>
+                <p class="user_email">{{request.email}}</p>
+                <p translate>asked to join the group <b>{{request.groupName}}</b></p>
+                <button class="action accept" ng-click="acceptRequest($index)" translate>Accept</button>
+                <button class="action refuse" ng-click="denyRequest($index)" translate>Deny</button>
+            </div>
+        </div>
+
+        <div ng-click="modal.hide()" ng-if="joinrequests.requests.length===0" class="infoline strong" translate>You have no more join requests pending. You can close this window!</div>
+    </ion-content>
+</ion-modal-view>

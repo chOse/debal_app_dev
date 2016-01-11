@@ -1,0 +1,14 @@
+#settings {
+	background: #ececec;
+	.flag {
+		img {
+			width: 32px;
+			vertical-align: middle;
+			margin-right: 10px;
+			&+span {
+				vertical-align: middle;
+			}
+		}
+
+	}
+}

@@ -1,0 +1,24 @@
+<ion-view hide-nav-bar="false" view-title="{{'Settings'|translate}}" id="settings">
+    <ion-content scroll="false">
+        <div class="list">
+            <a class="item item-icon-left" ng-click="changeUsername()">
+                <i class="icon ion-person"></i> <span translate>Username</span>
+                <span class="item-note">{{current_user.username}}</span>
+            </a>
+            <a class="item item-icon-left" ng-click="changeEmail()">
+                <i class="icon ion-at"></i> <span translate>Email</span>
+                <span class="item-note">{{current_user.email}}</span>
+            </a>
+            <a class="item item-icon-left" ui-sref="app.settings-language">
+                <i class="icon ion-chatbubble-working"></i> <span translate>Language</span>
+                <span class="item-note" ng-if="isLanguage('fr')">Français</span>
+                <span class="item-note" ng-if="isLanguage('en')">English</span>
+            </a>
+            <a class="item item-icon-left" ui-sref="app.settings-keypad">
+                <i class="icon ion-calculator"></i> <span translate>Numeric keyboard</span>
+                <span class="item-note" ng-if="!settings.keyboard" translate>Classic</span>
+                <span class="item-note" ng-if="settings.keyboard" translate>Phone keyboard</span>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

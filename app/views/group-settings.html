@@ -1,0 +1,30 @@
+<ion-view id="group-settings" view-title="{{group.name}}">
+
+    <ion-content has-bouncing="false">
+        
+        <div class="list" style="padding:10px;">
+            <form novalidate="novalidate" on-valid-submit="editGroup()">
+                <label class="item item-input item-label">
+                    <span translate class="input-label">Group name</span>
+                    <input ng-model="group.name" type="text" ng-blur="editGroup()" placeholder="{{'Enter a name'|translate}}..." name="group" required="required">
+                </label>
+
+                <label class="item item-input item-icon-right item-label">
+                    <span translate class="input-label">Currency</span>
+                    <i class="icon ion-arrow-down-b icon-accessory"></i>
+                    <select class="currency" ng-model="group.currency" ng-change="editGroup()" ng-options="curr.name_{{locale_curr}} for (k, curr) in currencies" required="required"></select>
+                </label>
+
+                <div class="item item-checkbox">
+                    <label class="checkbox">
+                        <input ng-model="group.private" ng-change="editGroup()" ng-checked="group.private==1" ng-true-value="1" ng-false-value="0" type="checkbox">
+                    </label>
+                    <span translate>Private group</span> <p class="help" translate>Restrict access to group's web page to registered members</p>
+                </div>
+            </form>
+
+            <button ng-click="deleteGroup()" class="deleteGroup button button-assertive button-block icon-left ion-ios-trash-outline" translate>Delete group</button>
+        </div>
+
+    </ion-content>
+</ion-view>

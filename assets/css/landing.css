@@ -1,95 +1,93 @@
-#backgroundlanding { 
-	background: url(../images/background_landing_1.jpg) no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	height:100%;
-}
+#backgroundlanding {
+  background: url(../images/background_landing.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  margin: 0; }
 
-#login-logo{
-	height: 80%;
-	margin:20px;
-}
+#landing #login-logo {
+  height: 80% !important;
+  margin: 20px; }
 
-#central_text{
-	font-size: 20px;
-line-height: 35px;
-padding: 0px 30px;
-}
+.image-full {
+  background: url(../images/logo-medium.png) no-repeat;
+  height: 52px;
+  width: 150px;
+  margin: 0 auto; }
 
-.top_content{
-	height:30%;
-}
+#central_text {
+  font-size: 20px;
+  line-height: 25px;
+  padding: 0px 30px;
+  margin-top: 20px; }
 
-.middle_content{
-	color:white;
-}
+.top_content {
+  height: 30%;
+  min-height: 160px; }
 
-.bottom_content{
-	color:white;
-	bottom: 14px;
-position: absolute;
-width: 100%;
-}
+.middle_content {
+  color: white; }
 
-.landing_button{
-	padding: 10px;
-	width: 80%;
-	margin: 0 auto;
-	border-radius: 4px;
-	max-width: 381px;
-display: block;
-	line-height: 28px;
-	color:white;
-	font-weight:bold;
-	border:none;
-}
+#landing .middle_content {
+  padding-top: 20px; }
 
-.landing_button1{
-	background-color: #3b5998;
-	-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	-o-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	margin-bottom:14px;
-}
+.bottom_content {
+  color: white;
+  bottom: 14px;
+  /*position: absolute;*/
+  margin-top: 40px;
+  width: 100%; }
 
-.landing_button1:active{
-	-moz-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-	-webkit-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-	-o-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-	box-shadow: inset  1px 2px 0px 0px rgba(0,0,0,0.2);
-	background-color: #24407a;
-}
+.landing_button {
+  padding: 10px;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 4px;
+  max-width: 381px;
+  display: block;
+  line-height: 20px;
+  color: white;
+  border: none; }
 
-.landing_button2{
-	background-color: #F5B643;
-	-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	-o-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);
-	margin-bottom:6px;
-}
+.landing_button1 {
+  background-color: #3b5998;
+  -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  margin-bottom: 14px; }
 
-.landing_button2:active{
-	-moz-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-	-webkit-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-	-o-box-shadow: inset 1px 2px 0px 0px rgba(0,0,0,0.2);
-	box-shadow: inset  1px 2px 0px 0px rgba(0,0,0,0.2);
-	background-color: #F09C3D;
-}
+.landing_button1:active {
+  -moz-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  background-color: #24407a; }
 
-.landing_button3{
-	padding: 2px;
-	line-height: 18px;
-	background: none;
-}
+.landing_button2 {
+  background-color: #F5B643;
+  -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  margin-bottom: 6px; }
 
-#mid_text{
-	font-size:12px;
-}
+.landing_button2:active {
+  -moz-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  background-color: #F09C3D; }
 
-a{
-	text-decoration: none;
-}
+.landing_button3 {
+  padding: 2px;
+  line-height: 18px;
+  background: none; }
+
+#mid_text {
+  font-size: 12px; }
+
+a {
+  text-decoration: none; }

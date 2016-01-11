@@ -1,39 +1,43 @@
-<ion-view hide-back-button="true" view-title="{{'My groups'|translate}}" id="groups">
+<ion-view hide-nav-bar="false" hide-back-button="true" view-title="{{'My groups'|translate}}" id="groups">
 
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
 
-    <ion-content class="has-header has-footer">
+    <div class="bar bar-subheader notifications" ng-if="joinrequests.requests.length>0">
+        <button ng-click="openJoinRequests()" class="button button-block button-clear title icon-right ion-chevron-right icon-accessory"><i class="ion-android-notifications-none"></i><span translate translate-n="joinrequests.requests.length" translate-plural="{{joinrequests.requests.length}} members asked to join one of your groups">{{joinrequests.requests.length}} member asked to join one of your groups</span></button>
+    </div>
+
+    <ion-content class="has-footer" ng-class="{'has-subheader': joinrequests.requests.length>0}">
         <ion-refresher on-refresh="doRefresh()"
         pulling-text="{{'Manual sync'|translate}}"
         refreshing-text="{{'Now syncing...'|translate}}..."
         refreshing-icon="ion-loading-d"></ion-refresher>
 
-        <section id="group-buttons">
+        <section ng-if="groups.length" id="group-buttons">
             <div class="list">
+                <div collection-repeat="group in groups" class="item item-icon-right" ng-click="openGroup(group.GroupId)">
+                    <div class="thumbnail" style="background-color: {{getThumbnailColor(group.name)}};">{{group.name.toUpperCase()| limitTo : 1 : 0}}</div>
+                    {{group.name}}
+                    <div class="secondLine">{{group.members_list}}</div>
 
-            <a ng-repeat="group in groups" class="item item-icon-right" href="#/app/groupexpenses/{{group.GroupId}}" style="border:none;line-height:44px;padding:1px 24px;">
-                <img src="assets/images/group.png" style="width: 22px;top: 13px;position: relative;margin-right: 10px;" />
-                {{group.name}}</br>
-                <div style="padding-left:36px;font-size:12px;line-height:24px;margin-top:-10px;margin-bottom:10px;color:grey;">There are 6 members in this group</div>
-
-                <i class="icon ion-chevron-right icon-accessory"></i>
-                <div style="height:1px; width:100%;background-color:rgb(230,230,230);margin:0 auto;"></div>
-            </a>
-
-            <span translate ng-show="!groups.length" ng-click="goCreategroup()" class="item item-icon-right">No group created</span>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                    <div class="line" ng-if="!$last"></div>
+                </div>
             </div> 
         </section>
 
+        <div ng-if="showWelcomeMessage" class="list">
+            <div translate class="item text-center welcome-msg">Hey there! You aren't part of any group, what a pity! Here's what you can do:</div>
+            <div ng-click="goCreategroup()" class="item item-icon-left"><i class="icon ion-plus"></i> <span translate>Create a group</span></div>
+            <div ng-click="openJoinGroupPopup()" class="item item-icon-left"><i class="icon ion-android-share"></i> <span translate>Ask to join an existing group</span></div>
+        </div>
+
     </ion-content>
 
-    <ion-footer class="bar bar-footer" style="padding: 5px;background: none;height: auto;border-radius: 4px;">
-        <button ng-click="goCreategroup()" class="button button-full button-balanced">
-            <i class="icon ion-plus"></i><span translate>Create a group</span>
-        </button>
-        <button ng-click="goJoinGroup()" class="button button-full button-balanced" style="border:none;border-radius:4px;box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.13);">
-            <i class="icon ion-forward"></i><span translate>Join a group</span>
+    <ion-footer class="bar bar-footer">
+        <button ng-click="goCreategroup()" class="button button-positive button-full icon-right ion-chevron-right icon-accessory">
+            <span translate>Create a group</span>
         </button>
     </ion-footer>
 </ion-view>

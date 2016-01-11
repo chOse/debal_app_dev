@@ -3,12 +3,13 @@
     config_data = {
         'GENERAL_CONFIG': {
             'APP_NAME': 'Debal',
-            'RECREATE_APP_VERSIONS': ['1.0.0', '1.0.1', '1.0.2', '1.0.3'],
+            'RECREATE_APP_VERSIONS': ['1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.1.8'],
             'APP_VERSION': '1.1.9',
-            //'API_URL': 'http://localhost:8888/debal_web/Apiv2/'
-            'API_URL': 'http://dev1466.debal.fr/Apiv2/'
-            //'API_URL': 'http://api.debal.fr/'
+            'CURR_RATES_URL' : "https://www.debal.fr/currency_rates",
+            'API_URL': 'https://www.debal.fr/Apiv2/'
+            //'API_URL': 'http://dev.debal.fr/Apiv2/'
         },
+        
         'API_ROUTES':{
             sync: {
                 url: "sync.json", type: "POST", auth: true
@@ -24,6 +25,18 @@
             },
             invite_user: {
                 url: "invite_user.json", type: "POST", auth: true
+            },
+            edit_email: {
+                url: "edit_email.json", type: "POST", auth: true
+            },
+            join_group: {
+                url: "join_group.json", type: "POST", auth: true
+            },
+            handle_join_request: {
+                url: "handle_join_request.json", type: "POST", auth: true
+            },
+            get_exchange_rates: {
+                url: "get_exchange_rates.json", type: "GET", auth: true
             },
             facebook_connect: {
                 url: "facebook_connect.json", type: "POST"
@@ -106,7 +119,6 @@
             NZD : "$",
             NIO : "C$",
             NGN : "₦",
-            KPW : "₩",
             NOK : "kr",
             OMR : "﷼",
             PKR : "₨",
@@ -126,7 +138,6 @@
             SBD : "$",
             SOS : "S",
             ZAR : "R",
-            KRW : "₩",
             LKR : "₨",
             SEK : "kr",
             CHF : "CHF",
@@ -200,7 +211,7 @@
             LVL : {id: "LVL", name_fr: "lats letton (LVL LVL)", name_en: "Latvian Lats (LVL LVL)"},
         }
     },
-    config_module = angular.module('spendingsManager.config', []);
+    config_module = angular.module('Debal.config', []);
     
     angular.forEach(config_data, function(key, value) {
         config_module.constant(value, key);

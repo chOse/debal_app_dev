@@ -1,0 +1,8 @@
+#settings {
+  background: #ececec; }
+  #settings .flag img {
+    width: 32px;
+    vertical-align: middle;
+    margin-right: 10px; }
+    #settings .flag img + span {
+      vertical-align: middle; }

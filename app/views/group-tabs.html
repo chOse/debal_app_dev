@@ -1,0 +1,20 @@
+<ion-view id="group">
+
+    <div class="bar bar-calm bar-subheader notifications">
+        <div class="inline icon-left ion-android-people">{{members_count}}</div>
+        <div class="inline icon-left ion-ios-cart-outline">{{entries_count | currency:group.currency.symbol}}</div>
+        <div ng-show="group.public_key.length" class="inline icon-left ion-key">{{group.public_key}}</div>
+    </div>
+    
+    <ion-content scroll="false" class="has-subheader">
+
+        <div class="tabs tabs-striped tabs-icon-only tabs-positive">
+            <a class="tab-item" ng-class="{'active': tabSelectedIndex===0}" ng-click="changeTab(0)"><i class="icon ion-android-list"></i>Items</a>
+            <a class="tab-item" ng-class="{'active': tabSelectedIndex===1}" ng-click="changeTab(1)"><i class="icon ion-cash"></i>Items</a>
+            <a class="tab-item" ng-class="{'active': tabSelectedIndex===2}" ng-click="changeTab(2)"><i class="icon ion-android-people"></i>Items</a>
+            <a class="tab-item" ng-class="{'active': tabSelectedIndex===3}" ng-click="changeTab(3)"><i class="icon ion-gear-a"></i>Items</a>
+        </div>
+
+        <ion-nav-view name="tabsContent"></ion-nav-view>
+    </ion-content>
+</ion-view>

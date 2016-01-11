@@ -1,0 +1,111 @@
+/* Footer START */
+#group-expenses .bar-footer {
+  background: transparent;
+  height: 1px; }
+
+#group-expenses .tabs.footer .tab-item {
+  font-weight: bold; }
+
+#group-expenses .tabs.footer .tab-item.button {
+  border-top: none;
+  border-bottom: none;
+  border-right: none; }
+
+/* Footer END */
+#group-expenses .item h2 {
+  font-size: 16px;
+  white-space: normal;
+  font-weight: normal; }
+
+/* Content START */
+#group-expenses ion-content, #group-balance ion-content, #group-members ion-content, #group-settings ion-content {
+  bottom: 49px;
+  background: #ececec;
+  top: 0; }
+
+#group-expenses .card {
+  margin-top: 5px;
+  margin-bottom: 5px; }
+
+#group-expenses .list .item {
+  padding-top: 10px;
+  padding-bottom: 5px; }
+
+#group-expenses .expenseslist {
+  padding: 10px;
+  padding-right: 20px; }
+
+#group-expenses .expenseslist.item:active {
+  background-color: #eee; }
+
+#group-expenses .expenseslist .flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+#group-expenses .expenseslist .expense_icon, .expenseIconTip .expense_icon {
+  font-size: 30px;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  margin-right: 10px;
+  color: #ccc; }
+
+.expenseIconTip .expense_icon {
+  float: left; }
+
+.expenseIconTip .popup-body {
+  line-height: 17px; }
+
+#group-expenses .expenseslist .expense_icon.paid_by_me, .expenseIconTip .expense_icon.paid_by_me {
+  color: orange; }
+
+#group-expenses .expenseslist .expense_icon.includes_me, .expenseIconTip .expense_icon.includes_me {
+  color: #00a8ec; }
+
+#group-expenses .expenseslist .title_line {
+  font-size: 11pt; }
+
+#group-expenses .share_indicator {
+  font-size: 9pt;
+  line-height: 13px; }
+
+#group-expenses .share_indicator.owes {
+  color: #00a8ec; }
+
+#group-expenses .share_indicator.owed {
+  color: orange; }
+
+#group-expenses .list .item div {
+  color: #666; }
+
+#group-expenses .expenseslist.unsynced {
+  background-color: #ECECEC; }
+
+#group-expenses .expenseslist .title {
+  flex: 1; }
+
+#group-expenses .expenseslist .title p {
+  font-style: italic;
+  margin-bottom: 0; }
+
+#group-expenses .expenseslist .title p strong {
+  color: #00a8ec; }
+
+#group-expenses .expenseslist .title p strong.myself {
+  text-decoration: underline; }
+
+#group-expenses .ion-android-share:before {
+  margin-right: 5px; }
+
+#group-expenses .expenseslist .amount {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0; }
+
+/* Content END */

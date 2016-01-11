@@ -1,4 +1,4 @@
-App.service('initService', function(API_ROUTES, LocalStorageService, GENERAL_CONFIG, DB_CONFIG, SQLiteService, SyncService) {
+App.service('initService', function($timeout, $ionicHistory, API_ROUTES, LocalStorageService, GENERAL_CONFIG, DB_CONFIG, SQLiteService, SyncService) {
 
     var appName = GENERAL_CONFIG.APP_NAME,
         db_name = DB_CONFIG.DB_NAME;
@@ -13,50 +13,52 @@ App.service('initService', function(API_ROUTES, LocalStorageService, GENERAL_CON
             tableName : 'users',
             idName : 'UserId',
             serverId: 'user_id',
-            associations : []
+            associations : [],
+            trigger: true
         },
     
         {
             tableName : 'groups', 
             idName : 'GroupId',
             serverId : 'group_id',
-            associations : ['users']
+            associations : ['users'],
+            trigger: true
         },
         {
             tableName : 'groups_users', 
             idName : 'GroupsUserId', 
             serverId : 'groups_user_id', 
-            associations : ['groups', 'users']
+            associations : ['groups', 'users'],
+            trigger: true
         },
         {
             tableName : 'entries', 
             idName : 'EntryId',
             serverId : 'entry_id',
-            associations : ['groups', 'groups_users']
+            associations : ['groups', 'groups_users'],
+            trigger: true
         },
         {
             tableName : 'entries_groups_users', 
             idName : 'EntriesGroupsUserId',
             serverId : 'entries_groups_user_id',
-            associations : ['entries', 'groups_users']
+            associations : ['entries', 'groups_users'],
+            trigger: true
         },
         {
             tableName : 'groups_requests', 
             idName : 'GroupRequestId',
             serverId : 'groups_request_id',
-            associations : ['users', 'groups']
+            associations : ['users', 'groups'],
+            trigger : false,
+            syncWay: 'down'
         },
         {
             tableName : 'categories', 
-            idName : 'CategoryId',
-            serverId : 'category_id',
-            associations : ['groups']
-        },
-        {
-            tableName : 'categories_entries', 
-            idName : 'CategoriesEntryId',
-            serverId : 'categories_entries_id',
-            associations : ['entries', 'categories']
+            idName : 'id',
+            associations: [],
+            trigger: false,
+            syncWay: 'down'
         },
 
     ];
@@ -81,16 +83,23 @@ App.service('initService', function(API_ROUTES, LocalStorageService, GENERAL_CON
         SQLite.init_db(_db, appName,db_name,db_tables,db_tables_sql, false, function() {
             initSync(callback);
         });
+        LocalStorageService.set('app_version', GENERAL_CONFIG.APP_VERSION);
     }
 
-    this.reInit = function(callback) {
+    this.reInit = function(callback,clearCredentials) {
         console.log("---- DB RE INIT START ----");
-        LocalStorageService.clear("user_email");
-        LocalStorageService.clear("user_id");
-        LocalStorageService.clear("user_name");
-        LocalStorageService.clear("user_basic");
-        LocalStorageService.clear("user_password");
-        LocalStorageService.clear("login");
+        if(typeof clearCredentials=='undefined' || clearCredentials===true) {
+            LocalStorageService.clear("user_email");
+            LocalStorageService.clear("user_id");
+            LocalStorageService.clear("user_name");
+            LocalStorageService.clear("user_basic");
+            LocalStorageService.clear("user_password");
+            LocalStorageService.clear("login");
+        }
+        $timeout(function () {
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
+        }, 1500)
         LocalStorageService.set('app_version', GENERAL_CONFIG.APP_VERSION);
         SQLite.init_db(_db,appName,db_name,db_tables,db_tables_sql, true, function() {
             initSync(callback);
@@ -98,5 +107,9 @@ App.service('initService', function(API_ROUTES, LocalStorageService, GENERAL_CON
         SyncService.syncInfo = {
             lastSyncDate : 0
         };
+
+        // Intercom
+        if(typeof intercom != 'undefined')
+            intercom.reset();
     }
 });

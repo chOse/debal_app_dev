@@ -40,10 +40,10 @@ App.factory('GroupsModel', function(SQLiteService, DB_CONFIG) {
                                     SQL.insert("groups_users", cgu, tx);
 
                                 }, "OR IGNORE"); // Will ignore inserting users with UserId specified (already in Db)
-                            }(i)
+                            }(i);
                         }
                     });
-                }, callback, function() { callback(group_id)}
+                }, callback, function() { callback(group_id); }
             );
         },
         create_groups_user : function(user_data, group_data, callback) {
@@ -62,13 +62,13 @@ App.factory('GroupsModel', function(SQLiteService, DB_CONFIG) {
                             'UserId' : user_id,
                             'GroupId' : group_data.GroupId,
                             'group_id' : (typeof(group_data.group_id) != 'undefined') ? group_data.group_id : null
-                        }
+                        };
 
                         SQL.insert("groups_users", created_gu, tx, function(res2) {
                             created_gu.GroupsUserId = res2.insertId;
-                        })
-                    })
-                }, callback, function() { callback(created_gu) }
+                        });
+                    });
+                }, callback, function() { callback(created_gu); }
             );
         },
         update : function (data, callback){
@@ -86,28 +86,34 @@ App.factory('GroupsModel', function(SQLiteService, DB_CONFIG) {
                 .update("groups", {'deleted':1}, null, "GroupId=" + GroupId, callback);
         },
 
-        get_members : function(group_id, callback) {
+        get_members : function(group_id, callback, optWhere) {
             var DB = new SQLiteService();
-            DB.select("gu.GroupsUserId as guid, u.username as username, gu.share as default_share, gu.id, gu.UserId, u.id as user_id, u.email, gu.invite_email");
+            DB.select("gu.GroupsUserId, u.username as username, gu.display_name as display_name, gu.share as default_share, gu.id as groups_user_id, gu.UserId, u.id as user_id, u.email, gu.invite_email");
             DB.from("groups_users as gu");
             DB.join("users as u", "u.UserId = gu.UserId");
             DB.where("gu.deleted = 0");
             DB.where("gu.GroupId = " + group_id);
-            DB.order_by("gu.UserId asc");
+
+            if(typeof optWhere!=='undefined')
+                DB.where(optWhere);
+
+            DB.order_by("u.username ASC");
 
             DB.query(callback);
         },
         get_members_sharenotzero : function(group_id, callback) {
+            return this.get_members(group_id, callback, "gu.share!=0");
+        },
+        get_members_synced_not_registered : function(group_id, callback) {
+            return this.get_members(group_id, callback, "(u.id!='' AND u.id IS NOT NULL) AND (u.email=='' OR u.email=='null' OR u.email IS NULL)");
+        },
+        get_categories : function(callback) {
             var DB = new SQLiteService();
-            DB.select("gu.GroupsUserId as guid, u.username as username, gu.share as default_share, gu.id, gu.UserId, u.email, gu.invite_email");
-            DB.from("groups_users as gu");
-            DB.left_join("users as u", "u.UserId = gu.UserId");
-            DB.where("gu.deleted = 0");
-            DB.where("gu.share != 0");
-            DB.where("gu.GroupId = " + group_id);
-            DB.order_by("gu.UserId asc");
-
+            DB.select("id, name, icon");
+            DB.from("categories");
+            DB.order_by("position ASC");
             DB.query(callback);
         }
+
     };
 });

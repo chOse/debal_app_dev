@@ -1,0 +1,41 @@
+<ion-view id="group-expenses" view-title="{{group.name}}">
+    
+    <ion-content has-bouncing="false">
+
+        <ion-refresher on-refresh="doRefresh()"
+                 pulling-text="{{'Manual sync'|translate}}"
+                 refreshing-text="{{'Now syncing...'|translate}}..."
+                 refreshing-icon="ion-loading-d"></ion-refresher>
+        
+        
+        <div class="expenseslist item" collection-repeat="expense in expenses" item-height="60">
+            <div class="flex">
+                <div class="expense_icon" ng-class="{'paid_by_me' : expense.GroupsUserId === currentUserGuid, 'includes_me' : (expense.current_user_in_expense && expense.GroupsUserId !== currentUserGuid)}" ng-click="showIconTip(expense)">
+                    <i ng-class="expense.category_id ? 'glyphicons glyphicons-' + categories[expense.category_id].icon : 'glyphicons glyphicons-' + categories[1].icon"></i>
+
+                </div>
+                <div class="title" ng-click="editExpense(expense.EntryId)">
+                    <p class="title_line" ng-if="expense.title">{{expense.title}}</p><p ng-if="!expense.title" translate>Various</p> <i ng-show="!expense.id" class="ion-ios7-bolt-outline"></i>
+                    <p style="font-style: normal;font-size:12px;">
+                        <span translate>paid by</span> 
+                        <strong ng-if="expense.GroupsUserId!=currentUserGuid">{{membersNames[expense.GroupsUserId]}}</strong>
+                        <strong translate class="myself" ng-if="expense.GroupsUserId==currentUserGuid">You</strong>
+                    </p>
+                </div>
+
+                <div class="amount" ng-click="editExpense(expense.EntryId)">
+                    <h2 style="color:#00a8ec">{{expense.amount | currency:group.currency.symbol}}</h2>
+                    <p style="font-size:12px">{{ expense.date | date: 'shortDate'}}</p>
+                    <!--<p class="share_indicator" ng-class="{'owed': expense.GroupsUserId==currentUserGuid}" ng-if="expense.GroupsUserId==currentUserGuid">{{expense.amount-expense.shared_amount|currency:group.currency_symbol}}</p>
+                    <p class="share_indicator" ng-class="{'owes': expense.GroupsUserId!=currentUserGuid}" ng-if="expense.GroupsUserId!=currentUserGuid && expense.current_user_in_expense">{{expense.shared_amount|currency:group.currency_symbol}}</p>-->
+                </div>
+            </div>
+        </div>
+
+        <span translate class="item item-icon-right" ng-click="addExpense()" ng-show="!expenses.length">No expense added</span>
+
+    </ion-content>
+    <ion-footer-bar>
+        <button class="floatingButton icon ion-plus" ng-click="addExpense()"></button>
+    </ion-footer-bar>
+</ion-view>

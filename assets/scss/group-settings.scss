@@ -1,0 +1,172 @@
+/* Footer START */
+
+#group-settings .add-member {
+	font-size:15px;
+}
+#group-settings .ion-checkmark-round {
+	margin-left:10px;
+	color:red;
+}
+#group-settings .item-input-wrapper {
+    background:#Fff;
+    white-space: normal;
+}
+#group-settings .item-input-wrapper i {
+    margin-right: 8px;
+    margin-left: -8px;
+}
+#group-settings .label-members {
+    border-bottom:0;
+}
+#group-settings .ion-arrow-down-b {
+    font-size: 25px;
+}
+#group-settings .userlist.nomargin {
+    box-shadow:none;
+    margin-left: 0;
+    margin-right: 0;
+}
+#group-settings .userlist a.ion-android-more {
+    font-size:15px;
+    color:orange;
+}
+#group-settings .userlist a.ion-android-more:before {
+    margin-top: 4px;
+    margin-right: 3px;
+}
+#group-settings .ion-android-person-add:before {
+    margin-right:5px;
+}
+#group-settings .members_title {
+    height: 25px;
+    background: #00a8ec;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    margin-top: 20px;
+    line-height: 25px;
+    font-size: 16px;
+}
+#group-settings .card {
+    margin-top:4px;
+    margin-bottom:4px;
+}
+#group-settings .currency, #popup_groupbalance_secondarycurrency .currency {
+    margin-right:75px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    max-width: 65%;
+    border: none;
+    background: 0 0;
+    color: #333;
+    text-indent: .01px;
+    text-overflow: '';
+    white-space: nowrap;
+    font-size: 14px;
+    cursor: pointer;
+    display: block;
+}
+#group-settings .current-user {
+    color: orange;
+}
+#group-settings .add-member {
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 35px;
+    line-height: 35px;
+    width: 120px;
+    margin-top: -45px;
+    border-radius: 5px;
+}
+#group-settings .deleteGroup {
+    width: 300px;
+    margin: 20px auto 0 auto
+}
+
+#group-settings div.disabled, #group-settings div.disabled  label {
+    background:#eee;
+}
+#group-settings label.ion-android-social-user.disabled::before {
+    color:#ccc;
+}
+#group-settings .share-status.button-small:before {
+    font-size:20px;
+} 
+
+#group-settings .share-status input {
+    padding-right: 0;
+}
+#group-settings .share-status {
+    text-align: center;
+    font-size: 15px;
+    width: 60px;
+    height: 25px;
+    line-height: 25px;
+    font-weight:bold;
+}
+#group-settings input[readonly] {
+    background-color:#fff;
+}
+#group-settings .tip {
+    position: absolute;
+    right: 5px;
+    font-size: 11px;
+    color: #3D3D3D;
+}
+#group-settings .tip.visible {
+  visibility: visible;
+}
+#group-settings .tip.hidden {
+  visibility: hidden;
+}
+.bar-header a.button.ion-checkmark.edited {
+    color:orange;
+}
+#group-settings ion-content {
+    background:#ececec;
+}
+#group-settings .userlist label div p {
+    margin:0;
+    white-space: normal;
+}
+#group-settings .userlist label div .info {
+    font-size:11px;
+    overflow: initial;
+    text-overflow: initial;
+    white-space: initial;
+}
+#group-settings div.userlist label.ion-android-social-user:before {
+    font-size: 30px;
+}
+#group-settings div.userlist label.ion-android-social-user.current-user:before {
+    color:orange;
+}
+#group-settings div.userlist label.ion-android-social-user.registered-user:before {
+    color:green;
+}
+#group-settings div.userlist label.ion-android-social-user.guest-user:before {
+    color:gray;
+    content: "\f143";
+    margin-left: 3px;
+    padding-left:7px;
+    padding-right:7px;
+}
+.popup-body .button.ion-android-contacts {
+    display: inline;width: 88px;font-size: 12px;height: 34px;min-height: initial;margin-left: 4px;
+}
+#group-settings div.username {
+    margin-left: 20px;
+}
+#group-settings div.username_small {
+    margin-left: 10px;
+}
+#group-settings .help {
+    font-size: 0.8em;
+    font-style: italic;
+    color: #666;
+    white-space: normal;
+}
+
+/* Footer END */

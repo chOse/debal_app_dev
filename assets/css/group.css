@@ -1,0 +1,27 @@
+#group ion-content.has-subheader {
+  top: 74px !important; }
+
+.platform-ios #group ion-content.has-subheader {
+  top: 92px !important; }
+
+#group .list {
+  padding-top: 0; }
+
+/* Subheader */
+#group .bar-subheader.notifications {
+  height: 30px;
+  text-align: center;
+  font-size: 15px;
+  background-color: #0e6bb9;
+  color: #d0f2ff; }
+
+#group .bar-subheader.notifications > div + div {
+  margin-left: 30px; }
+
+#group .bar-subheader.notifications .icon-left:before {
+  margin-right: 5px;
+  font-weight: bold; }
+
+button.back-text-manual {
+  font-weight: bold;
+  font-size: 14px; }

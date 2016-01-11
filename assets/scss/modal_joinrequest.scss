@@ -1,0 +1,96 @@
+#modal_joinrequest .infoline  {
+	padding:10px;
+	background-color:#ccc;
+	color:#444;
+	font-size:13px;
+	text-align:center;
+}
+#modal_joinrequest .infoline.strong  {
+	margin-top:20px;
+	font-weight:bold;
+	}
+#popup_joinrequest_selectmember .infoline {
+	color:#444;
+	font-size:13px;
+	text-align:center;
+	margin-bottom:10px;
+}
+#modal_joinrequest .thumbnail {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    float: left;
+    color: #fff;
+    padding-bottom: 5px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 19pt;
+    margin-top: 12px;
+    margin-right: 20px;
+}
+#modal_joinrequest button.action {
+	border: none;
+	padding: 10px;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	border-radius: 2px;
+	padding: 7px 20px;
+}
+#modal_joinrequest button.action.accept {
+	background-color: green;
+}
+#modal_joinrequest button.action.refuse {
+	background-color: red;
+}
+#modal_joinrequest .user_avatar {
+	float:left;
+	margin-right: 20px;
+	margin-bottom:10px;
+}
+#modal_joinrequest .item .username {
+	font-size:15px;
+}
+#modal_joinrequest .item .username,#modal_joinrequest .item .user_email {
+	line-height:15px;
+}
+#modal_joinrequest .user_email {
+	font-size: 0.7em;
+}
+
+#popup_joinrequest_selectmember .user_avatar {
+	float:none;
+	display: inline-block;
+	border:1px dashed #ccc;
+	line-height: 10px;
+	padding-top: 18px;
+}
+#popup_joinrequest_selectmember .user_box .user_avatar i {
+	display:none;
+}
+#popup_joinrequest_selectmember .user_box.new .user_avatar i {
+	display:inline-block;
+}
+#popup_joinrequest_selectmember .user_box.activated .user_avatar i,#popup_joinrequest_selectmember .user_box.on .user_avatar i {
+	display:inline-block;
+}
+#popup_joinrequest_selectmember .user_box {
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+	max-width: 50px;
+	text-align: center;
+	font-size: 12px;
+	border: none;
+	background-color: transparent;
+	padding: inherit;
+}
+#popup_joinrequest_selectmember .user_box.new .user_avatar {
+	font-size: 35px;
+	display: inline-block;
+	padding-top: 5px;
+}
+#popup_joinrequest_selectmember .user_box.activated .user_avatar,#popup_joinrequest_selectmember .user_box.activated p ,#popup_joinrequest_selectmember .user_box.on .user_avatar,#popup_joinrequest_selectmember .user_box.on p {
+	color:#00a8ec;
+	border-color:#00a8ec;
+}

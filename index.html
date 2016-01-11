@@ -8,17 +8,23 @@
         <title>Debal</title>
 
         <link href="system/ionic/css/ionic.css" rel="stylesheet">
+        <link href="system/glyphicons-regular/css/glyphicons.css" rel="stylesheet">
+        <link href="assets/css/common-styling.css" rel="stylesheet">
         <link href="assets/css/sidemenu.css" rel="stylesheet">
         <link href="assets/css/addexpense.css" rel="stylesheet">
-        <link href="assets/css/common-styling.css" rel="stylesheet">
         <link href="assets/css/creategroup.css" rel="stylesheet">
         <link href="assets/css/editgroup.css" rel="stylesheet">
         <link href="assets/css/form-validation.css" rel="stylesheet">
-        <link href="assets/css/groupexpenses.css" rel="stylesheet">
+        <link href="assets/css/group.css" rel="stylesheet">
+        <link href="assets/css/settings.css" rel="stylesheet">
+        <link href="assets/css/group-expenses.css" rel="stylesheet">
+        <link href="assets/css/group-balance.css" rel="stylesheet">
+        <link href="assets/css/group-members.css" rel="stylesheet">
+        <link href="assets/css/group-settings.css" rel="stylesheet">
         <link href="assets/css/groups.css" rel="stylesheet">
-        <link href="assets/css/loader-rotation-spin.css" rel="stylesheet">
         <link href="assets/css/login.css" rel="stylesheet">
         <link href="assets/css/landing.css" rel="stylesheet">
+        <link href="assets/css/modal_joinrequest.css" rel="stylesheet">
 
         <script src="system/ionic/js/ionic.bundle.min.js"></script>
 
@@ -30,13 +36,15 @@
         <script src="assets/js/facebookConnectPlugin.js"></script>
         <script src="assets/js/gettext.js"></script>
         <script src="assets/js/myHelpers.js"></script>
+        <script src="assets/js/didyoumean.js"></script>
+        <script src="assets/js/money.js"></script>
 
         <script src="app/translations/fr.js"></script>
 
         <script src="app/directives/formValidation.js"></script>
         
+        
         <script src="app/services/initService.js"></script>
-        <script src="app/services/LoaderService.js"></script>
         <script src="app/services/LocalStorageService.js"></script>
         <script src="app/services/LoginService.js"></script>
         <script src="app/services/SQLiteService.js"></script>
@@ -45,21 +53,35 @@
         <script src="app/services/models/EntriesModel.js"></script>
         <script src="app/services/models/GroupsModel.js"></script>
         <script src="app/services/models/UsersModel.js"></script>
+        <script src="app/services/models/GroupRequestsModel.js"></script>
+        <script src="app/services/models/GroupsSecondCurrencyModel.js"></script>
         
         <script src="app/controllers/SaveExpenseCtrl.js"></script>
         <script src="app/controllers/AppCtrl.js"></script>
         <script src="app/controllers/CreateGroupCtrl.js"></script>
-        <script src="app/controllers/EditgroupCtrl.js"></script>
-        <script src="app/controllers/EditgroupUserOptionsCtrl.js"></script>
-        <script src="app/controllers/GroupexpensesCtrl.js"></script>
+        
+        
+        <script src="app/controllers/SettingsCtrl.js"></script>
         <script src="app/controllers/GroupsCtrl.js"></script>
         <script src="app/controllers/LoginCtrl.js"></script>
         <script src="app/controllers/SideMenuCtrl.js"></script>
 
+        <script src="app/controllers/GroupCtrl.js"></script>
+        <script src="app/controllers/GroupExpensesCtrl.js"></script>
+        <script src="app/controllers/GroupBalanceCtrl.js"></script>
+        <script src="app/controllers/GroupMembersCtrl.js"></script>
+        <script src="app/controllers/GroupSettingsCtrl.js"></script>
+        <script src="app/controllers/EditgroupUserOptionsCtrl.js"></script>
+        <script src="app/controllers/GroupBalancePopoverCtrl.js"></script>
+
     </head>
-    <body ng-app="spendingsManager" ng-controller="AppCtrl">
+    <body ng-app="Debal" ng-controller="AppCtrl">
         <div id="fb-root"></div>
 
-        <ion-nav-view animation="no-animation"></ion-nav-view>
+        <ion-nav-view></ion-nav-view>
+
+
+
+
     </body>
 </html>

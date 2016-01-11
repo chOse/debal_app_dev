@@ -71,13 +71,11 @@ App
             if(LocalStorageService.get("db_inited") !== "true" || clear) {
                 console.error("Recreating DB");
 
-                _executeSQL('DELETE FROM new_elem', function() {
-                    _executeSQL('DELETE FROM sync_info', function() {
-                        _executeSQL('DELETE FROM sqlite_sequence', function() {
-                            if(callback) callback();
-                        });
-                    });
-                });
+                _executeSQL('DELETE FROM new_elem');
+                _executeSQL('DELETE FROM sync_info');
+                _executeSQL('DELETE FROM sqlite_sequence');
+                setTimeout(function(){ if(callback) callback(); }, 1000);
+                
                 
                 
                 db_tables.forEach(function(v){
@@ -222,7 +220,12 @@ App
 
         insert = function(table, data, tx, callback, optionalAttribute) {
 
+
+
             build_insert_query(table, data, function(sql,values) {
+
+                
+
 
                 if(tx !== null) {
                     return _queryDB(tx, sql, values, callback);
@@ -231,7 +234,7 @@ App
                 else {
                     return _db.transaction(
                         function(tx) {
-                            _queryDB(tx, sql, data, callback);
+                            _queryDB(tx, sql, values, callback);
                         },
                         function(err, err2){
                             _errorCB(err, sql, callback, err2);

@@ -1,0 +1,18 @@
+<ion-popover-view id="group-balance-options" ng-controller="GroupBalancePopoverCtrl">
+    <ion-content scroll="false">
+        <div class="list">
+            <a translate class="item icon ion-social-usd" ng-click="openSecondaryCurrencyOptions()">
+                Set secondary currency
+            </a>
+            <a translate class="item icon ion-ios-world" ng-class="{'disabled':$scope.group.public_key.length>0}" ng-click="openGroupUrl()">
+                Open group's web page
+            </a>
+            <a translate class="item icon ion-stats-bars" ng-class="{'disabled':$scope.group.public_key.length>0}" ng-click="openGroupStats()">
+                Group stats
+            </a>
+            <a translate class="item icon ion-share" ng-click="ShareGroup()">
+                Share group's page
+            </a>
+      </div>
+    </ion-content>
+</ion-popover-view>

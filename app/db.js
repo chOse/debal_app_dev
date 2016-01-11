@@ -4,7 +4,7 @@
         DB_CONFIG: {
             DB_NAME : "debal",
 
-            TABLES : ["entries", "entries_groups_users", "groups", "groups_users", "users", "categories", "categories_entries"],
+            TABLES : ["entries", "entries_groups_users", "groups", "groups_users", "groups_requests", "groups_second_currency", "users", "categories", "categories_entries"],
 
             CREATE_SQL : [
                 'CREATE TABLE IF NOT EXISTS `entries` (\n\
@@ -14,9 +14,15 @@
                 `date` TEXT,\n\
                 `group_id` INTEGER,\n\
                 `groups_user_id` INTEGER,\n\
+                `payment` INTEGER,\n\
+                `payment_method` TEXT,\n\
+                `payment_url` TEXT,\n\
+                `payment_internal_ref` TEXT,\n\
+                `payment_confirmed` INTEGER,\n\
                 `GroupId` INTEGER,\n\
                 `GroupsUserId` INTEGER,\n\
                 `title` TEXT,\n\
+                `category_id` INTEGER,\n\
                 `deleted` INTEGER DEFAULT \'0\',\n\
                 UNIQUE (id) ON CONFLICT REPLACE)',
 
@@ -52,6 +58,7 @@
                 `user_id` INTEGER,\n\
                 `GroupId` INTEGER,\n\
                 `UserId` INTEGER,\n\
+                `display_name` TEXT,\n\
                 `invite_email` TEXT,\n\
                 `invite_date` TIMESTAMP,\n\
                 `share` INTEGER DEFAULT \'1\',\n\
@@ -66,22 +73,10 @@
                 UNIQUE (id) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `categories` (\n\
-                `CategoryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
                 `id` INTEGER,\n\
-                `group_id` INTEGER,\n\
-                `GroupId` INTEGER,\n\
+                `position` INTEGER,\n\
                 `name` TEXT,\n\
-                `deleted` INTEGER DEFAULT \'0\',\n\
-                UNIQUE (id) ON CONFLICT REPLACE)',
-
-                'CREATE TABLE IF NOT EXISTS `categories_entries` (\n\
-                `CategoriesEntryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n\
-                `id` INTEGER,\n\
-                `category_id` INTEGER,\n\
-                `CategoryId` INTEGER,\n\
-                `entry_id` INTEGER,\n\
-                `EntryId` INTEGER,\n\
-                `deleted` INTEGER DEFAULT \'0\',\n\
+                `icon` TEXT,\n\
                 UNIQUE (id) ON CONFLICT REPLACE)',
 
                 'CREATE TABLE IF NOT EXISTS `groups_requests` (\n\
@@ -91,9 +86,17 @@
                 `UserId` INTEGER,\n\
                 `group_id` INTEGER,\n\
                 `GroupId` INTEGER,\n\
+                `modified_by` INTEGER,\n\
                 `status` INTEGER DEFAULT \'0\',\n\
                 `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n\
+                `modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n\
                 UNIQUE (id) ON CONFLICT REPLACE)',
+
+                'CREATE TABLE IF NOT EXISTS `groups_second_currency` (\n\
+                `GroupId` INTEGER PRIMARY KEY NOT NULL,\n\
+                `second_currency` TEXT,\n\
+                `rate` TEXT,\n\
+                UNIQUE (GroupId) ON CONFLICT REPLACE)'
             ],
 
             RECREATE_DB : false,
@@ -103,7 +106,7 @@
         }
     },
 
-    config_module = angular.module('spendingsManager.db', []);
+    config_module = angular.module('Debal.db', []);
     
     angular.forEach(config_data, function(key, value) {
         config_module.constant(value, key);

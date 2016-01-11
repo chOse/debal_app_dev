@@ -1,0 +1,40 @@
+<ion-view id="group-balance" view-title="{{group.name}}">
+
+    <ion-content has-bouncing="false">
+
+        <ion-refresher on-refresh="doRefresh()"
+                 pulling-text="{{'Manual sync'|translate}}"
+                 refreshing-text="{{'Now syncing...'|translate}}..."
+                 refreshing-icon="ion-loading-d"></ion-refresher>
+
+        <ul class="list" style="margin-bottom:0">
+
+            <span translate class="item item-icon-right" ng-show="!expenses.length || expenses.length==0">No expense added</span>
+            <span translate class="item item-icon-right" ng-show="settled">Debts are already settled!</span>
+            <li ng-repeat="(guid,flows) in balances " ng-if="flows.length>0" class="item" ng-class="{'myself': guid==currentUserGuid}">
+
+                <div ng-if="flows.length>=1" ng-repeat="(k,flow) in flows" ng-class="{'last': k==flows.length-1}" class="debts">
+                    <p ng-if="k==0" class="debtor_name">
+                        <strong>{{membersNames[guid]}}</strong> <span translate>owes</span>
+                    </p>
+                    
+                    <div class="col-center item">
+                        <div class="col-left">
+                            <strong class="amount">{{flow.amount | currency:group.currency.symbol}}</strong>
+                            <span ng-if="group.secondary_currency.id.length>0">({{flow.amount*group.currency_rate | currency:group.secondary_currency.symbol}})</span>
+                        </div>
+                        <div class="col-right">
+                            <span translate>to</span>
+                            <strong ng-class="{true:'myself'}[flows[k].to==currentUserGuid]" class="beneficiary">{{membersNames[flows[k].to]}}</strong>
+                        </div>
+                    </div>
+                    <p style="clear:both"></p>
+                </div>
+
+            </li>
+        </ul>
+    </ion-content>
+    <ion-footer-bar>
+        <button class="floatingButton icon ion-grid" ng-click="openPopover($event)"></button>
+    </ion-footer-bar>
+</ion-view>

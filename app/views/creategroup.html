@@ -1,15 +1,9 @@
-<ion-view cache-view="false" title="{{'New group'|translate}}" id="creategroup">
-    <ion-nav-buttons side="right">
-
-        <button class="button button-clear icon-left ion-checkmark" ng-click="addGroup()"></button>
-    </ion-nav-buttons>
-
+<ion-view view-title="{{'New group'|translate}}" id="creategroup">
     <ion-content has-bouncing="false" has-header>
         <form novalidate="novalidate" on-valid-submit="addGroup()">
             <div class="list" style="padding-left: 10px; padding-right: 10px;margin-top: 20px;">
-                <label class="item item-input item-label">
-                    <span translate class="input-label">Group name</span>
-                    <input ng-model="group.name" type="text" placeholder="{{'Enter a name'|translate}}" name="group" required="required">
+                <label class="item item-input item-label" style="margin-bottom:10px">
+                    <input ng-model="group.name" type="text" placeholder="{{'Enter a name for this group'|translate}}" name="group" required="required">
                 </label>
                 <label class="item item-input item-icon-right item-label">
                     <span translate class="input-label">Currency</span>
@@ -19,15 +13,17 @@
 
                 <div class="members_title" translate>Members</div>
 
-                <div ng-repeat="member in group.members" class="userlist nomargin card item item-input-inset">
-                    <label class="item-input-wrapper validated icon-left ion-person" ng-class="{true:'current-user'}[member.current_user]" style="font-size:20px; padding-left:2px">
+                <div ng-repeat="member in group.members" ng-class="{true:'current-user'}[member.current_user]" class="userlist nomargin card item item-input-inset">
+                    <div class="user_avatar">{{member.username.toUpperCase()| limitTo : 3 : 0}}</div>
+                    <label class="item-input-wrapper"  style="font-size:20px; padding-left:2px">
                         <div style="font-size:16px; color:black" ng-model="member.username" type="text" class="username_small" ng-readonly name="member" required="required">{{member.username}}</div>
                     </label>
-                    <div ng-click="editShare(member)" class="button button-small button-energized share-status icon-left ion-pie-graph">{{member.share}}</div>
-                    <button ng-disabled="member.current_user" ng-click="group.members.splice($index, 1)" class="button icon button-small ion-trash-a"></button>
+                    <button type="button" class="user_share" ng-click="editShare(member)">{{member.share}}<br /><span translate translate-n="member.share" translate-plural="shares">share</span></button>
+                    <button type="button" ng-disabled="member.current_user" ng-click="group.members.splice($index, 1)" class="button icon button-small ion-trash-a user_remove"></button>
                 </div>
                 
-                <button translate style="margin-right:10px" class="creategroup_button creategroup_button1" ng-click="addMember()">Add a member</button>
+                <button type="button" translate class="addMember icon-left ion-person-add" ng-click="addMember()">Add a member</button>
+                <button type="button" translate class="button button-block button-positive" ng-click="addGroup()">Create group</button>
             </div>
         </form> 
     </ion-content>

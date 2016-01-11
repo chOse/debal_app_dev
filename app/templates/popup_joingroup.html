@@ -1,0 +1,17 @@
+<div id="join_group">
+	<label class="item item-input">
+		<i class="icon ion-key placeholder-icon"></i>
+		<input autofocus maxlength="5" ng-model="joinrequest.group_code" type="text" placeholder="ABCD" />
+	</label>
+
+	<p ng-click="showHelp = !showHelp" ng-init="showHelp=false" class="subtitle2"><span translate>Where can I find the group key?</span> <i class="ion-arrow-down-b"></i></p>
+	<div ng-if="showHelp">
+		<p style="margin: 0;text-align: center;" translate>Ask the group owner to look for it:</p>
+		<li><span translate>In the app's group screen on the top bar:</span>
+			<div class="icon-left ion-key img1">ABCD</div>
+		</li>
+		<li><span translate>In the web address of the group's page:</span>
+			<img src="assets/images/screen_groupkey.png" style="max-width:100%" />
+		</li>
+	</div>
+</div>

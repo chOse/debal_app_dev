@@ -1,0 +1,139 @@
+/* Footer START */
+
+
+
+#creategroup .item-input-wrapper {
+    background:#Fff;
+    white-space: normal;
+}
+#creategroup .item-input-wrapper i {
+    margin-right: 8px;
+    margin-left: -8px;
+}
+#creategroup .label-members {
+    border-bottom:0;
+}
+#creategroup .ion-arrow-down-b {
+    font-size: 25px;
+}
+#creategroup .userlist.nomargin {
+    box-shadow:none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+#creategroup .userlist a.ion-android-more-vertical {
+    font-size:15px;
+    color:orange;
+}
+#creategroup .userlist a.ion-android-more-vertical:before {
+    margin-top: 5px;
+    margin-right: 3px;
+    font-size: 14pt;
+}
+#creategroup .ion-android-person-add:before {
+    margin-right:5px;
+}
+#creategroup .members_title {
+    height: 25px;
+    background: #00a8ec;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    margin-top: 20px;
+    line-height: 25px;
+    font-size: 16px;
+}
+#creategroup .card {
+    margin-top:4px;
+    margin-bottom:4px;
+}
+#creategroup .currency {
+    margin-right:35px;
+}
+
+#creategroup div.disabled, #creategroup div.disabled  label {
+    background:#eee;
+}
+#creategroup label.ion-person.disabled::before {
+    color:#ccc;
+}
+#creategroup .share-status.button-small:before {
+    font-size:20px;
+} 
+
+
+#creategroup input[readonly] {
+    background-color:#fff;
+}
+
+#creategroup ion-content {
+    background:#ececec;
+}
+#creategroup div.username {
+    margin-left: 20px;
+}
+#creategroup div.username_small {
+    margin-left: 10px;
+}
+#creategroup button.user_share, #creategroup button.user_remove {
+    width: 45px;
+    height: 45px;
+    color:#fff;
+    border:none;
+}
+#creategroup button.user_share:active {
+    background-color: #A3A2A2;
+}
+#creategroup button.user_share {
+    line-height: 15px;
+    background-color:#C5C5C5;
+}
+#creategroup button.user_share span {
+    font-size: 12px;
+}
+#creategroup button.user_remove {
+    background-color: red;
+    border-radius: 0;
+}
+#creategroup button[disabled].user_remove {
+    display:none;
+}
+/* Footer END */
+
+#creategroup .addMember {
+    padding: 10px;
+    width: 100%;
+    margin: 0 auto 14px;
+    border-radius: 2px;
+    line-height: 28px;
+    color: grey;
+    border: 1px dotted grey;
+    background: 0 0;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+}
+#creategroup .addMember:active {
+    background-color: rgb(208, 208, 208);
+}
+#creategroup .addMember:before {
+    margin-right: 10px;
+}
+#creategroup .item-input select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    max-width: 65%;
+    border: none;
+    background: 0 0;
+    color: #333;
+    text-indent: .01px;
+    text-overflow: '';
+    white-space: nowrap;
+    font-size: 14px;
+    cursor: pointer;
+    display: block;
+    padding-right: 35px;
+}

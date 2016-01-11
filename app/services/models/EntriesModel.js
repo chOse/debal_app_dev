@@ -3,7 +3,7 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
     return {
         read: function(where, callback) {
             var DB = new SQLiteService();
-            DB.select("e.EntryId, e.amount, e.date, e.GroupsUserId, e.title, e.id");
+            DB.select("e.EntryId, e.amount, e.date, e.GroupsUserId, e.category_id, e.title, e.id");
             DB.from("entries as e");
             DB.join("groups_users as gu", "e.GroupsUserId = gu.GroupsUserId");
             DB.where("e.deleted = 0");
@@ -106,7 +106,7 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                 DB.select('COUNT(DISTINCT EntriesGroupsUserId) as count1');
                 DB.from('entries_groups_users as egu');
                 DB.join('entries as e', 'e.EntryId = egu.EntryId');
-                DB.where('e.deleted = 0')
+                DB.where('e.deleted = 0');
                 DB.where('egu.GroupsUserId = ' + GroupsUserId);
                 DB.query(callback);
             };
@@ -117,7 +117,7 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                 DB.join("entries_groups_users as egu", "egu.EntryId = e.GroupsUserId");
                 DB.where('egu.GroupsUserId != ' + GroupsUserId);
                 DB.where('e.GroupsUserId = ' + GroupsUserId);
-                DB.where('e.deleted = 0')
+                DB.where('e.deleted = 0');
                 DB.query(callback);
             };
 
@@ -127,8 +127,8 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                     var spent_not_benefited_count = count[0].count2;
                     var benefited_total = spent_not_benefited_count + benefited_count;
                     callback(benefited_total);
-                })
-            })
+                });
+            });
         },
 
 
@@ -175,13 +175,13 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                 var benefited, spent;
 
                 getBenefitedByUser(guid, function(user_benefited) {
-                    benefited = user_benefited[0]['sum'];
+                    benefited = user_benefited[0].sum;
                     getSpentByUser(guid, function(user_spent) {
-                        spent = user_spent[0]['sum'];
+                        spent = user_spent[0].sum;
                         callBack(guid, i, spent-benefited);
                     });
                 });
-            }
+            };
 
             var balance = [];
 
@@ -195,27 +195,27 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                     var giver = users_balance[i];
                     var j = ct - 1;   
 
-                    while(giver['balance']<0) {
+                    while(giver.balance<0) {
 
                         var receiver = users_balance[j];
 
                         if(receiver == giver)
                             break;
 
-                        if(receiver['balance']>0) {
+                        if(receiver.balance>0) {
 
-                            var flow_amount = Math.min(Math.abs(giver['balance']), receiver['balance']);
+                            var flow_amount = Math.min(Math.abs(giver.balance), receiver.balance);
                             var flow_amount_round = Math.round(flow_amount*100)/100;
 
                             if(flow_amount_round>0) {
-                                if(!money_flows[giver['guid']])
-                                    money_flows[giver['guid']] = [];
+                                if(!money_flows[giver.guid])
+                                    money_flows[giver.guid] = [];
                                 
-                                money_flows[parseInt(giver['guid'])].push({'to':receiver['guid'], 'amount':flow_amount_round.toFixed(2)});
+                                money_flows[parseInt(giver.guid)].push({'to':receiver.guid, 'amount':flow_amount_round.toFixed(2)});
                             }
 
-                            receiver['balance'] = receiver['balance'] - flow_amount;
-                            giver['balance'] = giver['balance'] + flow_amount;
+                            receiver.balance = receiver.balance - flow_amount;
+                            giver.balance = giver.balance + flow_amount;
                         }
 
                         else
@@ -226,20 +226,18 @@ App.factory('EntriesModel', function(SQLiteService, DB_CONFIG, GroupsModel) {
                 cb(money_flows);
             };
 
-            getGroupBalance = function(data) {
+            settle_member = function(guid, i, user_balance) {
+                balance.push({'guid':guid, 'balance':user_balance});
+                if(i==groups_users.length-1)
+                    settle(balance);
+            };
 
+            getGroupBalance = function(data) {
                 groups_users = data.sort(function(a, b) {return a.GroupsUserId - b.GroupsUserId;});
 
                 for (var i in groups_users) {
                     var guid = groups_users[i].GroupsUserId;
-
-                    getUserBalance(guid, i, function(guid, i, user_balance) {
-                        balance.push({'guid':guid, 'balance':user_balance});
-                        if(i==groups_users.length-1) {
-
-                            settle(balance);
-                        }
-                    });
+                    getUserBalance(guid, i, settle_member);
                 }
             };
             getGroupBalance(group_data);
