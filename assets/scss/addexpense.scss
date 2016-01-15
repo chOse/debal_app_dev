@@ -136,9 +136,15 @@
 }
 
 #addexpense .title_and_category {
+    display:-webkit-flex;
     display:flex;
+    -webkit-flex-direction:row;
+    flex-direction:row;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
     text-align:center;
     .title {
+        -webkit-flex:1;
         flex:1;
     }
     .category {
@@ -238,8 +244,11 @@
     }
 }
 #addexpense .share_box {
-    display:inline-block;text-align:right;margin-right:10px;
-        min-width: 75px;
+    display:inline-block;
+    text-align:right;
+    margin-right:10px;
+    float:left;
+    min-width: 75px;
     i.ion-edit {
         font-size: 18px;
         vertical-align: middle;
@@ -380,6 +389,7 @@
 #addexpense .center-text{
     width:80%;
     margin:0 auto;
+    min-height: 430px;
 }
 
 #addexpense .center-text.marginTop {

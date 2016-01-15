@@ -4,8 +4,8 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
 
-    <div class="bar bar-subheader notifications" ng-if="joinrequests.requests.length>0">
-        <button ng-click="openJoinRequests()" class="button button-block button-clear title icon-right ion-chevron-right icon-accessory"><i class="ion-android-notifications-none"></i><span translate translate-n="joinrequests.requests.length" translate-plural="{{joinrequests.requests.length}} members asked to join one of your groups">{{joinrequests.requests.length}} member asked to join one of your groups</span></button>
+    <div class="bar bar-subheader notifications" ng-if="joinrequests.requests.length>0" ng-click="openJoinRequests()">
+        <div class="title icon-right ion-chevron-right icon-accessory"><i class="ion-android-notifications-none"></i><span translate translate-n="joinrequests.requests.length" translate-plural="{{joinrequests.requests.length}} members asked to join one of your groups">{{joinrequests.requests.length}} member asked to join one of your groups</span></div>
     </div>
 
     <ion-content class="has-footer" ng-class="{'has-subheader': joinrequests.requests.length>0}">

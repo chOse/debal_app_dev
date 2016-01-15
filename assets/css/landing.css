@@ -30,9 +30,6 @@
 .middle_content {
   color: white; }
 
-#landing .middle_content {
-  padding-top: 20px; }
-
 .bottom_content {
   color: white;
   bottom: 14px;
@@ -84,7 +81,9 @@
 .landing_button3 {
   padding: 2px;
   line-height: 18px;
-  background: none; }
+  background: none;
+  color: #F5B643;
+  font-weight: bold; }
 
 #mid_text {
   font-size: 12px; }

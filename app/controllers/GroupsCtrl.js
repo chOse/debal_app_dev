@@ -1,9 +1,10 @@
-App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDelegate, $ionicModal, $ionicPopup, $ionicLoading, gettextCatalog, GroupsModel, GroupRequestsModel, LocalStorageService, SyncService) {
+App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDelegate, $ionicModal, $ionicPopup, $ionicLoading, LoginService, gettextCatalog, GroupsModel, GroupRequestsModel, LocalStorageService, SyncService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
     $scope.user_name = LocalStorageService.get("user_name");
     $scope.showWelcomeMessage = false;
+
 
     $scope.$on('newGroups', function(event) {
         console.error("new groups triggered");
@@ -289,12 +290,10 @@ App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDe
         }
     };
 
-    
-    
     /* End Join request Modal */
-    
-    $scope.getGroups();
-
-    $scope.trackView();
+    if(LoginService.isLogged()==="true") {
+        $scope.getGroups();
+        $scope.trackView();
+    }
 
 });

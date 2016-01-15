@@ -182,7 +182,7 @@ $stateProvider
         }
     });
     
-    $urlRouterProvider.otherwise("/landing");
+    $urlRouterProvider.otherwise("/app/groups");
     
 })
 .config(function($ionicConfigProvider) {
@@ -191,9 +191,13 @@ $stateProvider
     $ionicConfigProvider.backButton.previousTitleText(true);
     $ionicConfigProvider.tabs.position('bottom');
 })
-.run(function($ionicPlatform, $state, $rootScope, $ionicLoading, $ionicPopup, $ionicSideMenuDelegate, $interval, tmhDynamicLocale, LocalStorageService, LoginService, initService, SyncService, gettextCatalog, GENERAL_CONFIG, SUPPORTED_LANG) {
+.run(function($ionicPlatform, $state, $rootScope, $http, $ionicLoading, $ionicSideMenuDelegate, $interval, tmhDynamicLocale, LocalStorageService, LoginService, SyncService, gettextCatalog, SUPPORTED_LANG) {
 
     $ionicPlatform.ready(function() {
+
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+        }
 
         this.loadLocale = function(locale) {
             device_locale = locale.value.toLowerCase();
@@ -224,6 +228,10 @@ $stateProvider
             this.loadLocale({value:"en"});
         }
 
+        // Hide splashscreen on iOS
+        if(typeof navigator.splashscreen != 'undefined')
+            navigator.splashscreen.hide();
+
         // Sync constants
         var syncInterval = 5000;
         var syncForcePeriod = 12; // Will force sync (if not blocked) each syncForcePeriod * syncInterval ms
@@ -235,7 +243,27 @@ $stateProvider
             syncCounter = 0;
         });
 
-        var appSync = $interval(handleSync, syncInterval);
+        var appSyncInterval;
+
+        $rootScope.$on('startSyncInterval', function(event) {
+            console.error("broadcast");
+            if(!angular.isDefined(appSyncInterval)) {
+                console.error("starting interval");
+                appSyncInterval = $interval(handleSync, syncInterval);
+            }
+            else
+                console.error("interval already started");
+        });
+
+        $rootScope.$on('stopSyncInterval', function(event) {
+            if(angular.isDefined(appSyncInterval)) {
+                console.error("stopping interval");
+                $interval.cancel(appSyncInterval);
+                appSyncInterval = undefined;
+            }
+            else
+                console.error("interval already STOPPED");
+        })
 
         var appPause = $ionicPlatform.on('pause', appPauseFunction);
         var appResume = $ionicPlatform.on('resume', appResumeFunction);
@@ -250,49 +278,8 @@ $stateProvider
             appBackOnline();
         }
 
-        var update_popup_triggered = false;
-
         function appBackOnline() {
             console.error("App back on line");
-
-            // RECREATE DB IF APP UPDATED
-            var app_version = LocalStorageService.get('app_version');
-            if(!update_popup_triggered && app_version!==GENERAL_CONFIG.APP_VERSION && GENERAL_CONFIG.RECREATE_APP_VERSIONS.indexOf(app_version)>-1) {
-                console.error("app version mismatch");
-                update_popup_triggered = true;
-                initService.reInit(function() {
-                    if(LoginService.isLogged()==="true") {
-                        appPaused = true;
-                        $ionicPopup.alert({
-                            title: gettextCatalog.getString('App updated'),
-                            template: gettextCatalog.getString('Thanks for updating the app! It will now refresh your data from server. Enjoy!')
-                        }).then(function(res) {
-                            $ionicLoading.show({templateUrl:false, template:'<ion-spinner></ion-spinner><p>' +  gettextCatalog.getString('Downloading your data from server...') +'</p>', duration:100000});
-                            appPaused = false;
-                            handleSync(function() {
-                                $ionicLoading.hide();
-                                $state.go('app.groups');
-                            }, false);
-                        });
-                    }
-                }, false);
-                
-            }
-
-            else if(LoginService.isLogged()==="true") {
-                initService.init(function() {
-                    syncCounter = 0;
-                    handleSync(function() {
-                        if($state.current.name=="login" || $state.current.name=="landing" || $state.current.name=="register")
-                            $state.go('app.groups');
-                    }, false);
-                });
-            }
-
-            else {
-                console.error("no credentials found, reiniting");
-                initService.reInit();
-            }
 
             // Analytics
             if (typeof analytics !== 'undefined') {
@@ -304,18 +291,18 @@ $stateProvider
 
             // Intercom
             if(typeof intercom != 'undefined') {
-                intercom.registerIdentifiedUser({userId: LocalStorageService.get("user_id")});
-                if(LoginService.isLogged()==="true")
-                    intercom.updateUser({ email: user_email, name: user_name });
+                if(LoginService.isLogged()==="true") {
+                    intercom.registerIdentifiedUser({userId: LocalStorageService.get("user_id")});
+                    intercom.updateUser({ email: LocalStorageService.get("user_email"), name: LocalStorageService.get("user_name"), locale: LocalStorageService.get("locale")});
+                }
             }
         }
 
         appBackOnline();
-
+        
         function handleSync(callback, saveBandwidth) {
             var online = (typeof(navigator.online)!=='undefined') ? navigator.onLine : (typeof(navigator.network)!=='undefined') ? (navigator.network.connection.type !== Connection.NONE) : true;
             var logged_in = LocalStorageService.get("login");
-
             if(online && logged_in==="true" && !appPaused) {
 
                 syncCounter++;
@@ -332,7 +319,6 @@ $stateProvider
             }
             else if(callback && typeof callback=='function')
                 callback();
-
         }
 
         // Handle back button
@@ -353,7 +339,5 @@ $stateProvider
 
             else $rootScope.goBack();
         }
-
-        
     });
 });

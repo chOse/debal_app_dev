@@ -39,6 +39,7 @@ App.service('LoginService', function(LocalStorageService, SyncService, initServi
 
         LocalStorageService.set("login", status);
 
+        // Connect
         if(status===true) {
 
             var user_email = data.email;
@@ -52,7 +53,7 @@ App.service('LoginService', function(LocalStorageService, SyncService, initServi
             // Intercom
             if(typeof intercom != 'undefined') {
                 intercom.registerIdentifiedUser({userId: user_id});
-                intercom.updateUser({ email: user_email, name: user_name });
+                intercom.updateUser({ email: user_email, name: user_name, locale: LocalStorageService.get("locale") });
             }
 
             LocalStorageService.set("user_email", user_email);
@@ -61,8 +62,14 @@ App.service('LoginService', function(LocalStorageService, SyncService, initServi
             LocalStorageService.set("user_basic", btoa(user_email + ":" + pwd));
         }
 
+        // Disconnect
         else if(status===false) {
             initService.reInit();
+
+            // Intercom
+            if(typeof intercom != 'undefined') {
+                intercom.reset();
+            }
         }
     };
 });

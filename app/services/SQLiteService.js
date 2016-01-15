@@ -70,10 +70,6 @@ App
 
             if(LocalStorageService.get("db_inited") !== "true" || clear) {
                 console.error("Recreating DB");
-
-                _executeSQL('DELETE FROM new_elem');
-                _executeSQL('DELETE FROM sync_info');
-                _executeSQL('DELETE FROM sqlite_sequence');
                 setTimeout(function(){ if(callback) callback(); }, 1000);
                 
                 

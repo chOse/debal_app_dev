@@ -96,8 +96,8 @@ App
             ]
         });
         myPopup.then(function(res) {
-            $ionicLoading.show();
             if(res) {
+                $ionicLoading.show();
                 UsersModel.getUserId($scope.current_user.id, function(data) {
                     if(data.length>0 && data[0].UserId!==null) {
                         var UserId = data[0].UserId;

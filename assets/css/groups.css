@@ -1,4 +1,7 @@
 /* Header START */
+.platform-ios #groups ion-content.has-subheader {
+  top: 106px !important; }
+
 #groups .bar-header .button-clear {
   color: #525252;
   font-size: 12px; }
@@ -15,9 +18,6 @@
   border: none;
   line-height: 44px;
   padding: 1px 14px; }
-
-#groups ion-content.has-subheader {
-  top: 68px; }
 
 #groups ion-content {
   background: #ececec; }
@@ -75,30 +75,19 @@
 /* Footer END */
 /* Notifications */
 #groups .bar-subheader.notifications {
-  height: 30px;
   background-color: #0e6bb9; }
 
 #groups .notifications .title {
-  text-align: left;
   font-size: 14px;
-  height: 29px;
-  line-height: 25px;
   color: #d0f2ff;
   text-align: center;
   margin: 0; }
 
 #groups .notifications .title:before {
-  margin-right: 5px;
   font-size: 10pt;
   line-height: inherit;
-  position: relative;
-  top: -2px; }
+  position: absolute;
+  right: 15px; }
 
 #groups .notifications .title i {
-  position: relative;
-  top: -2px;
   margin-right: 3px; }
-
-#groups .notifications .title span {
-  position: relative;
-  top: -2px; }

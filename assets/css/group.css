@@ -14,6 +14,8 @@
   font-size: 15px;
   background-color: #0e6bb9;
   color: #d0f2ff; }
+  #group .bar-subheader.notifications > div {
+    color: #d0f2ff !important; }
 
 #group .bar-subheader.notifications > div + div {
   margin-left: 30px; }

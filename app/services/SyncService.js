@@ -134,7 +134,6 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
                 }
 
                 else {
-                    //self.firstSync = false;
                     callback(false);
                 }
             }, saveBandwidth);
@@ -339,10 +338,10 @@ App.service('SyncService', function(API_ROUTES, GENERAL_CONFIG, $state, $rootSco
         this._executeSql('UPDATE sync_info SET last_sync = "'+this.syncInfo.lastSyncDate+'"', []);
     };
     //Useful to tell the client to send all his data again (like the firstSync)
-    this.setFirstSync = function() {
+    this.setFirstSync = function(callback) {
         this.firstSync = true;
         this.syncInfo.lastSyncDate = 0;
-        this._executeSql('UPDATE sync_info SET last_sync = "'+this.syncInfo.lastSyncDate+'"', []);
+        this._executeSql('UPDATE sync_info SET last_sync = "'+this.syncInfo.lastSyncDate+'"', [], null, callback);
     };
     /*************** PRIVATE FUNCTIONS ********************/
 

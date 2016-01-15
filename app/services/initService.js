@@ -88,6 +88,7 @@ App.service('initService', function($timeout, $ionicHistory, API_ROUTES, LocalSt
 
     this.reInit = function(callback,clearCredentials) {
         console.log("---- DB RE INIT START ----");
+        
         if(typeof clearCredentials=='undefined' || clearCredentials===true) {
             LocalStorageService.clear("user_email");
             LocalStorageService.clear("user_id");
@@ -102,14 +103,11 @@ App.service('initService', function($timeout, $ionicHistory, API_ROUTES, LocalSt
         }, 1500)
         LocalStorageService.set('app_version', GENERAL_CONFIG.APP_VERSION);
         SQLite.init_db(_db,appName,db_name,db_tables,db_tables_sql, true, function() {
-            initSync(callback);
+            initSync(function() {
+                SyncService.setFirstSync();
+                if(callback && typeof callback == 'function')
+                    callback();
+            });
         });
-        SyncService.syncInfo = {
-            lastSyncDate : 0
-        };
-
-        // Intercom
-        if(typeof intercom != 'undefined')
-            intercom.reset();
     }
 });

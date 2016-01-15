@@ -17,6 +17,10 @@
     font-size: 15px;
     background-color:#0e6bb9;
     color:#d0f2ff;
+
+    &>div {
+        color:#d0f2ff !important; // Bug in ios fix : color changed to darker blue
+    }
 }
 #group .bar-subheader.notifications > div+div {
     margin-left:30px;
