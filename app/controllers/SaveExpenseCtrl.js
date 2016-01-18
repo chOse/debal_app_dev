@@ -304,7 +304,6 @@ App
         }
         else {
             if(!$scope.expense) {
-                console.error("reset entry");
                 $scope.expense = {amount:0, date: new Date()};
             }
             if(callback)

@@ -2,7 +2,6 @@ App.controller('GroupCtrl',
     function($scope, $rootScope, $timeout, $stateParams, $state, $ionicPopup, $ionicNavBarDelegate, $ionicSideMenuDelegate, $ionicLoading, gettextCatalog, EntriesModel, GroupsModel, UsersModel, GroupsSecondCurrencyModel, CURRENCIES_LIST, LocalStorageService) {
 
     /* Init data */
-    
     UsersModel.getUserId(LocalStorageService.get("user_id"), function(r) {
         $scope.current_user = {
             UserId: r[0].UserId,
@@ -13,7 +12,6 @@ App.controller('GroupCtrl',
     });
 
     $scope.GroupId = $stateParams.GroupId;
-    
     $scope.locale = LocalStorageService.get("locale");
     $scope.currencies = CURRENCIES_LIST;
 
@@ -71,12 +69,6 @@ App.controller('GroupCtrl',
 
     $scope.getMembers = function(callback) {
 
-        CountEntries = function(member) {
-            EntriesModel.count_user_entries(member.GroupsUserId, function(r) {
-                member.count_total = r;
-            });
-        };
-
         // Rearrange array : current user on top, deleted user at bottom
         SortMembersList = function(members) {
             members.sort(function(a, b) {
@@ -96,10 +88,10 @@ App.controller('GroupCtrl',
             });
         };
 
-        GroupsModel.get_members($scope.GroupId, function(members) {
+        GroupsModel.get_members($scope.GroupId, function(m) {
             var temp_members_names = [];
             $scope.members_count = 0;
-
+            var members = angular.copy(m);
             for(var i in members) {
 
                 var member = members[i];
@@ -110,7 +102,9 @@ App.controller('GroupCtrl',
 
                 delete member.display_name;
 
-                if(member.user_id == LocalStorageService.get("user_id")) {
+                // Current User
+                if(member.UserId==$scope.current_user.UserId) {
+                    member.current_user = true;
                     $scope.currentUserGuid = member.GroupsUserId;
                 }
 
@@ -118,18 +112,11 @@ App.controller('GroupCtrl',
                     $scope.members_count++;
 
                 temp_members_names[member.GroupsUserId] = member.username; // Array of usernames indexed by GroupsUserIds
-
-                CountEntries(member);
             
                 member.share = member.default_share;
                 member.registered = (validateEmail(member.email));
                 member.deleted = 0;
                 member.invited = (validateEmail(member.invite_email));
-
-                // Current User
-                if(member.UserId==$scope.current_user.UserId) {
-                    member.current_user = true;
-                }
 
                 if(i==members.length-1) { // End of Loop
                     SortMembersList(members);
@@ -137,7 +124,6 @@ App.controller('GroupCtrl',
                     $scope.membersNames = temp_members_names;
                     if(callback) callback();
                 }
-
             }
         });
     };
@@ -146,9 +132,8 @@ App.controller('GroupCtrl',
 
         $scope.entries_count = 0;
 
-
         getBeneficiaries = function(data, j, callback) {
-            
+
             var entry_data = data[j];
 
             EntriesModel.get_beneficiaries(entry_data.EntryId, function(data) {
@@ -159,11 +144,8 @@ App.controller('GroupCtrl',
                         current_user_in_expense = true;
                     }
                     entry_data.current_user_in_expense = current_user_in_expense;
-
                 }
-
                 callback(j, entry_data);
-
             });
         };
         EntriesModel.read({GroupId: $scope.GroupId}, function(data) {
@@ -226,7 +208,6 @@ App.controller('GroupCtrl',
 
 
     $scope.initGroup = function(discret) {
-        console.error("initing group! " + $state.current.name);
 
         if(!discret) $ionicLoading.show();
 
@@ -246,6 +227,4 @@ App.controller('GroupCtrl',
         });
     };
     $scope.initGroup();
-
-    
 });

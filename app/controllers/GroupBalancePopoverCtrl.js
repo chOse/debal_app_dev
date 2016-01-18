@@ -114,6 +114,17 @@ App.controller('GroupBalancePopoverCtrl',
                     title: gettextCatalog.getString('Error'),
                     template: gettextCatalog.getString('Unable to download the latest rate for now. Please try again later.')
                 });
+        }).error(function() {
+            if(LocalStorageService.get("exchange_rates")) {
+                fx.rates = LocalStorageService.get("exchange_rates");
+                fx.base = LocalStorageService.get("exchange_base");
+                $scope.group.currency_rate = fx(1).from($scope.group.currency.id).to($scope.secondCurrency.secondary_currency.id);
+            }
+            else
+                $ionicPopup.alert({
+                    title: gettextCatalog.getString('Error'),
+                    template: gettextCatalog.getString('Unable to download the latest rate for now. Please try again later.')
+                });
         });
     };
     /* End Secondary Currency Functions */

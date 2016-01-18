@@ -67,22 +67,31 @@ App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDe
                 var members_list = "";
                 var members = [];
                 var connector1 = gettextCatalog.getString('with');
-                
+                if(data.length>0) {
+                    for(var i in data) {
+                        if(data[i].user_id*1!==LocalStorageService.get('user_id')*1) {
+                            if(data[i].display_name !== null && data[i].display_name.length!=0)
+                                members.push(data[i].display_name);
+                            else
+                                members.push(data[i].username);
+                        }
+                    }
+                    var last = members[members.length-1];
+                    members.pop();
+                    members_list = connector1 + " " + members.join(", ");
 
-                for(var i in data) {
-                    if(data[i].user_id*1!==LocalStorageService.get('user_id')*1)
-                        members.push(data[i].username);
+                    var connector2 = members.length>0 ? gettextCatalog.getString('and') : '';
+                    
+                    if(typeof last=='undefined')
+                        group_data.members_list = gettextCatalog.getString('(members removed)');
+                    else
+                        group_data.members_list = members_list + " " + connector2 + " " + last;
                 }
-                var last = members[members.length-1];
-                members.pop();
-                members_list = connector1 + " " + members.join(", ");
 
-                var connector2 = members.length>0 ? gettextCatalog.getString('and') : '';
-
-                group_data.members_list = members_list + " " + connector2 + " " + last;
-
-                callback(group_data);
+                else
+                    group_data.members_list = gettextCatalog.getString('(members removed)');
                 
+                callback(group_data);
             });
         };
 

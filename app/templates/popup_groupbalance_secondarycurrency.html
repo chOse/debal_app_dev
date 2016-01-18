@@ -5,7 +5,7 @@
 	    <i class="icon ion-arrow-down-b icon-accessory"></i>
 	    <select class="currency" ng-model="secondCurrency.secondary_currency" ng-options="curr.name_{{secondCurrency.locale_curr}} for (k, curr) in currencies" required="required"></select>
 	</label>
-	<p ng-if="secondCurrency.secondary_currency.id.length>0" style="text-align: center;">Enter a change rate manually or click the icon below to download the latest rate <br> 1 {{group.currency.symbol}} = ? {{getCurrencySymbol(secondCurrency.secondary_currency.id)}} :</p>
+	<p ng-if="secondCurrency.secondary_currency.id.length>0" style="text-align: center;"><span translate>Enter a change rate manually or click the icon below to download the latest rate</span><br /> 1 {{group.currency.symbol}} = ? {{getCurrencySymbol(secondCurrency.secondary_currency.id)}} :</p>
 
 	<label ng-if="secondCurrency.secondary_currency.id.length>0" class="exchangeRate item item-input item-label item-icon-right">
 	    <input ng-model="group.currency_rate" type="text" placeholder="{{'Enter change rate'|translate}}..." name="group" required="required">

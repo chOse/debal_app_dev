@@ -54,7 +54,8 @@
   text-align: center;
   line-height: 40px;
   margin-right: 10px;
-  color: #ccc; }
+  color: #ccc;
+  margin-top: 4px; }
 
 .expenseIconTip .expense_icon {
   float: left; }
@@ -88,6 +89,7 @@
   background-color: #ECECEC; }
 
 #group-expenses .expenseslist .title {
+  -webkit-flex: 1;
   flex: 1; }
 
 #group-expenses .expenseslist .title p {

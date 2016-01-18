@@ -4,7 +4,7 @@
         'GENERAL_CONFIG': {
             'APP_NAME': 'Debal',
             'RECREATE_APP_VERSIONS': ['1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.1.8'],
-            'APP_VERSION': '1.1.9',
+            'APP_VERSION': '1.2.3',
             'CURR_RATES_URL' : "https://www.debal.fr/currency_rates",
             'API_URL': 'https://www.debal.fr/Apiv2/'
             //'API_URL': 'http://dev.debal.fr/Apiv2/'

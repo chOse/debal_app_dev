@@ -246,9 +246,7 @@ $stateProvider
         var appSyncInterval;
 
         $rootScope.$on('startSyncInterval', function(event) {
-            console.error("broadcast");
             if(!angular.isDefined(appSyncInterval)) {
-                console.error("starting interval");
                 appSyncInterval = $interval(handleSync, syncInterval);
             }
             else
@@ -257,7 +255,6 @@ $stateProvider
 
         $rootScope.$on('stopSyncInterval', function(event) {
             if(angular.isDefined(appSyncInterval)) {
-                console.error("stopping interval");
                 $interval.cancel(appSyncInterval);
                 appSyncInterval = undefined;
             }

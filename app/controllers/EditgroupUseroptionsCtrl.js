@@ -1,5 +1,5 @@
 App
-.controller('EditgroupUseroptionsCtrl', function($scope, $state, $ionicPopup, $ionicLoading, gettextCatalog, LocalStorageService, GroupsModel, UsersModel, SyncService) {
+.controller('EditgroupUseroptionsCtrl', function($scope, $state, $ionicPopup, $ionicLoading, gettextCatalog, LocalStorageService, EntriesModel, GroupsModel, UsersModel, SyncService) {
 
 
     $scope.popInvite = function() {
@@ -134,6 +134,7 @@ App
                         // Update table
                         GroupsModel.update_groups_user({'display_name':$scope.data.username,'GroupsUserId': $scope.popover.member.GroupsUserId});
                     }
+                    $scope.getMembers();
 
                 }
                 
@@ -201,49 +202,53 @@ App
 
         if($scope.popover.member.share!=0) {
 
-            if($scope.popover.member.current_user)
-                var template_text = '<div style="text-align:center">' + gettextCatalog.getString('Your default share will be set to 0 and you <strong>won\'t be displayed in further entries</strong>.') + '</div>';
+            EntriesModel.count_user_entries($scope.popover.member.GroupsUserId, function(r) {
+                $scope.popover.member.count_total = r;
 
+                if($scope.popover.member.current_user)
+                    var template_text = '<div style="text-align:center">' + gettextCatalog.getString('Your default share will be set to 0 and you <strong>won\'t be displayed in further entries</strong>.') + '</div>';
 
-            else if($scope.popover.member.count_total>0) 
-                var template_text = '<div style="text-align:center">' + gettextCatalog.getString('{{name}} is listed in some entries and thus couldn\'t be removed.<br />Their default share was set to 0 and they <strong>won\'t be displayed in further entries</strong>.', {name: $scope.popover.member.username }) + '</div>';
+                else {
+                    if($scope.popover.member.count_total>0) 
+                        var template_text = '<div style="text-align:center">' + gettextCatalog.getString('{{name}} is listed in some entries and thus couldn\'t be removed.<br />Their default share was set to 0 and they <strong>won\'t be displayed in further entries</strong>.', {name: $scope.popover.member.username }) + '</div>';
 
-            else
-                var template_text = gettextCatalog.getString('Remove {{name}} from group?', {name: $scope.popover.member.username});
-
-            var confirmPopup = $ionicPopup.confirm({
-                title: gettextCatalog.getString('Information'),
-                template: template_text,
-                buttons: [
-                    { text: gettextCatalog.getString('Cancel') },
-                    {
-                        text: gettextCatalog.getString('OK'),
-                        type: 'button-calm',
-                        onTap: function(e) {
-                            return true
-                        }
-                    },
-                ]
-            });
-           
-            confirmPopup.then(function(res) {
-                if(res) {
-                    if($scope.popover.member.current_user || $scope.popover.member.count_total>0) {
-                        $scope.popover.member.share = 0;
-                        console.log("member removed");
-                        // Update SQL
-                        GroupsModel.update_groups_user({GroupsUserId:$scope.popover.member.GroupsUserId, share:0});
-                    }
-
-                    else if(typeof($scope.popover.member.GroupsUserId)!='undefined' && $scope.popover.member.GroupsUserId!==null && !isNaN($scope.popover.member.GroupsUserId)) {
-                        $scope.group.members[$scope.popover.member.index].deleted = 1;
-                        // Update SQL
-                        GroupsModel.update_groups_user({GroupsUserId:$scope.popover.member.GroupsUserId, deleted:1});
-                    }
-
+                    else
+                        var template_text = gettextCatalog.getString('Remove {{name}} from group?', {name: $scope.popover.member.username});
                 }
+
+                var confirmPopup = $ionicPopup.confirm({
+                    title: gettextCatalog.getString('Information'),
+                    template: template_text,
+                    buttons: [
+                        { text: gettextCatalog.getString('Cancel') },
+                        {
+                            text: gettextCatalog.getString('OK'),
+                            type: 'button-calm',
+                            onTap: function(e) {
+                                return true
+                            }
+                        },
+                    ]
+                });
+                
+                confirmPopup.then(function(res) {
+                    if(res) {
+                        if($scope.popover.member.current_user || $scope.popover.member.count_total>0) {
+                            $scope.popover.member.share = 0;
+                            console.log("member removed");
+                            // Update SQL
+                            GroupsModel.update_groups_user({GroupsUserId:$scope.popover.member.GroupsUserId, share:0});
+                        }
+
+                        else if(typeof($scope.popover.member.GroupsUserId)!='undefined' && $scope.popover.member.GroupsUserId!==null && !isNaN($scope.popover.member.GroupsUserId)) {
+                            $scope.group.members[$scope.popover.member.index].deleted = 1;
+                            // Update SQL
+                            GroupsModel.update_groups_user({GroupsUserId:$scope.popover.member.GroupsUserId, deleted:1});
+                        }
+
+                    }
+                });
             });
         }
     };
-
 });
