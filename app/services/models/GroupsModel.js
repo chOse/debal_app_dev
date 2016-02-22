@@ -13,7 +13,15 @@ App.factory('GroupsModel', function(SQLiteService, DB_CONFIG) {
             DB.order_by_desc("groups.GroupId");
             DB.query(callback);
         },
-
+        read_user_groups : function(UserId, callback) {
+            var DB = new SQLiteService();
+            DB.select();
+            DB.from("groups as g");
+            DB.join("groups_users as gu", "gu.GroupId = g.GroupId AND gu.UserId = " + UserId + " AND gu.deleted=0 AND gu.share!=0");
+            DB.where('g.deleted = 0');
+            DB.order_by_desc("g.GroupId");
+            DB.query(callback);
+        },
         create_group : function(group_data, members_data, callback) {
             var SQL = new SQLiteService();
             var db = SQL.getDb();

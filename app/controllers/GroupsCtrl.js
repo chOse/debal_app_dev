@@ -1,4 +1,4 @@
-App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDelegate, $ionicModal, $ionicPopup, $ionicLoading, LoginService, gettextCatalog, GroupsModel, GroupRequestsModel, LocalStorageService, SyncService) {
+App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDelegate, $ionicModal, $ionicPopup, $ionicLoading, LoginService, gettextCatalog, UsersModel, GroupsModel, GroupRequestsModel, LocalStorageService, SyncService) {
 
     $ionicSideMenuDelegate.canDragContent(true);
 
@@ -97,24 +97,29 @@ App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDe
 
         $scope.getJoinRequests();
         var groups = [];
-        GroupsModel.read({}, function(data) {
-            for(var i in data) {
-                getGroupMembers(data[i], function(group_data) {
-                    groups.push(group_data);
-                    if(i==data.length-1) {
-                        if($scope.groups !== groups)
-                            $scope.groups = groups;
-                        $scope.$apply();
-                    }
-                });
-            }
-            $scope.showWelcomeMessage = (data.length===0);
-            $scope.$apply();
-            $ionicLoading.hide();
-        });
+
+        // Retrieve current user's UserId from user_id
+        UsersModel.getUserId(LocalStorageService.get('user_id'), function(v) {
+            var UserId = v[0].UserId;
+
+            // Get this user's groups
+            GroupsModel.read_user_groups(UserId, function(data) {
+                for(var i in data) {
+                    getGroupMembers(data[i], function(group_data) {
+                        groups.push(group_data);
+                        if(i==data.length-1) {
+                            if($scope.groups !== groups)
+                                $scope.groups = groups;
+                            $scope.$apply();
+                        }
+                    });
+                }
+                $scope.showWelcomeMessage = (data.length===0);
+                $scope.$apply();
+                $ionicLoading.hide();
+            });
+        })
     };
-
-
 
     /* Join request Modal */
     $ionicModal.fromTemplateUrl('app/templates/joinrequest_modal.html', {

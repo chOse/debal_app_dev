@@ -215,6 +215,7 @@ App
             var url = "itms-apps://itunes.apple.com/app/id896184333";
 
         var confirmPopup = $ionicPopup.confirm({
+            cancelText: gettextCatalog.getString('Cancel'),
             title: gettextCatalog.getString('Like the App?'),
             template: gettextCatalog.getString('Please support ous and take a few seconds to rate the App in the store!')
         }).then(function(res) {
