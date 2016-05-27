@@ -1,6 +1,6 @@
 /* global Connection, analytics, ionic, angular */
 
-var App = angular.module('Debal', ['tmh.dynamicLocale', 'ionic', 'Debal.config', 'gettext', 'Debal.db'])
+var App = angular.module('Debal', ['tmh.dynamicLocale', 'ionic', 'ionic-datepicker', 'angularPayments', 'puigcerber.countryPicker', 'mm.iban', 'Debal.config', 'gettext', 'Debal.db'])
 .filter('isEmpty', function () {
     var bar;
     return function (obj) {
@@ -17,6 +17,16 @@ var App = angular.module('Debal', ['tmh.dynamicLocale', 'ionic', 'Debal.config',
     duration: 5000,
     noBackdrop: true
 })
+/*
+.config(function(pvpCountriesProvider) {
+        allCountries = countries_list_iso['fr'];
+ device_lang = SUPPORTED_LANG.indexOf($rootScope.device_lang)==-1 ? "en" : $rootScope.device_lang;
+
+        if(typeof countries_list_iso != 'undefined' && countries_list_iso[device_lang] != 'undefined')
+            allCountries = countries_list_iso[device_lang];
+    pvpCountriesProvider.setCountries(allCountries);
+})
+*/
 .config(function($stateProvider, $urlRouterProvider) {
 
 $stateProvider
@@ -58,6 +68,56 @@ $stateProvider
         'menuContent' :{
           templateUrl: 'app/views/groups.html',
           controller: 'GroupsCtrl'
+        }
+      }
+    })
+    .state('app.payments', {
+        url: "/payments",
+        cache: false,
+        views: {
+        'menuContent' :{
+          templateUrl: 'app/views/payments.html',
+          controller: 'PaymentsCtrl'
+        }
+      }
+    })
+    .state('app.payments-tuto', {
+        url: "/payments/tuto",
+        cache: false,
+        views: {
+        'menuContent' :{
+          templateUrl: 'app/views/payments-tuto.html',
+          controller: 'PaymentsCtrl'
+        }
+      }
+    })
+    .state('app.payments-account', {
+        url: "/payments/account",
+        cache: false,
+        views: {
+        'menuContent' :{
+          templateUrl: 'app/views/payments-account.html',
+          controller: 'PaymentsCtrl'
+        }
+      }
+    })
+    .state('app.payments-creditcard', {
+        url: "/payments/creditcard",
+        cache: false,
+        views: {
+        'menuContent' :{
+          templateUrl: 'app/views/payments-creditcard.html',
+          controller: 'PaymentsCtrl'
+        }
+      }
+    })
+    .state('app.payments-iban', {
+        url: "/payments/iban",
+        cache: false,
+        views: {
+        'menuContent' :{
+          templateUrl: 'app/views/payments-iban.html',
+          controller: 'PaymentsCtrl'
         }
       }
     })
@@ -180,6 +240,16 @@ $stateProvider
                 controller: 'SaveExpenseCtrl'
             }
         }
+    })
+    .state('app.group.addrefund', {
+        url: "/addrefund-creditcard/:BeneficiaryGuid/:Step",
+        cache: false,
+        views: {
+            'groupContent' :{
+                templateUrl: 'app/views/addrefund-creditcard.html',
+                controller: 'AddRefundCreditCardCtrl'
+            }
+        }
     });
     
     $urlRouterProvider.otherwise("/app/groups");
@@ -210,6 +280,17 @@ $stateProvider
             $rootScope.device_lang = device_lang;
 
             gettextCatalog.setCurrentLanguage(device_lang);
+
+
+            if(is_set(countries_list_iso) && is_set(countries_list_iso[device_lang])) {
+                console.error("check");
+                App.config(function(pvpCountriesProvider) {
+                    console.error("check2");
+                    pvpCountriesProvider.setCountries(countries_list_iso[device_lang]);
+                })
+            }
+            
+            
 
             if(typeof device_locale !== 'undefined') {
                 tmhDynamicLocale.set(device_locale);

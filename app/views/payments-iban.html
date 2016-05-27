@@ -1,0 +1,39 @@
+<ion-view hide-nav-bar="false" view-title="{{'Settings'|translate}}" id="payments">
+    <ion-content scroll="false">
+        <div class="center-text">
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label" translate>Owner name</span>
+                    <input type="text" ng-model="account.bank.ownerName" />
+                </label>
+                <label class="item item-input">
+                    <span class="input-label" translate>Owner address</span>
+                    <input type="text" ng-model="account.bank.OwnerAddress" />
+                </label>
+                <label class="item item-input">
+                    <span class="input-label" translate>Owner city</span>
+                    <input type="text" ng-model="account.bank.ownerCity" />
+                </label>
+                <label class="item item-input">
+                    <span class="input-label" translate>Owner PostalCode</span>
+                    <input type="text" ng-model="account.bank.ownerPostalCode" />
+                </label>
+                <label class="item item-input item-icon-right item-label item-select-list">
+                    <span class="input-label" translate>Owner country</span>
+                    <i class="icon ion-arrow-down-b icon-accessory"></i>
+                    <select pvp-country-picker="name" ng-model="account.bank.ownerCountry"></country-select>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label" translate>IBAN code</span>
+                    <input type="text" ng-model="account.bank.iban" ng-iban="[FR]"/>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label" translate>BIC code</span>
+                    <input type="text" ng-model="account.bank.bic"/>
+                </label>
+                <button type="button" translate="" class="button button-block button-positive activated" ng-click="saveIbanData()"><span class="">Save data</span></button>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>
