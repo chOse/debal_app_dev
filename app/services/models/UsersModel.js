@@ -29,17 +29,6 @@ App.factory('UsersModel', function(SQLiteService, DB_CONFIG) {
         delete : function(UserId, callback) {
             (new SQLiteService())
                 .remove("users", "UserId="+UserId, callback);
-        },
-        update_user_details : function(data, callback) {
-            data.id = data.user_id;
-            (new SQLiteService()).insert("users_details", data, null, callback)
-        },
-        get_user_details : function(user_id, callback) {
-            var DB = new SQLiteService();
-            DB.select();
-            DB.from("users_details");
-            DB.where("user_id = "+ user_id);
-            DB.query(callback);
         }
     };
 

@@ -4,9 +4,9 @@
         'GENERAL_CONFIG': {
             'APP_NAME': 'Debal',
             'RECREATE_APP_VERSIONS': ['1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.1.8'],
-            'APP_VERSION': '1.3.0',
+            'APP_VERSION': '1.2.5',
             'CURR_RATES_URL' : "https://www.debal.fr/currency_rates",
-            'API_URL': 'http://localhost:8888/debal_web/Apiv2/'
+            'API_URL': 'https://www.debal.fr/Apiv2/'
             //'API_URL': 'http://dev.debal.fr/Apiv2/'
         },
         
@@ -40,17 +40,7 @@
             },
             facebook_connect: {
                 url: "facebook_connect.json", type: "POST"
-            },
-            mangopay_register_card: {
-                url: "mangopay_register_card.json", type: "GET", auth: true
-            },
-            mangopay_register_bankaccount: {
-                url: "mangopay_register_bankaccount.json", type: "POST", auth: true
-            },
-            mangopay_process_group_payment: {
-                url: "mangopay_process_group_payment.json", type: "POST", auth: true
             }
-            
         },
         SUPPORTED_LANG : ["en","fr"],
         CURRENCIES_DEFAULT : "EUR",

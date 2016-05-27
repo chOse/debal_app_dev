@@ -96,21 +96,7 @@
                 `GroupId` INTEGER PRIMARY KEY NOT NULL,\n\
                 `second_currency` TEXT,\n\
                 `rate` TEXT,\n\
-                UNIQUE (GroupId) ON CONFLICT REPLACE)',
-
-                'CREATE TABLE IF NOT EXISTS `users_details` (\n\
-                `id` INTEGER,\n\
-                `user_id` INTEGER,\n\
-                `last_name` TEXT,\n\
-                `first_name` TEXT,\n\
-                `birthday` TEXT,\n\
-                `nationality` TEXT,\n\
-                `country_of_residence` TEXT,\n\
-                `mangopay_user_id` TEXT,\n\
-                `mangopay_wallet_id` TEXT,\n\
-                `mangopay_card_id` TEXT,\n\
-                `mangopay_bank_id` TEXT,\n\
-                UNIQUE (user_id) ON CONFLICT REPLACE)'
+                UNIQUE (GroupId) ON CONFLICT REPLACE)'
             ],
 
             RECREATE_DB : false,
