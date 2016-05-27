@@ -92,6 +92,10 @@ App
             
         });
     };
+    $scope.openPayments = function() {
+        $ionicSideMenuDelegate.toggleLeft();
+        $state.go('app.payments');
+    };
 
     $scope.openSettings = function() {
         $ionicSideMenuDelegate.toggleLeft();

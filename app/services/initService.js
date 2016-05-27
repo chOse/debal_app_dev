@@ -16,7 +16,13 @@ App.service('initService', function($timeout, $ionicHistory, API_ROUTES, LocalSt
             associations : [],
             trigger: true
         },
-    
+        {
+            tableName : 'users_details',
+            idName : 'user_id',
+            serverId: 'user_id',
+            associations : [],
+            trigger: true
+        },
         {
             tableName : 'groups', 
             idName : 'GroupId',

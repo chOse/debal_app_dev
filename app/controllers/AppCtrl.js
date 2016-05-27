@@ -2,7 +2,7 @@
 
 App
 .controller('AppCtrl',
-    function($state, $rootScope, $scope, $ionicHistory, $ionicLoading, $ionicPopup, $ionicSlideBoxDelegate, gettextCatalog, LocalStorageService, initService, LoginService, SyncService, CURRENCIES_SYMBOLS, GENERAL_CONFIG) {
+    function($state, $rootScope, $scope, $ionicHistory, $ionicLoading, $ionicPopup, $ionicSlideBoxDelegate, gettextCatalog, SQLiteService, LocalStorageService, initService, LoginService, SyncService, CURRENCIES_SYMBOLS, GENERAL_CONFIG) {
 
     // Analytics
     $scope.trackView = function() {
@@ -15,9 +15,33 @@ App
             analytics.trackEvent(Category, Action, Label);
     }
 
+    $scope.getGroupThumbnailColor = function(groupName) {
+        if(typeof groupName === 'undefined')
+            return;
+        
+        var colors = ["#66D8BA","#f16364","#f58559","#f9a43e","#e4c62e","#67bf74","#59a2be","#2093cd","#ad62a7"];
+
+        hashCode = function(strInput) {
+            var str = strInput.toUpperCase();
+            var hash = 0;
+            if (str.length === 0) return hash;
+            for (i = 0; i < str.length && i<3; i++) {
+                char = str.charCodeAt(i);
+                hash = ((hash<<5)-hash)+char;
+                hash = hash & hash;
+            }
+            return hash;
+        };
+        
+        groupName_number = Math.abs(hashCode(groupName)*1)%(colors.length);
+        return colors[groupName_number];
+    };
+
 
     $scope.initApp = function() {
         var app_version = LocalStorageService.get('app_version');
+        
+        // Not Authed = RECREATE DB
         if(LoginService.isLogged()!=="true") {
             console.error("no credentials found, reiniting");
             initService.reInit(function() {
@@ -30,7 +54,7 @@ App
                 }, 0); // Don't know why it doesn't redirect without setTimeout...
             }
         }
-        // RECREATE DB IF APP UPDATED
+        // Authed + APP UPDATED AND RECREATION REQUIRED = RECREATE DB and Login and Download data
         else if(!update_popup_triggered && app_version!==GENERAL_CONFIG.APP_VERSION && GENERAL_CONFIG.RECREATE_APP_VERSIONS.indexOf(app_version)>-1) {
             console.error("app version mismatch");
             $ionicLoading.hide();
@@ -46,22 +70,50 @@ App
                 }, false);
             }, false);   
         }
+        
+        // Authed
         else {
             initService.init(function() {
-                SyncService.syncAndRefresh(function(result) {
-                    // Logged in but in pre-auth screen
-                    if($state.current.name==="landing" || $state.current.name==="login" || $state.current.name==="register")
-                        $state.go('app.groups');
 
-                    $rootScope.$broadcast('startSyncInterval');
-                }, false);
+                function refreshAndRedirect() {
+                    SyncService.syncAndRefresh(function(result) {
+                        // Logged in but in pre-auth screen
+                        if($state.current.name==="landing" || $state.current.name==="login" || $state.current.name==="register")
+                            $state.go('app.groups');
+
+                        $rootScope.$broadcast('startSyncInterval');
+                    }, false);
+                }
+
+                // Authed + Updated to 1.3 = DONT RECREATE (BUS REPORTED) BUT Create user_details Table
+                if(app_version!==GENERAL_CONFIG.APP_VERSION && GENERAL_CONFIG.APP_VERSION>="1.3.0") {
+                    console.error("SWITCH TO 1.3 > CREATE USERS_DETAILS");
+                    var SQLite = (new SQLiteService());
+                    SQLite._executeSQL(
+                        'CREATE TABLE IF NOT EXISTS `users_details` (\n\
+                        `id` INTEGER,\n\
+                        `user_id` INTEGER,\n\
+                        `last_name` TEXT,\n\
+                        `first_name` TEXT,\n\
+                        `birthday` TEXT,\n\
+                        `nationality` TEXT,\n\
+                        `country_of_residence` TEXT,\n\
+                        `mangopay_user_id` TEXT,\n\
+                        `mangopay_wallet_id` TEXT,\n\
+                        `mangopay_card_id` TEXT,\n\
+                        `mangopay_bank_id` TEXT,\n\
+                        UNIQUE (user_id) ON CONFLICT REPLACE)', refreshAndRedirect
+                    );
+                }
+
+                else
+                    refreshAndRedirect();
             });
         }
     }
     
     var update_popup_triggered = false;
     $scope.initApp();
-
 
     // Handle back top-left button
     $rootScope.goBack = function() { // Using rootScope because it is called from in app.js's $ionicPlatformReady
