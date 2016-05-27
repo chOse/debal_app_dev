@@ -26,6 +26,7 @@
                         <div class="col-right">
                             <span translate>to</span>
                             <strong ng-class="{true:'myself'}[flows[k].to==currentUserGuid]" class="beneficiary">{{membersNames[flows[k].to]}}</strong>
+                            <span ng-click="initRefund(guid, flows[k].to, flow.amount)"> >R</span>
                         </div>
                     </div>
                     <p style="clear:both"></p>

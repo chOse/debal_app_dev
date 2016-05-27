@@ -27,27 +27,7 @@ App.controller('GroupsCtrl', function($scope, $state, $timeout, $ionicSideMenuDe
         $state.go('app.group.tabs.expenses', {GroupId: GroupId});
     };
 
-    $scope.getThumbnailColor = function(groupName) {
-        if(typeof groupName === 'undefined')
-            return;
-        
-        var colors = ["#66D8BA","#f16364","#f58559","#f9a43e","#e4c62e","#67bf74","#59a2be","#2093cd","#ad62a7"];
-
-        hashCode = function(strInput) {
-            var str = strInput.toUpperCase();
-            var hash = 0;
-            if (str.length === 0) return hash;
-            for (i = 0; i < str.length && i<3; i++) {
-                char = str.charCodeAt(i);
-                hash = ((hash<<5)-hash)+char;
-                hash = hash & hash;
-            }
-            return hash;
-        };
-        
-        groupName_number = Math.abs(hashCode(groupName)*1)%(colors.length);
-        return colors[groupName_number];
-    };
+    
 
     $scope.getJoinRequests = function(callback) {
         $scope.joinrequests = {};

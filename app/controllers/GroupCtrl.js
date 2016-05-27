@@ -177,6 +177,20 @@ App.controller('GroupCtrl',
         });
     };
 
+    $scope.getP2PBalance = function(GroupsUserIdOwes, GroupsUserIdTo, callback) {
+        if(typeof $scope.balances != 'undefined') {
+            if(typeof $scope.balances[GroupsUserIdOwes] == 'undefined')
+                return callback(0);
+            else {
+                angular.forEach($scope.balances[GroupsUserIdOwes], function(v,k) {
+                    if(v.to == parseInt(GroupsUserIdTo)) {
+                        return callback(parseFloat(v.amount));
+                    }
+                });
+            }
+        }
+    }
+
     $scope.initCurrencies = function() {
      
         $scope.group.currency = $scope.currencies[$scope.group.currency];
